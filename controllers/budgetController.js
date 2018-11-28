@@ -24,7 +24,7 @@ module.exports = {
           date: 1,
           userID: 1,
           month: { $substrBytes: ["$date", 0, 2] },
-          convertedIncome: { $toString: "$income" }
+          //convertedIncome: { $toString: "$income" }
         }
       }
     ])
