@@ -22,18 +22,20 @@ A users' experience can only be as good as the technology in the User Interface.
 
 ## Back-End
 The goal of our backend was optimization in order to lighten the load for our front-end. We used MongoDB to it's full potential to sort, group, and aggregate our data. In doing so, we were able to create API routes that are seemingly complex, without the sacrifice of front-end efficiency.
+
 ![image](https://user-images.githubusercontent.com/11838797/49107896-da649680-f254-11e8-936d-b10adc2ce442.png)
 
 ### Technologies Used: 
 * **React**
+* **React-Router**
 * **Material UI** 
 * **Prime-React** 
-* **ChartJS**
+* **Chart.JS**
 * **MongoDB**
 * **Express**
 * **Axios**
 * **React-Moment**
 * **Passport**
 * **Mongoose**
-* **React-Strap**
+* **reactstrap**
 * **Concurrently**

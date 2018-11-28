@@ -656,6 +656,13 @@ class Main extends Component {
               >
                 Click on headers to sort
               </Typography>
+              <Typography
+                className={classes.title}
+                color="textSecondary"
+                gutterBottom
+              >
+                Double click on corresponding table row to delete a budget item
+              </Typography>
               <DataTable
                 className="budget-table"
                 tableStyle={{ width: "100%" }}
@@ -783,7 +790,7 @@ class Main extends Component {
               toggle={this.toggle}
               className={this.props.className}
             >
-              <ModalHeader style={{marginTop: 50}} toggle={this.toggle}>Walmart Resuults</ModalHeader>
+              <ModalHeader style={{marginTop: 50}} toggle={this.toggle}>Walmart Results</ModalHeader>
               <ModalBody>
                 <div className="row align-items-center">
                   {this.state.itemImages.length === 0 ? (
