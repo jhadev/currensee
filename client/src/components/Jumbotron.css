@@ -1,0 +1,17 @@
+.styles {
+  opacity: 1;
+  background-image:  linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(https://images.pexels.com/photos/1345089/pexels-photo-1345089.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.textStyle {
+  color: white;
+  font-family: 'Righteous', cursive;
+}

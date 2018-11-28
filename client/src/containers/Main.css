@@ -1,0 +1,27 @@
+.dashtext {
+  font-family: 'Righteous', cursive;
+  font-size: 20px;
+}
+
+.table-data {
+  font-size: 16px;
+}
+
+.highlightRed {
+  background-color: rgba(255, 0, 17, 0.226);
+  padding: 2px;
+}
+
+.highlightGreen {
+  background-color: rgb(244, 66, 78, 0.2);
+  border: 2px solid black;
+  padding: 2px;
+}
+
+.content-section {
+  padding: 20px;
+}
+
+.total-sum {
+  margin-bottom: 20px;
+}

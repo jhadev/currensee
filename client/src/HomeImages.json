@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "about",
+    "image": "https://images.pexels.com/photos/1068523/pexels-photo-1068523.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "body": "bullshit"
+  },
+  {
+    "id": 2,
+    "name": "visuals",
+    "image": "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "body": "bullshit"
+  },
+  {
+    "id": 3,
+    "name": "inputs",
+    "image": "https://images.pexels.com/photos/297642/pexels-photo-297642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "body": "bullshit"
+  },
+  {
+    "id": 4,
+    "name": "tech",
+    "image": "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "body": "bullshit"
+  }
+]

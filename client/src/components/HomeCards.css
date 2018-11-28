@@ -1,0 +1,17 @@
+.card{
+  width: 100%;
+}
+.card-img-top {
+  opacity: 0.4;
+  object-fit: contain;
+}
+
+.card-img-top:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.img {
+  min-height: 100%
+}
+

@@ -1,0 +1,15 @@
+.layer {
+  background: black;
+}
+
+.navbar-brand {
+  font-size: 30px;
+  font-family: 'Righteous', cursive;
+  color: white !important;
+}
+
+.font {
+  font-family: 'Righteous', cursive;
+  margin-top: 3px;
+  color: white !important;
+}
