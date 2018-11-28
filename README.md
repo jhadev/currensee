@@ -6,11 +6,11 @@
 
 [View on Heroku](https://pacific-ridge-46060.herokuapp.com/)
 
-*Since Heroku mLab Mongo Sandbox uses Mongo version 3.6 we lost some functionality of our data table with this deployment. Part of the backend will need to be rewritten to compensate*
+*Since Heroku mLab Mongo Sandbox uses Mongo version 3.6 we lost some functionality of our data table with this deployment because of a few aggregation pipeline operators we used that were new in version 4.0. Part of the backend will need to be rewritten to compensate.*
 
 [View Demo on YouTube](https://youtu.be/FkLv9twceOU)
 
-*This demo shows the added functionality of the table*
+*This demo shows the added functionality of the table.*
 
 ## Overview
 The overall project was developed with the highest industry standards in mind, in terms of widely accepted notions in the developer world. We made sure to organize ourselves with a the MVC model (Models Views Controllers) in order to ensure the skillset we gained would be applicable to the real world. In addition, we chose to create a true single page application with the use of react-router-dom and express. With these goals in mind, we felt we met our personal goals to foster a product that utilizes the latest technologies with the added benefit of scalability.
@@ -28,6 +28,7 @@ The goal of our backend was optimization in order to lighten the load for our fr
 ### Technologies Used: 
 * **React**
 * **React-Router**
+* **Node.js**
 * **Material UI** 
 * **Prime-React** 
 * **Chart.JS**
