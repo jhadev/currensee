@@ -6,7 +6,7 @@
 
 [View on Heroku](https://pacific-ridge-46060.herokuapp.com/)
 
-*Since Heroku mLab Mongo Sandbox uses Mongo version 3.6 we lost some functionality of our data table with this deployment because of a few aggregation pipeline operators we used that were new in version 4.0. Part of the backend will need to be rewritten to compensate.*
+*Since Heroku mLab Sandbox uses MongoDB version 3.6 we lost some functionality of our data table with this deployment. A few aggregation pipeline operators we used are exclusive to version 4.0+. Part of the backend will need to be rewritten to compensate.*
 
 [View Demo on YouTube](https://youtu.be/FkLv9twceOU)
 
