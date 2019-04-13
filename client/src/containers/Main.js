@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import SideNav from "../components/SideNav";
+import moment from "moment";
 import API from "../utils/API";
+import SideNav from "../components/SideNav";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Chart } from "primereact/chart";
+import { DataTable, Column } from "primereact/datatable";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -11,16 +14,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
-import IconButton from "@material-ui/core/IconButton";
-import { DataTable, Column } from "primereact/datatable";
-import "./Main.css";
 import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid";
 import CardContent from "@material-ui/core/CardContent";
-import moment from "moment";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import "./Main.css";
 
 const drawerWidth = 300;
 
@@ -422,7 +421,12 @@ class Main extends Component {
     API.getDelete(event.data._id)
       .then(res => {
         console.log(res.data);
-        window.location.reload();
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.createMonthLabels();
       })
       .catch(err => {
         console.log(err);
@@ -456,6 +460,36 @@ class Main extends Component {
       .catch(err => {
         console.log(err);
       });
+  };
+
+  handleWalmartSubmit = event => {
+    // event.preventDefault();
+    console.log("this");
+    console.log(event.target);
+    const { value, name } = event.target;
+
+    let walmartObject = {
+      description: name,
+      amount: value,
+      date: moment().format("L"),
+      income: false,
+      category: "Walmart"
+    };
+
+    this.setState({ walmart: walmartObject });
+
+    API.budgetPost(walmartObject)
+      .then(res => {
+        console.log(res);
+        console.warn("WALMART STATE OBJECT: " + this.state.walmart);
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.createMonthLabels();
+      })
+      .catch(err => console.log(err));
   };
 
   rowClassName = rowData => {
@@ -632,7 +666,9 @@ class Main extends Component {
               <Grid container justify="center">
                 <Card className="total-sum">
                   <CardContent style={{ marginBottom: -10 }}>
-                    <h3>DISPOSABLE INCOME: ${this.state.budgetTotal}</h3>
+                    <h3>
+                      DISPOSABLE INCOME: ${this.state.budgetTotal.toFixed(2)}
+                    </h3>
                   </CardContent>
                 </Card>
               </Grid>
@@ -798,10 +834,10 @@ class Main extends Component {
                   {this.state.itemImages.length === 0 ? (
                     <h3>Product Results</h3>
                   ) : (
-                    this.state.itemImages.map(item => {
+                    this.state.itemImages.map((item, index) => {
                       return (
                         <div
-                          key={item}
+                          key={index}
                           className="col-12 col-md-12 text-center"
                         >
                           <img
@@ -811,10 +847,20 @@ class Main extends Component {
                           />
                           <p>{item.name}</p>
                           <p>{item.salePrice}</p>
-                          <button className="btn btn-outline-primary m-2 text-center">
+                          <a
+                            target="_blank"
+                            href={item.productUrl}
+                            rel="noopener noreferrer"
+                            className="btn btn-outline-primary m-2 text-center"
+                          >
                             View on Walmart.com
-                          </button>
-                          <button className="btn btn-primary m-2 text-center">
+                          </a>
+                          <button
+                            className="btn btn-primary m-2 text-center"
+                            name={item.name}
+                            value={item.salePrice}
+                            onClick={this.handleWalmartSubmit}
+                          >
                             Add to Budget
                           </button>
                         </div>
