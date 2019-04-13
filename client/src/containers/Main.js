@@ -161,18 +161,17 @@ class Main extends Component {
         let expense = arrayForSumByIncome[1].budgetTotal;
         let budgetTotal = income - expense;
         this.setState({ budgetTotal: budgetTotal });
-        }
-        if (arrayForSumByIncome[0]._id.income === false) {
-          let expense = arrayForSumByIncome[0].budgetTotal;
-          let income = arrayForSumByIncome[1].budgetTotal;
-          let budgetTotal = income - expense;
-          this.setState({ budgetTotal: budgetTotal });
-        }
-      } else {
-        this.setState({ budgetTotal: 0 });
       }
+      if (arrayForSumByIncome[0]._id.income === false) {
+        let expense = arrayForSumByIncome[0].budgetTotal;
+        let income = arrayForSumByIncome[1].budgetTotal;
+        let budgetTotal = income - expense;
+        this.setState({ budgetTotal: budgetTotal });
+      }
+    } else {
+      this.setState({ budgetTotal: 0 });
     }
-
+  };
 
   getCategorySum = () => {
     API.getSumByCategory().then(res => {
@@ -849,17 +848,16 @@ class Main extends Component {
           </div>
           <div>
             <Modal
+              style={{ marginTop: 100 }}
               isOpen={this.state.modal}
               toggle={this.toggle}
               className={this.props.className}
             >
-              <ModalHeader style={{ marginTop: 50 }} toggle={this.toggle}>
-                Walmart Results
-              </ModalHeader>
+              <ModalHeader toggle={this.toggle}>Walmart Results</ModalHeader>
               <ModalBody>
                 <div className="row align-items-center">
                   {this.state.itemImages.length === 0 ? (
-                    <h3>Product Results</h3>
+                    <h3 className="ml-2 text-center">Product Results</h3>
                   ) : (
                     this.state.itemImages.map((item, index) => {
                       return (
@@ -868,12 +866,16 @@ class Main extends Component {
                           className="col-12 col-md-12 text-center"
                         >
                           <img
-                            src={item.mediumImage}
+                            src={item.largeImage}
                             alt={item}
-                            className="img-fluid"
+                            className="img-fluid rounded border border-dark my-2"
                           />
-                          <p>{item.name}</p>
-                          <p>{item.salePrice}</p>
+                          <p className="itemName font-weight-bold">
+                            {item.name}
+                          </p>
+                          <p className="itemPrice font-weight-bold">
+                            ${item.salePrice}
+                          </p>
                           <a
                             target="_blank"
                             href={item.productUrl}
