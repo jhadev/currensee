@@ -156,11 +156,17 @@ class Main extends Component {
         budgetTotal: arrayForSumByIncome[0].budgetTotal
       });
     } else if (arrayForSumByIncome.length === 2) {
-      let income = arrayForSumByIncome[0].budgetTotal;
-      let expense = arrayForSumByIncome[1].budgetTotal;
-      let budgetTotal = income - expense;
-      console.log(budgetTotal);
-      this.setState({ budgetTotal: budgetTotal });
+      if (arrayForSumByIncome[0]._id.income === true) {
+        let income = arrayForSumByIncome[0].budgetTotal;
+        let expense = arrayForSumByIncome[1].budgetTotal;
+        let budgetTotal = income - expense;
+        this.setState({ budgetTotal: budgetTotal });
+      if (arrayForSumByIncome[0]._id.income === false) {
+        let expense = arrayForSumByIncome[0].budgetTotal;
+        let income = arrayForSumByIncome[1].budgetTotal;
+        let budgetTotal = income - expense;
+        this.setState({ budgetTotal: budgetTotal });
+      }
     } else {
       this.setState({ budgetTotal: 0 });
     }
