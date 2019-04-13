@@ -135,17 +135,35 @@ class Main extends Component {
         "ARRAY FOR BUDGET SUM: " +
           JSON.stringify(this.state.arrayForSumByIncome)
       );
-
-      const budgetSumList = res.data.map(function(item) {
-        return item.budgetTotal;
-      });
-
-      let income = budgetSumList[0];
-      let expense = budgetSumList[1];
-      let budgetTotal = income - expense;
-
-      this.setState({ budgetTotal: budgetTotal });
+      this.setBudgetSum();
     });
+  };
+
+  setBudgetSum = () => {
+    const { arrayForSumByIncome } = this.state;
+    if (
+      arrayForSumByIncome.length === 1 &&
+      arrayForSumByIncome[0]._id.income === false
+    ) {
+      this.setState({
+        budgetTotal: arrayForSumByIncome[0].budgetTotal * -1
+      });
+    } else if (
+      arrayForSumByIncome.length === 1 &&
+      arrayForSumByIncome[0]._id.income === true
+    ) {
+      this.setState({
+        budgetTotal: arrayForSumByIncome[0].budgetTotal
+      });
+    } else if (arrayForSumByIncome.length === 2) {
+      let income = arrayForSumByIncome[0].budgetTotal;
+      let expense = arrayForSumByIncome[1].budgetTotal;
+      let budgetTotal = income - expense;
+      console.log(budgetTotal);
+      this.setState({ budgetTotal: budgetTotal });
+    } else {
+      this.setState({ budgetTotal: 0 });
+    }
   };
 
   getCategorySum = () => {
@@ -528,6 +546,7 @@ class Main extends Component {
   };
 
   render() {
+    console.log(this.state);
     const pieData = {
       labels: [
         "Health & Fitness",
