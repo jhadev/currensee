@@ -444,7 +444,7 @@ class Main extends Component {
 
   handleSearch = event => {
     event.preventDefault();
-    this.toggle()
+    this.toggle();
     API.getWalmart(this.state.itemToSearch)
       .then(res => {
         console.log(res.data);
@@ -459,7 +459,7 @@ class Main extends Component {
   };
 
   rowClassName = rowData => {
-    let incomeRow = rowData.convertedIncome;
+    let incomeRow = rowData.income;
 
     return { highlightRed: incomeRow === "false" };
   };
@@ -702,7 +702,7 @@ class Main extends Component {
                 />
                 <Column
                   className="table-data"
-                  field="convertedIncome"
+                  field="income"
                   header="Income"
                   sortable="true"
                 />
@@ -790,7 +790,9 @@ class Main extends Component {
               toggle={this.toggle}
               className={this.props.className}
             >
-              <ModalHeader style={{marginTop: 50}} toggle={this.toggle}>Walmart Results</ModalHeader>
+              <ModalHeader style={{ marginTop: 50 }} toggle={this.toggle}>
+                Walmart Results
+              </ModalHeader>
               <ModalBody>
                 <div className="row align-items-center">
                   {this.state.itemImages.length === 0 ? (

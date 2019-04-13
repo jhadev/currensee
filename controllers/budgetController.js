@@ -29,15 +29,11 @@ module.exports = {
       }
     ])
       .then(dbModel => {
-        // dbModel.forEach(element => {
-        //   if (element == "income") {
-        //     element = element.toString();
-        //     console.log(element);
-        //     return element
-
-        //   }
-        // });
-
+        dbModel.map(element => {
+          element.income = JSON.stringify(element.income);
+          console.log(element);
+          return element;
+        })
         res.json(dbModel);
       })
       .catch(err => {
