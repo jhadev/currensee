@@ -161,7 +161,7 @@ class Main extends Component {
         let expense = arrayForSumByIncome[1].budgetTotal;
         let budgetTotal = income - expense;
         this.setState({ budgetTotal: budgetTotal });
-      }
+        }
         if (arrayForSumByIncome[0]._id.income === false) {
           let expense = arrayForSumByIncome[0].budgetTotal;
           let income = arrayForSumByIncome[1].budgetTotal;
@@ -172,7 +172,7 @@ class Main extends Component {
         this.setState({ budgetTotal: 0 });
       }
     }
-  };
+
 
   getCategorySum = () => {
     API.getSumByCategory().then(res => {
