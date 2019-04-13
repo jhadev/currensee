@@ -422,7 +422,12 @@ class Main extends Component {
     API.getDelete(event.data._id)
       .then(res => {
         console.log(res.data);
-        window.location.reload();
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.createMonthLabels();
       })
       .catch(err => {
         console.log(err);
@@ -456,6 +461,38 @@ class Main extends Component {
       .catch(err => {
         console.log(err);
       });
+  };
+
+  handleWalmartSubmit = event => {
+    // event.preventDefault();
+    console.log("this");
+    console.log(event.target);
+    const { value, name, data } = event.target;
+
+    let walmartObject = {
+      description: name,
+      amount: value,
+      date: moment().format("L"),
+      income: false,
+      category: data
+    };
+
+    this.setState({ walmart: walmartObject });
+
+    API.budgetPost(walmartObject)
+      .then(res => {
+        console.log(res);
+        console.log("WALMART STATE OBJECT: " + this.state.walmart);
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.createMonthLabels();
+
+        this.setState({ walmart: {} });
+      })
+      .catch(err => console.log(err));
   };
 
   rowClassName = rowData => {
@@ -811,10 +848,21 @@ class Main extends Component {
                           />
                           <p>{item.name}</p>
                           <p>{item.salePrice}</p>
-                          <button className="btn btn-outline-primary m-2 text-center">
+                          <a
+                            target="_blank"
+                            href={item.productUrl}
+                            rel="noopener noreferrer"
+                            className="btn btn-outline-primary m-2 text-center"
+                          >
                             View on Walmart.com
-                          </button>
-                          <button className="btn btn-primary m-2 text-center">
+                          </a>
+                          <button
+                            className="btn btn-primary m-2 text-center"
+                            name={item.name}
+                            value={item.salePrice}
+                            data="Shopping"
+                            onClick={this.handleWalmartSubmit}
+                          >
                             Add to Budget
                           </button>
                         </div>
