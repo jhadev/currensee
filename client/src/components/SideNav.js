@@ -22,6 +22,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const styles = theme => ({
   container: {
@@ -46,12 +49,13 @@ class SideNav extends Component {
     description: "",
     amount: 0,
     category: "",
-    date: "",
+    date: new Date(),
     income: true,
     budget: {},
     value: ""
   };
   handleInputChange = event => {
+    console.log(this.state);
     const { name, value } = event.target;
 
     this.setState({
@@ -59,21 +63,26 @@ class SideNav extends Component {
     });
   };
 
+  handleDateChange = pickedDate => {
+    console.log(this.state);
+    this.setState({
+      date: pickedDate
+    });
+  };
+
   handleChange = event => {
+    console.log(this.state);
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
   logout = event => {
     event.preventDefault();
-    API
-      .logout()
-      .then(res => {
-        console.log(res)
-        window.location.reload()
-      .catch(err => console.log(err));
-      })
-  }
+    API.logout().then(res => {
+      console.log(res);
+      window.location.reload().catch(err => console.log(err));
+    });
+  };
 
   handleFormSubmit = event => {
     event.preventDefault();
@@ -89,7 +98,7 @@ class SideNav extends Component {
       let budgetObject = {
         description: this.state.description,
         amount: this.state.amount,
-        date: this.state.date,
+        date: moment(this.state.date).format("L"),
         income: this.state.income,
         category: this.state.category
       };
@@ -149,29 +158,29 @@ class SideNav extends Component {
       </Typography>
       <Divider />
       <Grid className="logout" container justify="center">
-      <Button
-        variant="flat"
-        size="small"
-        color="secondary"
-        className="button"
-        type="submit"
-        onClick={this.logout}
-      >
-        Logout
-      </Button>
+        <Button
+          variant="flat"
+          size="small"
+          color="secondary"
+          className="button"
+          type="submit"
+          onClick={this.logout}
+        >
+          Logout
+        </Button>
       </Grid>
       <Divider />
       <Grid container justify="center">
-      <List>
-        <Link to={`/`}>
-          <ListItem button>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText className="home" primary={"Home"} />
-          </ListItem>
-        </Link>
-      </List>
+        <List>
+          <Link to={`/`}>
+            <ListItem button>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText className="home" primary={"Home"} />
+            </ListItem>
+          </Link>
+        </List>
       </Grid>
       <Divider />
       <div className="container">
@@ -214,6 +223,25 @@ class SideNav extends Component {
               placeholder="MM/DD/YYYY"
               margin="normal"
               name="date"
+            />
+            <DatePicker
+              className="p-0"
+              selected={this.state.date}
+              onChange={this.handleDateChange}
+              dateFormat="MM/dd/yyyy"
+              placeholderText="Click to select a date"
+              popperClassName="some-custom-class"
+              popperModifiers={{
+                offset: {
+                  enabled: true,
+                  offset: "-30px, 10px"
+                },
+                preventOverflow: {
+                  enabled: true,
+                  escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
+                  boundariesElement: "viewport"
+                }
+              }}
             />
           </Grid>
           <Grid className="allMargin" container justify="center">
