@@ -518,6 +518,7 @@ class Main extends Component {
         this.createMonthLabels();
       })
       .catch(err => console.log(err));
+    this.setState({ itemToSearch: "", itemImages: [] });
   };
 
   rowClassName = rowData => {
@@ -528,7 +529,7 @@ class Main extends Component {
 
   amountTemplate(rowData, column) {
     let amount = rowData.amount;
-    let fontWeight = amount >= 2500 ? "bold" : "normal";
+    let fontWeight = amount >= 500 ? "bold" : "normal";
 
     return <span style={{ fontWeight: fontWeight }}>{rowData.amount}</span>;
   }
@@ -605,6 +606,24 @@ class Main extends Component {
           label: "Expense",
           backgroundColor: "rgb(255, 0, 0, 0.8)",
           data: this.state.arrayForFalseIncome
+        }
+      ]
+    };
+
+    const lineData = {
+      labels: this.state.monthLabels,
+      datasets: [
+        {
+          label: "Income",
+          data: this.state.arrayForTrueIncome,
+          fill: false,
+          borderColor: "#42A5F5"
+        },
+        {
+          label: "Expenses",
+          data: this.state.arrayForFalseIncome,
+          fill: true,
+          borderColor: "#ff3059"
         }
       ]
     };
@@ -818,6 +837,20 @@ class Main extends Component {
                         Income vs Expense By Month
                       </h3>
                       <Chart type="bar" data={barData} />
+                    </div>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </div>
+            <div className="col-12">
+              <Grid container justify="center">
+                <Card style={{ width: "80%", marginBottom: 20 }}>
+                  <CardContent>
+                    <div className="content-section implementation">
+                      <h3 className="text-center">
+                        Income vs Expense By Month
+                      </h3>
+                      <Chart type="line" data={lineData} />
                     </div>
                   </CardContent>
                 </Card>
