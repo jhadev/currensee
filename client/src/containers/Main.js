@@ -241,7 +241,13 @@ class Main extends Component {
         return item.categoryTotal;
       });
 
-      categorySumList = [...cat1, cat2, cat3, cat4, cat5, cat6, cat7];
+      categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
+
+      for (let i = 0; i < categorySumList.length; i++) {
+        if (categorySumList[i].length > 1) {
+          categorySumList[i] = categorySumList[i].reduce((a, b) => a + b);
+        }
+      }
       console.log(
         "CATEGORY SUM LIST ARRAY: " + JSON.stringify(categorySumList)
       );
@@ -488,9 +494,7 @@ class Main extends Component {
   };
 
   handleWalmartSubmit = event => {
-    // event.preventDefault();
-    console.log("this");
-    console.log(event.target);
+    event.preventDefault();
     const { value, name } = event.target;
 
     let walmartObject = {
@@ -498,7 +502,7 @@ class Main extends Component {
       amount: value,
       date: moment().format("L"),
       income: false,
-      category: "Walmart"
+      category: "Shopping"
     };
 
     this.setState({ walmart: walmartObject });
