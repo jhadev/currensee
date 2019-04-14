@@ -673,7 +673,14 @@ class Main extends Component {
                 keepMounted: true
               }}
             >
-              <SideNav activePage={this.state.activePage} />
+              <SideNav
+                activePage={this.state.activePage}
+                getCategorySum={this.getCategorySum}
+                getBudgetSum={this.getBudgetSum}
+                getBudgetTable={this.getBudgetTable}
+                getSumByMonthFalse={this.getSumByMonthFalse}
+                getSumByMonthTrue={this.getSumByMonthTrue}
+              />
             </Drawer>
           </Hidden>
           <Hidden xsDown implementation="css">
@@ -684,7 +691,14 @@ class Main extends Component {
               variant="permanent"
               open
             >
-              <SideNav activePage={this.state.activePage} />
+              <SideNav
+                activePage={this.state.activePage}
+                getCategorySum={this.getCategorySum}
+                getBudgetSum={this.getBudgetSum}
+                getBudgetTable={this.getBudgetTable}
+                getSumByMonthFalse={this.getSumByMonthFalse}
+                getSumByMonthTrue={this.getSumByMonthTrue}
+              />
             </Drawer>
           </Hidden>
         </nav>

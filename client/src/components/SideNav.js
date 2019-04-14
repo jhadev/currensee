@@ -108,27 +108,28 @@ class SideNav extends Component {
           console.log(res);
           console.log("BUDGET STATE OBJECT: " + this.state.budget);
           this.setState({ budget: budgetObject });
-          window.location.reload();
+          // window.location.reload();
 
-          // props.getCategorySum();
-          // props.getBudgetTable();
-          // props.getBudgetSum();
-          // props.getSumByMonthFalse();
-          // props.getSumByMonthTrue();
-          // props.createMonthLabels();
-
-          // this.setState({
-          //   description: "",
-          //   amount: "",
-          //   date: "",
-          //   income: "",
-          //   income: "",
-          //   category: ""})
+          this.props.getCategorySum();
+          this.props.getBudgetTable();
+          this.props.getBudgetSum();
+          this.props.getSumByMonthFalse();
+          this.props.getSumByMonthTrue();
+          this.props.createMonthLabels();
         })
         .catch(err => console.log(err));
     } else {
       console.log("can't submit");
     }
+    this.setState({
+      description: "",
+      amount: 0,
+      date: new Date(),
+      income: true,
+      category: "",
+      value: "",
+      budget: {}
+    });
   };
   //RADIO BUTTON METHODS
   handleChangeRadio = event => {
