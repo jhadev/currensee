@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron";
 import HomeImages from "../HomeImages.json";
 import HomeCards from "../components/HomeCards";
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 
 class HomePage extends Component {
   state = {
@@ -18,26 +18,26 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-      <Navbar/>
-      <div>
-      <Jumbotron />
-        <div className="row">
-          <div className="col">
-            <div className="card-group">
-              {this.state.HomeImages.map(image => (
-                <HomeCards
-                  key={image.name}
-                  image={image.image}
-                  name={image.name}
-                  id={image.id}
-                  onClick={this.toggle}
-                />
-              ))}
+        <Navigation />
+        <div>
+          <Jumbotron />
+          <div className="row">
+            <div className="col">
+              <div className="card-group">
+                {this.state.HomeImages.map(image => (
+                  <HomeCards
+                    key={image.name}
+                    image={image.image}
+                    name={image.name}
+                    id={image.id}
+                    onClick={this.toggle}
+                  />
+                ))}
+              </div>
             </div>
           </div>
+          <div className="row" />
         </div>
-        <div className="row" />
-      </div>
       </div>
     );
   }

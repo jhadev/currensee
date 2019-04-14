@@ -245,7 +245,7 @@ class Main extends Component {
 
       for (let i = 0; i < categorySumList.length; i++) {
         if (categorySumList[i].length > 1) {
-          categorySumList[i] = categorySumList[i].reduce((a, b) => a + b);
+          categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
         }
       }
       console.log(
@@ -448,7 +448,6 @@ class Main extends Component {
   };
 
   handleItemDelete = event => {
-    console.log(event);
     API.getDelete(event.data._id)
       .then(res => {
         console.log(res.data);
@@ -838,7 +837,6 @@ class Main extends Component {
                       type="text"
                       list="item-list"
                     />
-
                     <button
                       className="btn btn-block btn-outline-primary mt-2 mb-5"
                       onClick={this.handleSearch}
