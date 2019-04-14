@@ -84,17 +84,15 @@ class SideNav extends Component {
     });
   };
 
-  handleFormSubmit = event => {
+  handleFormSubmit = (event, props) => {
     event.preventDefault();
     console.log("this");
-    // if (
-    //   this.state.description &&
-    //   this.state.amount &&
-    //   this.state.date &&
-    //   this.state.income &&
-    //   this.state.category
-    // )
-    {
+    if (
+      this.state.description !== "" &&
+      this.state.amount > 0 &&
+      this.state.date !== "" &&
+      this.state.category !== ""
+    ) {
       let budgetObject = {
         description: this.state.description,
         amount: this.state.amount,
@@ -128,6 +126,8 @@ class SideNav extends Component {
           //   category: ""})
         })
         .catch(err => console.log(err));
+    } else {
+      console.log("can't submit");
     }
   };
   //RADIO BUTTON METHODS
