@@ -530,7 +530,7 @@ class Main extends Component {
 
     this.setState({ walmart: walmartObject });
 
-    API.budgetPost(this.state.walmart)
+    API.budgetPost(walmartObject)
       .then(res => {
         console.log(res);
         console.warn("WALMART STATE OBJECT: " + this.state.walmart);
@@ -595,7 +595,6 @@ class Main extends Component {
   };
 
   render() {
-    console.log(this.state);
     const pieData = {
       labels: [
         "Health & Fitness",
