@@ -529,12 +529,12 @@ class Main extends Component {
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
         this.createMonthLabels();
-        this.setState({ itemToSearch: "", itemImages: [] });
       })
       .catch(err => console.log(err));
-    this.setState({ itemToSearch: "", itemImages: [] });
+
     this.toggle();
     this.notifySubmit();
+    this.setState({ itemToSearch: "", itemImages: [] });
   };
 
   rowClassName = rowData => {
