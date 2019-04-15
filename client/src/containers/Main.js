@@ -802,6 +802,8 @@ class Main extends Component {
               </Typography>
               <DataTable
                 className="budget-table"
+                paginator={true}
+                rows={10}
                 tableStyle={{ width: "100%" }}
                 value={this.state.arrayForBudgetTable}
                 rowClassName={this.rowClassName}

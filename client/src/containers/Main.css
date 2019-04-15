@@ -25,3 +25,22 @@
 .total-sum {
   margin-bottom: 20px;
 }
+
+.p-paginator-page {
+  position: relative;
+  display: inline-block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: rgba(7, 7, 7, 0.5) !important;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 3px;
+  border-radius: 2px;
+}
+
+.p-highlight {
+  color: rgba(7, 7, 7, 0.9) !important;
+}
