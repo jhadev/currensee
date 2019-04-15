@@ -500,7 +500,18 @@ class Main extends Component {
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
+      pauseOnHover: false,
+      draggable: true
+    });
+  };
+
+  notifyError = () => {
+    toast.error("Error. Please try again", {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
       draggable: true
     });
   };
@@ -519,7 +530,7 @@ class Main extends Component {
 
     this.setState({ walmart: walmartObject });
 
-    API.budgetPost(walmartObject)
+    API.budgetPost(this.state.walmart)
       .then(res => {
         console.log(res);
         console.warn("WALMART STATE OBJECT: " + this.state.walmart);
@@ -528,13 +539,14 @@ class Main extends Component {
         this.getBudgetSum();
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
-        this.createMonthLabels();
+        this.notifySubmit();
+        this.toggle();
       })
-      .catch(err => console.log(err));
-
-    this.toggle();
-    this.notifySubmit();
-    this.setState({ itemToSearch: "", itemImages: [] });
+      .catch(err => {
+        console.log(err);
+        this.toggle();
+        this.notifyError();
+      });
   };
 
   rowClassName = rowData => {
@@ -604,17 +616,16 @@ class Main extends Component {
             "#003366",
             "#F0F8FF",
             "#7FFFD4",
-            "#3399FF",
-            "#8A2BE2"
+            "#f48642"
           ],
           hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#003366",
-            "#F0F8FF",
-            "#7FFFD4",
-            "#8A2BE2"
+            "#ff3a64",
+            "#0291f2",
+            "#ffb80c",
+            "#001123",
+            "#d8edff",
+            "#38ffbc",
+            "#fc7019"
           ]
         }
       ]
@@ -848,7 +859,7 @@ class Main extends Component {
               </DataTable>
             </CardContent>
           </Card>
-          <div className="row">
+          <div className="row justify-content-center">
             <div className="col-12">
               <Grid container justify="center">
                 <Card
@@ -911,29 +922,33 @@ class Main extends Component {
                 </Card>
               </Grid>
             </div>
-            <div className="col">
-              <Grid container justify="center">
-                <Card style={{ marginTop: 50 }} className="total-sum">
-                  <CardContent>
-                    <h5>Search on Walmart.com (experimental)</h5>
-                    <input
-                      className="form-control"
-                      value={this.state.itemToSearch}
-                      onChange={this.handleInputChange}
-                      name="itemToSearch"
-                      placeholder="Search for a product"
-                      type="text"
-                      list="item-list"
-                    />
-                    <button
-                      className="btn btn-block btn-outline-primary mt-2 mb-5"
-                      onClick={this.handleSearch}
-                    >
-                      Search For Products
-                    </button>
-                  </CardContent>
-                </Card>
-              </Grid>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-md-6 col-12">
+              {/* <Grid container justify="center"> */}
+              <Card style={{ marginTop: 50 }} className="total-sum">
+                <CardContent>
+                  <h5 className="text-center">Search on Walmart.com</h5>
+                  <input
+                    className="form-control"
+                    value={this.state.itemToSearch}
+                    onChange={this.handleInputChange}
+                    name="itemToSearch"
+                    placeholder="Search for a product"
+                    type="text"
+                    list="item-list"
+                  />
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className="btn text-center btn-outline-primary my-2"
+                    onClick={this.handleSearch}
+                  >
+                    Search
+                  </Button>
+                </CardContent>
+              </Card>
+              {/* </Grid> */}
             </div>
           </div>
           <div>
@@ -947,7 +962,13 @@ class Main extends Component {
               <ModalBody>
                 <div className="row align-items-center">
                   {this.state.itemImages.length === 0 ? (
-                    <h3 className="ml-2 text-center">Product Results</h3>
+                    <React.Fragment>
+                      <h3 className="p-3 text-center">Product Results</h3>
+                      <p className="p-3 wait-msg">
+                        If search items don't show up quickly, Close this modal
+                        and try again.
+                      </p>
+                    </React.Fragment>
                   ) : (
                     this.state.itemImages.map((item, index) => {
                       return (
@@ -970,12 +991,12 @@ class Main extends Component {
                             target="_blank"
                             href={item.productUrl}
                             rel="noopener noreferrer"
-                            className="btn btn-outline-primary m-2 text-center"
+                            className="m-2 text-center btn btn-outline-dark"
                           >
                             View on Walmart.com
                           </a>
                           <button
-                            className="btn btn-primary m-2 text-center"
+                            className="m-2 text-center btn btn-dark"
                             name={item.name}
                             value={item.salePrice}
                             onClick={this.handleWalmartSubmit}
@@ -989,7 +1010,11 @@ class Main extends Component {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="warning" onClick={this.toggle}>
+                <Button
+                  variant="contained"
+                  className="button"
+                  onClick={this.toggle}
+                >
                   Close
                 </Button>
               </ModalFooter>
