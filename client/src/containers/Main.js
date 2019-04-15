@@ -269,7 +269,9 @@ class Main extends Component {
 
       let monthArray = [];
 
-      const monthCompare = moment().format("MM");
+      const monthCompare = moment()
+        .subtract(2, "M")
+        .format("MM");
       month1 = res.data.filter(function(item) {
         if (item._id.month === monthCompare) {
           return true;
@@ -281,7 +283,7 @@ class Main extends Component {
       console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
-        .add(1, "M")
+        .subtract(1, "M")
         .format("MM");
       console.log("COMPARE MONTH 2: " + monthCompare2);
       month2 = res.data.filter(function(item) {
@@ -294,9 +296,7 @@ class Main extends Component {
       });
       console.log("MONTH TWO: " + JSON.stringify(month2));
 
-      const monthCompare3 = moment()
-        .add(2, "M")
-        .format("MM");
+      const monthCompare3 = moment().format("MM");
       console.log("MONTH COMPARISON THREE: " + monthCompare3);
       month3 = res.data.filter(function(item) {
         if (item._id.month === monthCompare3) {
@@ -310,7 +310,7 @@ class Main extends Component {
       console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
-        .add(3, "M")
+        .add(1, "M")
         .format("MM");
       month4 = res.data.filter(function(item) {
         if (item._id.month === monthCompare4) {
@@ -323,7 +323,7 @@ class Main extends Component {
       console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
-        .add(4, "M")
+        .add(2, "M")
         .format("MM");
       month5 = res.data.filter(function(item) {
         if (item._id.month === monthCompare5) {
@@ -336,7 +336,7 @@ class Main extends Component {
       console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
-        .add(5, "M")
+        .add(3, "M")
         .format("MM");
       month6 = res.data.filter(function(item) {
         if (item._id.month === monthCompare6) {
@@ -348,7 +348,7 @@ class Main extends Component {
       });
       console.log("MONTH SIX: " + JSON.stringify(month6));
 
-      monthArray = [...month1, month2, month3, month4, month5, month6];
+      monthArray = [month1, month2, month3, month4, month5, month6];
       console.log("FULL SIX MONTH ARRAY: " + monthArray);
 
       this.setState({ arrayForTrueIncome: monthArray });
@@ -366,7 +366,9 @@ class Main extends Component {
 
       let monthArray = [];
 
-      const monthCompare = moment().format("MM");
+      const monthCompare = moment()
+        .subtract(2, "M")
+        .format("MM");
       month1 = res.data.filter(function(item) {
         if (item._id.month === monthCompare) {
           return true;
@@ -378,7 +380,7 @@ class Main extends Component {
       console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
-        .add(1, "M")
+        .subtract(1, "M")
         .format("MM");
       month2 = res.data.filter(function(item) {
         if (item._id.month === monthCompare2) {
@@ -390,9 +392,7 @@ class Main extends Component {
       });
       console.log("MONTH TWO: " + JSON.stringify(month2));
 
-      const monthCompare3 = moment()
-        .add(2, "M")
-        .format("MM");
+      const monthCompare3 = moment().format("MM");
       month3 = res.data.filter(function(item) {
         if (item._id.month === monthCompare3) {
           return true;
@@ -404,7 +404,7 @@ class Main extends Component {
       console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
-        .add(3, "M")
+        .add(1, "M")
         .format("MM");
       month4 = res.data.filter(function(item) {
         if (item._id.month === monthCompare4) {
@@ -417,7 +417,7 @@ class Main extends Component {
       console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
-        .add(4, "M")
+        .add(2, "M")
         .format("MM");
       month5 = res.data.filter(function(item) {
         if (item._id.month === monthCompare5) {
@@ -430,7 +430,7 @@ class Main extends Component {
       console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
-        .add(5, "M")
+        .add(3, "M")
         .format("MM");
       month6 = res.data.filter(function(item) {
         if (item._id.month === monthCompare6) {
@@ -442,7 +442,7 @@ class Main extends Component {
       });
       console.log("MONTH SIX: " + JSON.stringify(month6));
 
-      monthArray = [...month1, month2, month3, month4, month5, month6];
+      monthArray = [month1, month2, month3, month4, month5, month6];
       console.log("FULL SIX MONTH ARRAY: " + monthArray);
 
       this.setState({ arrayForFalseIncome: monthArray });
@@ -529,6 +529,7 @@ class Main extends Component {
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
         this.createMonthLabels();
+        this.setState({ itemToSearch: "", itemImages: [] });
       })
       .catch(err => console.log(err));
     this.setState({ itemToSearch: "", itemImages: [] });
@@ -552,10 +553,20 @@ class Main extends Component {
   createMonthLabels = () => {
     const barChartLabels = [];
 
-    const thisMonth = moment().format("MMMM");
-    barChartLabels.push(thisMonth);
+    const firstMonth = moment()
+      .subtract(2, "M")
+      .format("MMMM");
+    barChartLabels.push(firstMonth);
 
-    for (let i = 1; i < 6; i++) {
+    const secondMonth = moment()
+      .subtract(1, "M")
+      .format("MMMM");
+    barChartLabels.push(secondMonth);
+
+    const thirdMonth = moment().format("MMMM");
+    barChartLabels.push(thirdMonth);
+
+    for (let i = 1; i < 4; i++) {
       let newMonth = moment()
         .add(i, "M")
         .format("MMMM");
