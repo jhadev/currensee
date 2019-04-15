@@ -19,6 +19,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
 
 const drawerWidth = 300;
@@ -492,6 +494,17 @@ class Main extends Component {
       });
   };
 
+  notifySubmit = () => {
+    toast.success("Walmart item successfully added to budget.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true
+    });
+  };
+
   handleWalmartSubmit = event => {
     event.preventDefault();
     const { value, name } = event.target;
@@ -519,6 +532,8 @@ class Main extends Component {
       })
       .catch(err => console.log(err));
     this.setState({ itemToSearch: "", itemImages: [] });
+    this.toggle();
+    this.notifySubmit();
   };
 
   rowClassName = rowData => {
@@ -661,6 +676,19 @@ class Main extends Component {
 
     return (
       <div className={classes.root}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
+        {/* Same as */}
+        <ToastContainer />
         <CssBaseline />
         <AppBar position="fixed" color="inherit" className={classes.appBar}>
           <Toolbar>

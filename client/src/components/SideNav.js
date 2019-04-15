@@ -23,6 +23,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
 import DatePicker from "react-datepicker";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
@@ -84,6 +86,31 @@ class SideNav extends Component {
     });
   };
 
+  notifySubmit = () => {
+    toast.success("Item successfully added to budget.", {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true
+    });
+  };
+
+  notifySubmitError = () => {
+    toast.error(
+      "Error. Please check if all fields are filled before submitting.",
+      {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      }
+    );
+  };
+
   handleFormSubmit = (event, props) => {
     event.preventDefault();
     console.log("this");
@@ -105,7 +132,7 @@ class SideNav extends Component {
 
       API.budgetPost(budgetObject)
         .then(res => {
-          console.log(res);
+          this.notifySubmit();
           console.log("BUDGET STATE OBJECT: " + this.state.budget);
           this.setState({ budget: budgetObject });
           // window.location.reload();
@@ -119,7 +146,7 @@ class SideNav extends Component {
         })
         .catch(err => console.log(err));
     } else {
-      console.log("can't submit");
+      this.notifySubmitError();
     }
     this.setState({
       description: "",
@@ -149,6 +176,19 @@ class SideNav extends Component {
 
   render = () => (
     <div className="top">
+      <ToastContainer
+        position="top-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnVisibilityChange
+        draggable
+        pauseOnHover
+      />
+      {/* Same as */}
+      <ToastContainer />
       <Typography
         className="logo"
         align="center"

@@ -33,6 +33,7 @@
     "primereact": "^2.0.0-rc.1",
     "react-datepicker": "^2.4.0",
     "react-moment": "^0.8.4",
+    "react-toastify": "^5.0.1",
     "reactstrap": "^6.5.0"
   },
   "devDependencies": {
