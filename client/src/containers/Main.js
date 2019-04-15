@@ -516,9 +516,9 @@ class Main extends Component {
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
         this.createMonthLabels();
+        this.setState({ itemToSearch: "", itemImages: [] });
       })
       .catch(err => console.log(err));
-    this.setState({ itemToSearch: "", itemImages: [] });
   };
 
   rowClassName = rowData => {
@@ -538,12 +538,20 @@ class Main extends Component {
     const barChartLabels = [];
 
     const firstMonth = moment()
-      .subtract(2, "MM")
+      .subtract(2, "M")
       .format("MMMM");
     barChartLabels.push(firstMonth);
 
-    for (let i = -1; i < 3; i++) {
-      let newMonth = moment(firstMonth)
+    const secondMonth = moment()
+      .subtract(1, "M")
+      .format("MMMM");
+    barChartLabels.push(secondMonth);
+
+    const thirdMonth = moment().format("MMMM");
+    barChartLabels.push(thirdMonth);
+
+    for (let i = 1; i < 4; i++) {
+      let newMonth = moment()
         .add(i, "M")
         .format("MMMM");
       barChartLabels.push(newMonth);
