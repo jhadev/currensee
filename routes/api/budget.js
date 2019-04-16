@@ -43,7 +43,4 @@ router
   .route('/sumbymonthfalse')
   .get(budgetController.sumByMonthFalse)
 
-
-
-
 module.exports = router;
