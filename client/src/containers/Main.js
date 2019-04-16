@@ -596,6 +596,7 @@ class Main extends Component {
 
   render() {
     const pieData = {
+      responsive: true,
       labels: [
         "Health & Fitness",
         "Home",
@@ -631,6 +632,7 @@ class Main extends Component {
     };
 
     const barData = {
+      responsive: true,
       labels: this.state.monthLabels,
       datasets: [
         {
@@ -647,6 +649,7 @@ class Main extends Component {
     };
 
     const lineData = {
+      responsive: true,
       labels: this.state.monthLabels,
       datasets: [
         {
@@ -665,6 +668,7 @@ class Main extends Component {
     };
 
     const radarData = {
+      responsive: true,
       labels: [
         "Health & Fitness",
         "Home",
@@ -861,19 +865,13 @@ class Main extends Component {
           <div className="row justify-content-center">
             <div className="col-12">
               <Grid container justify="center">
-                <Card
-                  style={{
-                    width: "80%",
-                    marginBottom: 20,
-                    justifyContent: "center"
-                  }}
-                >
+                <Card className="chartCard">
                   <CardContent>
                     <div className="content-section implementation">
                       <h3 className="text-center">
                         Total Spending by Category
                       </h3>
-                      <Chart type="pie" data={pieData} />
+                      <Chart className="chart" type="pie" data={pieData} />
                     </div>
                   </CardContent>
                 </Card>
@@ -881,13 +879,13 @@ class Main extends Component {
             </div>
             <div className="col-12">
               <Grid container justify="center">
-                <Card style={{ width: "80%", marginBottom: 20 }}>
+                <Card className="chartCard">
                   <CardContent>
                     <div className="content-section implementation">
                       <h3 className="text-center">
                         Income vs Expense By Month
                       </h3>
-                      <Chart type="bar" data={barData} />
+                      <Chart className="chart" type="bar" data={barData} />
                     </div>
                   </CardContent>
                 </Card>
@@ -895,13 +893,13 @@ class Main extends Component {
             </div>
             <div className="col-12">
               <Grid container justify="center">
-                <Card style={{ width: "80%", marginBottom: 20 }}>
+                <Card className="chartCard">
                   <CardContent>
                     <div className="content-section implementation">
                       <h3 className="text-center">
                         Income vs Expense By Month
                       </h3>
-                      <Chart type="line" data={lineData} />
+                      <Chart className="chart" type="line" data={lineData} />
                     </div>
                   </CardContent>
                 </Card>
@@ -909,13 +907,13 @@ class Main extends Component {
             </div>
             <div className="col-12">
               <Grid container justify="center">
-                <Card style={{ width: "80%", marginBottom: -20 }}>
+                <Card className="chartCard">
                   <CardContent>
                     <div className="content-section implementation">
                       <h3 className="text-center">
                         Radar (Spending By Category)
                       </h3>
-                      <Chart type="radar" data={radarData} />
+                      <Chart className="chart" type="radar" data={radarData} />
                     </div>
                   </CardContent>
                 </Card>
@@ -925,9 +923,15 @@ class Main extends Component {
           <div className="row justify-content-center">
             <div className="col-md-6 col-12">
               {/* <Grid container justify="center"> */}
-              <Card style={{ marginTop: 50 }} className="total-sum">
+              <Card className="total-sum">
                 <CardContent>
-                  <h5 className="text-center">Search on Walmart.com</h5>
+                  <div className="text-center text-primary">
+                    <img
+                      src="https://user-images.githubusercontent.com/42519030/56179504-f5e9f700-5fd3-11e9-9d89-ad7ee7800272.png"
+                      alt="walmart"
+                      className="img-fluid walmartLogo mb-2"
+                    />
+                  </div>
                   <input
                     className="form-control"
                     value={this.state.itemToSearch}
