@@ -153,6 +153,18 @@ const Charts = props => {
           </Card>
         </Grid>
       </div>
+      {/* <div className="col-12">
+        <Grid container justify="center">
+          <Card className="chartCard">
+            <CardContent>
+              <div className="content-section implementation">
+                <h3 className="text-center">Radar (Spending By Category)</h3>
+                <Chart className="chart" type="polarArea" data={pieData} />
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      </div> */}
     </div>
   );
 };

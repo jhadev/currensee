@@ -4,16 +4,16 @@
   "proxy": "http://localhost:3001/",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.5.1",
+    "@material-ui/icons": "^3.0.1",
+    "axios": "^0.18.0",
+    "primereact": "^3.1.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "@material-ui/core": "^3.5.1",
-    "@material-ui/icons": "^3.0.1",
-    "axios": "^0.18.0",
-    "styled-components": "^4.1.1",
-    "primereact": "^2.0.0-rc.1",
-    "reactstrap": "^6.5.0"
+    "reactstrap": "^6.5.0",
+    "styled-components": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -33,13 +33,56 @@
   padding: .5rem .75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: rgba(7, 7, 7, 0.5) !important;
+  color: rgba(7, 7, 7, 0.4) !important;
   background-color: #fff;
   border: 1px solid #dee2e6;
   cursor: pointer;
   font-weight: bold;
   margin-top: 3px;
   border-radius: 2px;
+}
+
+.p-paginator-first,
+.p-paginator-last,
+.p-paginator-prev,
+.p-paginator-next {
+  display: inline-block;
+  padding: .5rem .4rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: rgba(7, 7, 7, 0.8) !important;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+.p-paginator-first:disabled,
+.p-paginator-last:disabled,
+.p-paginator-prev:disabled,
+.p-paginator-next:disabled {
+  color: rgba(7, 7, 7, 0.4) !important;
+}
+
+.p-paginator-first:before {
+  content: "⯇⯇";
+  font-size: 0.8rem;
+}
+
+.p-paginator-last:before {
+  content: "⯈⯈";
+  font-size: 0.8rem;
+}
+
+.p-paginator-prev:before {
+  content: "⯇";
+  font-size: 0.8rem;
+}
+
+.p-paginator-next:before {
+  content: "⯈";
+  font-size: 0.8rem;
 }
 
 .p-highlight {
