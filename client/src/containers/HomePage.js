@@ -21,22 +21,24 @@ class HomePage extends Component {
         <Navigation />
         <div>
           <Jumbotron />
-          <div className="row">
-            <div className="col">
-              <div className="card-group">
-                {this.state.HomeImages.map(image => (
-                  <HomeCards
-                    key={image.name}
-                    image={image.image}
-                    name={image.name}
-                    id={image.id}
-                    onClick={this.toggle}
-                  />
-                ))}
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="card-group">
+                  {this.state.HomeImages.map(image => (
+                    <HomeCards
+                      key={image.name}
+                      image={image.image}
+                      name={image.name}
+                      id={image.id}
+                      onClick={this.toggle}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
+            <div className="row" />
           </div>
-          <div className="row" />
         </div>
       </div>
     );

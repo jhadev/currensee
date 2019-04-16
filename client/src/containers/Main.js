@@ -3,8 +3,8 @@ import { Redirect } from "react-router-dom";
 import moment from "moment";
 import API from "../utils/API";
 import SideNav from "../components/SideNav";
+import Charts from "../components/Charts";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Chart } from "primereact/chart";
 import { DataTable, Column } from "primereact/datatable";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -595,103 +595,6 @@ class Main extends Component {
   };
 
   render() {
-    const pieData = {
-      responsive: true,
-      labels: [
-        "Health & Fitness",
-        "Home",
-        "Other",
-        "Savings",
-        "Shopping",
-        "Travel",
-        "Utilities"
-      ],
-      datasets: [
-        {
-          data: this.state.arrayForPieChart,
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#003366",
-            "#F0F8FF",
-            "#7FFFD4",
-            "#f48642"
-          ],
-          hoverBackgroundColor: [
-            "#ff3a64",
-            "#0291f2",
-            "#ffb80c",
-            "#001123",
-            "#d8edff",
-            "#38ffbc",
-            "#fc7019"
-          ]
-        }
-      ]
-    };
-
-    const barData = {
-      responsive: true,
-      labels: this.state.monthLabels,
-      datasets: [
-        {
-          label: "Income",
-          backgroundColor: "rgb(4, 244, 12, 0.8)",
-          data: this.state.arrayForTrueIncome
-        },
-        {
-          label: "Expense",
-          backgroundColor: "rgb(255, 0, 0, 0.8)",
-          data: this.state.arrayForFalseIncome
-        }
-      ]
-    };
-
-    const lineData = {
-      responsive: true,
-      labels: this.state.monthLabels,
-      datasets: [
-        {
-          label: "Income",
-          data: this.state.arrayForTrueIncome,
-          fill: false,
-          borderColor: "#42A5F5"
-        },
-        {
-          label: "Expenses",
-          data: this.state.arrayForFalseIncome,
-          fill: true,
-          borderColor: "#ff3059"
-        }
-      ]
-    };
-
-    const radarData = {
-      responsive: true,
-      labels: [
-        "Health & Fitness",
-        "Home",
-        "Other",
-        "Savings",
-        "Shopping",
-        "Travel",
-        "Utilities"
-      ],
-      datasets: [
-        {
-          label: "Amount in $",
-          backgroundColor: "rgba(255,99,132,0.2)",
-          borderColor: "rgba(255,99,132,1)",
-          pointBackgroundColor: "rgba(255,99,132,1)",
-          pointBorderColor: "#fff",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: "rgba(255,99,132,1)",
-          data: this.state.arrayForPieChart
-        }
-      ]
-    };
-
     // If user isn't logged in, don't let them see this page
     if (!this.state.isLoggedIn) {
       return <Redirect to="/login" />;
@@ -862,64 +765,12 @@ class Main extends Component {
               </DataTable>
             </CardContent>
           </Card>
-          <div className="row justify-content-center">
-            <div className="col-12">
-              <Grid container justify="center">
-                <Card className="chartCard">
-                  <CardContent>
-                    <div className="content-section implementation">
-                      <h3 className="text-center">
-                        Total Spending by Category
-                      </h3>
-                      <Chart className="chart" type="pie" data={pieData} />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </div>
-            <div className="col-12">
-              <Grid container justify="center">
-                <Card className="chartCard">
-                  <CardContent>
-                    <div className="content-section implementation">
-                      <h3 className="text-center">
-                        Income vs Expense By Month
-                      </h3>
-                      <Chart className="chart" type="bar" data={barData} />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </div>
-            <div className="col-12">
-              <Grid container justify="center">
-                <Card className="chartCard">
-                  <CardContent>
-                    <div className="content-section implementation">
-                      <h3 className="text-center">
-                        Income vs Expense By Month
-                      </h3>
-                      <Chart className="chart" type="line" data={lineData} />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </div>
-            <div className="col-12">
-              <Grid container justify="center">
-                <Card className="chartCard">
-                  <CardContent>
-                    <div className="content-section implementation">
-                      <h3 className="text-center">
-                        Radar (Spending By Category)
-                      </h3>
-                      <Chart className="chart" type="radar" data={radarData} />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </div>
-          </div>
+          <Charts
+            trueIncome={this.state.arrayForTrueIncome}
+            falseIncome={this.state.arrayForFalseIncome}
+            pieChart={this.state.arrayForPieChart}
+            monthLabels={this.state.monthLabels}
+          />
           <div className="row justify-content-center">
             <div className="col-md-6 col-12">
               {/* <Grid container justify="center"> */}
