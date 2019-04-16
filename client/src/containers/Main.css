@@ -51,11 +51,12 @@ table {
 }
 
 .scrollModal {
-  height: 70vh;
+  height: 68vh;
   overflow: auto;
 }
 
 .productImg {
+  height: 50%;
   width: 100%;
   padding: 10px;
 }
@@ -66,13 +67,11 @@ table {
 
 #modalContainer {
   position: absolute;
-  top: 10px;
+  top: 0px;
   right: 0px;
   bottom: 0;
   left: 11%;
   z-index: 10040;
-  overflow: auto;
-  overflow-y: auto;
 }
 
 .chartCard {
@@ -88,8 +87,6 @@ table {
     bottom: 0;
     left: 0px;
     z-index: 10040;
-    overflow: auto;
-    overflow-y: auto;
   }
 }
 
@@ -97,6 +94,11 @@ table {
   .chartCard {
     width: 100%;
     /* height: 300%; */
+  }
+
+  .scrollModal {
+    height: 90vh;
+    overflow: auto;
   }
 
   /* .chartjs-render-monitor {

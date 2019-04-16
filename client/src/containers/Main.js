@@ -22,6 +22,7 @@ import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
+// import BudgetTable from "../components/BudgetTable";
 
 const drawerWidth = 300;
 
@@ -490,6 +491,7 @@ class Main extends Component {
         });
       })
       .catch(err => {
+        this.notifyError();
         console.log(err);
       });
   };
@@ -808,11 +810,10 @@ class Main extends Component {
           <div>
             <Grid container justify="center">
               <Modal
-                style={{ marginTop: 100 }}
+                style={{ marginTop: 80 }}
                 isOpen={this.state.modal}
                 toggle={this.toggle}
                 className={this.props.className}
-                scrollable
                 id="modalContainer"
               >
                 <ModalHeader toggle={this.toggle}>Walmart Results</ModalHeader>
