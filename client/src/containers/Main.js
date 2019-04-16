@@ -22,6 +22,7 @@ import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
+// import WalmartModal from "../components/WalmartModal";
 // import BudgetTable from "../components/BudgetTable";
 
 const drawerWidth = 300;
@@ -808,6 +809,13 @@ class Main extends Component {
             </div>
           </div>
           <div>
+            {/* <WalmartModal
+              isOpen={this.state.modal}
+              toggle={this.toggle}
+              className="walmartModal"
+              itemImages={this.state.itemImages}
+              walmartSubmit={this.handleWalmartSubmit}
+            /> */}
             <Grid container justify="center">
               <Modal
                 style={{ marginTop: 80 }}
