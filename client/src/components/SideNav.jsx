@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import List from "@material-ui/core/List";
@@ -10,7 +11,6 @@ import HomeIcon from "@material-ui/icons/Home";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import "./SideNav.css";
 import API from "../utils/API";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -26,7 +26,7 @@ import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+import "./SideNav.css";
 
 const styles = theme => ({
   container: {
@@ -57,25 +57,16 @@ class SideNav extends Component {
     value: ""
   };
   handleInputChange = event => {
-    console.log(this.state);
     const { name, value } = event.target;
-
     this.setState({
       [name]: value
     });
   };
 
   handleDateChange = pickedDate => {
-    console.log(this.state);
     this.setState({
       date: pickedDate
     });
-  };
-
-  handleChange = event => {
-    console.log(this.state);
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
   };
 
   logout = event => {
@@ -113,7 +104,6 @@ class SideNav extends Component {
 
   handleFormSubmit = (event, props) => {
     event.preventDefault();
-    console.log("this");
     if (
       this.state.description !== "" &&
       this.state.amount > 0 &&
@@ -290,7 +280,7 @@ class SideNav extends Component {
               <InputLabel htmlFor="category-helper">Category</InputLabel>
               <Select
                 value={this.state.category}
-                onChange={this.handleChange}
+                onChange={this.handleInputChange}
                 input={<Input name="category" id="category=helper" />}
               >
                 <MenuItem value={"Health"}>Health & Fitness</MenuItem>
