@@ -30,6 +30,7 @@
 
 .home {
   font-family: 'Righteous', cursive;
+  padding: 0 0 !important;
 }
 
 .dropdownCat {
@@ -38,4 +39,9 @@
 
 .catForm {
   margin-top: -20px;
+}
+
+.homeContainer {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }

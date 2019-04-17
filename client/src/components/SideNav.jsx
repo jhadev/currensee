@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import API from "../utils/API";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
@@ -11,7 +12,6 @@ import HomeIcon from "@material-ui/icons/Home";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import API from "../utils/API";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -28,7 +28,6 @@ import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-datepicker/dist/react-datepicker.css";
 import "./SideNav.css";
 
 const styles = theme => ({
@@ -240,7 +239,7 @@ class SideNav extends Component {
         </Grid>
         <Divider />
         <Grid container justify="center">
-          <List>
+          <List className="homeContainer">
             <Link to={`/`}>
               <ListItem button>
                 <ListItemIcon>
