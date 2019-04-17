@@ -21,6 +21,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
 import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -50,13 +52,14 @@ const styles = theme => ({
 class SideNav extends Component {
   state = {
     description: "",
-    amount: 0,
+    amount: null,
     category: "",
     date: new Date(),
     income: true,
     budget: {},
     value: "",
-    monthsRecurring: 3
+    monthsRecurring: 0,
+    recurring: false
   };
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -65,11 +68,15 @@ class SideNav extends Component {
     });
   };
 
+  handleCheckboxChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+    console.log(this.state.recurring);
+  };
+
   handleDateChange = pickedDate => {
     this.setState({
       date: moment(pickedDate).format("MM/DD/YYYY")
     });
-    console.log(this.state.date);
   };
 
   logout = event => {
@@ -129,14 +136,12 @@ class SideNav extends Component {
           this.notifySubmit();
           console.log("BUDGET STATE OBJECT: " + this.state.budget);
           this.setState({ budget: budgetObject });
-          // window.location.reload();
 
           this.props.getCategorySum();
           this.props.getBudgetTable();
           this.props.getBudgetSum();
           this.props.getSumByMonthFalse();
           this.props.getSumByMonthTrue();
-          this.props.createMonthLabels();
         })
         .catch(err => console.log(err));
     } else if (this.state.monthsRecurring > 0) {
@@ -152,6 +157,7 @@ class SideNav extends Component {
           category: this.state.category
         };
         this.setState({ budget: budgetObject });
+
         API.budgetPost(budgetObject).then(res => {
           this.notifySubmit();
           console.log("BUDGET STATE OBJECT: " + this.state.budget);
@@ -165,10 +171,12 @@ class SideNav extends Component {
           this.props.getSumByMonthTrue();
         });
       }
+    } else {
+      this.notifySubmitError();
     }
     this.setState({
       description: "",
-      amount: 0,
+      amount: null,
       date: new Date(),
       income: true,
       category: "",
@@ -192,88 +200,90 @@ class SideNav extends Component {
     console.log(this.state.income);
   };
 
-  render = () => (
-    <div className="top">
-      <ToastContainer
-        position="top-left"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnVisibilityChange
-        draggable
-        pauseOnHover
-      />
-      {/* Same as */}
-      <ToastContainer />
-      <Typography
-        className="logo"
-        align="center"
-        variant="p"
-        color="textPrimary"
-      >
-        curren$ee
-      </Typography>
-      <Divider />
-      <Grid className="logout" container justify="center">
-        <Button
-          variant="flat"
-          size="small"
-          color="secondary"
-          className="button"
-          type="submit"
-          onClick={this.logout}
+  render = () => {
+    console.log(this.state);
+    return (
+      <div className="top">
+        <ToastContainer
+          position="top-left"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
+        {/* Same as */}
+        <ToastContainer />
+        <Typography
+          className="logo"
+          align="center"
+          variant="p"
+          color="textPrimary"
         >
-          Logout
-        </Button>
-      </Grid>
-      <Divider />
-      <Grid container justify="center">
-        <List>
-          <Link to={`/`}>
-            <ListItem button>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText className="home" primary={"Home"} />
-            </ListItem>
-          </Link>
-        </List>
-      </Grid>
-      <Divider />
-      <div className="container">
-        <h6 className="title">Input your budget items</h6>
-        <form
-          noValidate
-          autoComplete="off"
-          style={{
-            width: "100%"
-          }}
-          onSubmit={this.handleFormSubmit}
-        >
-          <Grid className="allMargin" container justify="center">
-            <TextField
-              id="standard-description"
-              label="Description"
-              className="textField"
-              value={this.state.description}
-              onChange={this.handleInputChange}
-              margin="normal"
-              name="description"
-              placeholder="Paycheck"
-            />
-            <TextField
-              id="standard-amount"
-              label="Amount"
-              className="textField"
-              onChange={this.handleInputChange}
-              value={this.state.amount}
-              margin="normal"
-              placeholder="100"
-              name="amount"
-            />
-            {/* <TextField
+          curren$ee
+        </Typography>
+        <Divider />
+        <Grid className="logout" container justify="center">
+          <Button
+            variant="flat"
+            size="small"
+            color="secondary"
+            className="button"
+            type="submit"
+            onClick={this.logout}
+          >
+            Logout
+          </Button>
+        </Grid>
+        <Divider />
+        <Grid container justify="center">
+          <List>
+            <Link to={`/`}>
+              <ListItem button>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText className="home" primary={"Home"} />
+              </ListItem>
+            </Link>
+          </List>
+        </Grid>
+        <Divider />
+        <div className="container">
+          <h6 className="title">Input your budget items</h6>
+          <form
+            noValidate
+            autoComplete="off"
+            style={{
+              width: "100%"
+            }}
+            onSubmit={this.handleFormSubmit}
+          >
+            <Grid className="allMargin" container justify="center">
+              <TextField
+                id="standard-description"
+                label="Description"
+                className="textField"
+                value={this.state.description}
+                onChange={this.handleInputChange}
+                margin="normal"
+                name="description"
+                placeholder="Paycheck"
+              />
+              <TextField
+                id="standard-amount"
+                label="Amount"
+                className="textField"
+                onChange={this.handleInputChange}
+                value={this.state.amount}
+                margin="normal"
+                placeholder="100"
+                name="amount"
+              />
+              {/* <TextField
               id="standard-date"
               label="Date"
               className="textField"
@@ -283,91 +293,128 @@ class SideNav extends Component {
               margin="normal"
               name="date"
             /> */}
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DatePicker
-                className="mt-2"
-                value={this.state.date}
-                label="Date Picker"
-                onChange={this.handleDateChange}
-                placeholderText="Click to select a date"
-                // popperClassName="some-custom-class"
-                // popperModifiers={{
-                //   offset: {
-                //     enabled: true,
-                //     offset: "-30px, 10px"
-                //   },
-                //   preventOverflow: {
-                //     enabled: true,
-                //     escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
-                //     boundariesElement: "viewport"
-                //   }
-                // }}
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-          <Grid className="allMargin" container justify="center">
-            <FormControl className="dropdownCat">
-              <InputLabel htmlFor="category-helper">Category</InputLabel>
-              <Select
-                value={this.state.category}
-                onChange={this.handleInputChange}
-                input={<Input name="category" id="category=helper" />}
-              >
-                <MenuItem value={"Health"}>Health & Fitness</MenuItem>
-                <MenuItem value={"Home"}>Home</MenuItem>
-                <MenuItem value={"Income"}>Income</MenuItem>
-                <MenuItem value={"Savings"}>Savings</MenuItem>
-                <MenuItem value={"Shopping"}>Shopping</MenuItem>
-                <MenuItem value={"Travel"}>Travel</MenuItem>
-                <MenuItem value={"Utilities"}>Utilities</MenuItem>
-                <MenuItem value={"Other"}>Other</MenuItem>
-              </Select>
-              <FormHelperText>choose your category</FormHelperText>
-            </FormControl>
-          </Grid>
-          {/* RADIO BUTTONS FOR INCOME AND EXPENSE */}
-          <Grid className="allMargin" container justify="center">
-            <FormControl component="fieldset" className="formControl">
-              <RadioGroup
-                aria-label="Income"
-                name="income"
-                className="group"
-                value={this.state.value}
-                onChange={this.handleChangeRadio}
-              >
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DatePicker
+                  className="mt-4"
+                  value={this.state.date}
+                  label="Date Picker"
+                  margin="normal"
+                  onChange={this.handleDateChange}
+                  placeholderText="Click to select a date"
+                  // popperClassName="some-custom-class"
+                  // popperModifiers={{
+                  //   offset: {
+                  //     enabled: true,
+                  //     offset: "-30px, 10px"
+                  //   },
+                  //   preventOverflow: {
+                  //     enabled: true,
+                  //     escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
+                  //     boundariesElement: "viewport"
+                  //   }
+                  // }}
+                />
+              </MuiPickersUtilsProvider>
+              <FormGroup row className="ml-2">
                 <FormControlLabel
-                  value="true"
-                  control={<Radio />}
-                  label="Income"
+                  control={
+                    <Checkbox
+                      checked={this.state.recurring}
+                      onChange={this.handleCheckboxChange("recurring")}
+                      value={!this.state.recurring}
+                    />
+                  }
+                  label="Is this a recurring transaction?"
+                />
+              </FormGroup>
+            </Grid>
+            {this.state.recurring && (
+              <Grid className="allMargin" container justify="center">
+                <FormControl className="dropdownCat">
+                  <InputLabel htmlFor="recurring-helper">
+                    How many months?
+                  </InputLabel>
+                  <Select
+                    value={this.state.monthsRecurring}
+                    onChange={this.handleInputChange}
+                    input={
+                      <Input name="monthsRecurring" id="recurring-helper" />
+                    }
+                  >
+                    <MenuItem value={2}>Month Selected + 1 Month</MenuItem>
+                    <MenuItem value={3}>Month Selected + 2 Months</MenuItem>
+                    <MenuItem value={4}>Month Selected + 3 Months</MenuItem>
+                    <MenuItem value={5}>Month Selected + 4 Months</MenuItem>
+                    <MenuItem value={6}>Month Selected + 5 Months</MenuItem>
+                  </Select>
+                  <FormHelperText>choose amount of months</FormHelperText>
+                </FormControl>
+              </Grid>
+            )}
+            <Grid className="allMargin" container justify="center">
+              <FormControl className="dropdownCat">
+                <InputLabel htmlFor="category-helper">Category</InputLabel>
+                <Select
+                  value={this.state.category}
+                  onChange={this.handleInputChange}
+                  input={<Input name="category" id="category-helper" />}
+                >
+                  <MenuItem value={"Health"}>Health & Fitness</MenuItem>
+                  <MenuItem value={"Home"}>Home</MenuItem>
+                  <MenuItem value={"Income"}>Income</MenuItem>
+                  <MenuItem value={"Savings"}>Savings</MenuItem>
+                  <MenuItem value={"Shopping"}>Shopping</MenuItem>
+                  <MenuItem value={"Travel"}>Travel</MenuItem>
+                  <MenuItem value={"Utilities"}>Utilities</MenuItem>
+                  <MenuItem value={"Other"}>Other</MenuItem>
+                </Select>
+                <FormHelperText>choose your category</FormHelperText>
+              </FormControl>
+            </Grid>
+            {/* RADIO BUTTONS FOR INCOME AND EXPENSE */}
+            <Grid className="allMargin" container justify="center">
+              <FormControl component="fieldset" className="formControl">
+                <RadioGroup
+                  aria-label="Income"
                   name="income"
-                  onClick={this.handleInputTrue}
-                />
+                  className="group"
+                  value={this.state.value}
+                  onChange={this.handleChangeRadio}
+                >
+                  <FormControlLabel
+                    value="true"
+                    control={<Radio />}
+                    label="Income"
+                    name="income"
+                    onClick={this.handleInputTrue}
+                  />
 
-                <FormControlLabel
-                  value="false"
-                  control={<Radio />}
-                  label="Expense"
-                  name="expense"
-                  onClick={this.handleInputFalse}
-                />
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-          <Grid className="allMargin" container justify="center">
-            <Button
-              variant="contained"
-              color="secondary"
-              className="button"
-              type="submit"
-              onClick={this.handleFormSubmit}
-            >
-              Submit Budget Item
-            </Button>
-          </Grid>
-        </form>
+                  <FormControlLabel
+                    value="false"
+                    control={<Radio />}
+                    label="Expense"
+                    name="expense"
+                    onClick={this.handleInputFalse}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            <Grid className="allMargin" container justify="center">
+              <Button
+                variant="contained"
+                color="secondary"
+                className="button"
+                type="submit"
+                onClick={this.handleFormSubmit}
+              >
+                Submit Budget Item
+              </Button>
+            </Grid>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 }
 
 export default withStyles(styles)(SideNav);

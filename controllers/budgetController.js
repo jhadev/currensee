@@ -81,6 +81,16 @@ module.exports = {
         res.status(422).json(err);
       });
   },
+  insert: function(req, res) {
+    console.log(req.user);
+    req.body.userID = req.user._id;
+    db.Budget.insert(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => {
+        console.log(err);
+        res.status(422).json(err);
+      });
+  },
   update: function(req, res) {
     req.body.userID = req.user._id;
     db.Budget.findOneAndUpdate(

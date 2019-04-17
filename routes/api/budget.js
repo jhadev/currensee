@@ -6,6 +6,7 @@ router
   .route("/")
   .get(budgetController.findAll)
   .post(budgetController.create);
+// .post(budgetController.insert);
 
 // Matches with "/api/budget/:id"
 router
