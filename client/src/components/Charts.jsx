@@ -8,6 +8,7 @@ import "../containers/Main.css";
 const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
   const pieData = {
     responsive: true,
+    maintainAspectRatio: false,
     labels: [
       "Health & Fitness",
       "Home",
@@ -108,9 +109,11 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
       <div className="col-12">
         <Grid container justify="center">
           <Card className="chartCard">
-            <CardContent>
+            <CardContent className="chartCardContent">
               <div className="content-section implementation">
-                <h3 className="text-center">Total Spending by Category</h3>
+                <h3 className="text-center chartHeading">
+                  Total Spending by Category
+                </h3>
                 <Chart className="chart" type="pie" data={pieData} />
               </div>
             </CardContent>
@@ -120,9 +123,11 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
       <div className="col-12">
         <Grid container justify="center">
           <Card className="chartCard">
-            <CardContent>
+            <CardContent className="chartCardContent">
               <div className="content-section implementation">
-                <h3 className="text-center">Income vs Expense By Month</h3>
+                <h3 className="text-center chartHeading">
+                  Income vs Expense By Month
+                </h3>
                 <Chart className="chart" type="bar" data={barData} />
               </div>
             </CardContent>
@@ -132,9 +137,11 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
       <div className="col-12">
         <Grid container justify="center">
           <Card className="chartCard">
-            <CardContent>
+            <CardContent className="chartCardContent">
               <div className="content-section implementation">
-                <h3 className="text-center">Income vs Expense By Month</h3>
+                <h3 className="text-center chartHeading">
+                  Income vs Expense By Month
+                </h3>
                 <Chart className="chart" type="line" data={lineData} />
               </div>
             </CardContent>
@@ -144,9 +151,11 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
       <div className="col-12">
         <Grid container justify="center">
           <Card className="chartCard">
-            <CardContent>
+            <CardContent className="chartCardContent">
               <div className="content-section implementation">
-                <h3 className="text-center">Radar (Spending By Category)</h3>
+                <h3 className="text-center chartHeading">
+                  Radar (Spending By Category)
+                </h3>
                 <Chart className="chart" type="radar" data={radarData} />
               </div>
             </CardContent>

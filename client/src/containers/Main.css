@@ -4,7 +4,7 @@
 }
 
 .content-section {
-  padding: 20px;
+  padding: 5px;
 }
 
 .total-sum {
@@ -63,8 +63,15 @@
     overflow: auto;
   }
 
-  /* .chartjs-render-monitor {
-    width: 200%;
-    height: 200%;
-  } */
+  .content-section {
+    padding: 0px;
+  }
+
+  .chartCardContent {
+    padding: 10px 10px !important;
+  }
+
+  .chartHeading {
+    font-size: 1.4rem;
+  }
 }
