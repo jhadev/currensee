@@ -119,7 +119,7 @@ class SideNav extends Component {
       this.state.amount > 0 &&
       this.state.date !== "" &&
       this.state.category !== "" &&
-      this.state.monthsRecurring === 0
+      !this.state.recurring
     ) {
       let budgetObject = {
         description: this.state.description,
@@ -144,7 +144,7 @@ class SideNav extends Component {
           this.props.getSumByMonthTrue();
         })
         .catch(err => console.log(err));
-    } else if (this.state.monthsRecurring > 0) {
+    } else if (this.state.recurring && this.state.monthsRecurring > 0) {
       let budgetArray = [];
       for (let i = 0; i < this.state.monthsRecurring; i++) {
         let budgetObject = {
@@ -301,18 +301,6 @@ class SideNav extends Component {
                   margin="normal"
                   onChange={this.handleDateChange}
                   placeholderText="Click to select a date"
-                  // popperClassName="some-custom-class"
-                  // popperModifiers={{
-                  //   offset: {
-                  //     enabled: true,
-                  //     offset: "-30px, 10px"
-                  //   },
-                  //   preventOverflow: {
-                  //     enabled: true,
-                  //     escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
-                  //     boundariesElement: "viewport"
-                  //   }
-                  // }}
                 />
               </MuiPickersUtilsProvider>
               <FormGroup row className="ml-2">
@@ -351,8 +339,8 @@ class SideNav extends Component {
                 </FormControl>
               </Grid>
             )}
-            <Grid className="allMargin" container justify="center">
-              <FormControl className="dropdownCat">
+            <Grid className="allMargin catForm" container justify="center">
+              <FormControl className="dropdownCat catForm">
                 <InputLabel htmlFor="category-helper">Category</InputLabel>
                 <Select
                   value={this.state.category}
@@ -388,7 +376,6 @@ class SideNav extends Component {
                     name="income"
                     onClick={this.handleInputTrue}
                   />
-
                   <FormControlLabel
                     value="false"
                     control={<Radio />}
