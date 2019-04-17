@@ -22,7 +22,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
-import DatePicker from "react-datepicker";
+import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -54,7 +55,8 @@ class SideNav extends Component {
     date: new Date(),
     income: true,
     budget: {},
-    value: ""
+    value: "",
+    monthsRecurring: 3
   };
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -65,8 +67,9 @@ class SideNav extends Component {
 
   handleDateChange = pickedDate => {
     this.setState({
-      date: pickedDate
+      date: moment(pickedDate).format("MM/DD/YYYY")
     });
+    console.log(this.state.date);
   };
 
   logout = event => {
@@ -108,7 +111,8 @@ class SideNav extends Component {
       this.state.description !== "" &&
       this.state.amount > 0 &&
       this.state.date !== "" &&
-      this.state.category !== ""
+      this.state.category !== "" &&
+      this.state.monthsRecurring === 0
     ) {
       let budgetObject = {
         description: this.state.description,
@@ -135,8 +139,32 @@ class SideNav extends Component {
           this.props.createMonthLabels();
         })
         .catch(err => console.log(err));
-    } else {
-      this.notifySubmitError();
+    } else if (this.state.monthsRecurring > 0) {
+      let budgetArray = [];
+      for (let i = 0; i < this.state.monthsRecurring; i++) {
+        let budgetObject = {
+          description: this.state.description,
+          amount: this.state.amount,
+          date: moment(this.state.date)
+            .add(i, "M")
+            .format("L"),
+          income: this.state.income,
+          category: this.state.category
+        };
+        this.setState({ budget: budgetObject });
+        API.budgetPost(budgetObject).then(res => {
+          this.notifySubmit();
+          console.log("BUDGET STATE OBJECT: " + this.state.budget);
+          this.setState({ budget: budgetArray });
+          // window.location.reload();
+
+          this.props.getCategorySum();
+          this.props.getBudgetTable();
+          this.props.getBudgetSum();
+          this.props.getSumByMonthFalse();
+          this.props.getSumByMonthTrue();
+        });
+      }
     }
     this.setState({
       description: "",
@@ -245,7 +273,7 @@ class SideNav extends Component {
               placeholder="100"
               name="amount"
             />
-            <TextField
+            {/* <TextField
               id="standard-date"
               label="Date"
               className="textField"
@@ -254,26 +282,28 @@ class SideNav extends Component {
               placeholder="MM/DD/YYYY"
               margin="normal"
               name="date"
-            />
-            <DatePicker
-              className="p-0"
-              selected={this.state.date}
-              onChange={this.handleDateChange}
-              dateFormat="MM/dd/yyyy"
-              placeholderText="Click to select a date"
-              popperClassName="some-custom-class"
-              popperModifiers={{
-                offset: {
-                  enabled: true,
-                  offset: "-30px, 10px"
-                },
-                preventOverflow: {
-                  enabled: true,
-                  escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
-                  boundariesElement: "viewport"
-                }
-              }}
-            />
+            /> */}
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DatePicker
+                className="mt-2"
+                value={this.state.date}
+                label="Date Picker"
+                onChange={this.handleDateChange}
+                placeholderText="Click to select a date"
+                // popperClassName="some-custom-class"
+                // popperModifiers={{
+                //   offset: {
+                //     enabled: true,
+                //     offset: "-30px, 10px"
+                //   },
+                //   preventOverflow: {
+                //     enabled: true,
+                //     escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
+                //     boundariesElement: "viewport"
+                //   }
+                // }}
+              />
+            </MuiPickersUtilsProvider>
           </Grid>
           <Grid className="allMargin" container justify="center">
             <FormControl className="dropdownCat">
