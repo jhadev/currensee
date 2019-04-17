@@ -200,7 +200,6 @@ class SideNav extends Component {
   };
 
   render = () => {
-    console.log(this.state);
     return (
       <div className="top">
         <ToastContainer

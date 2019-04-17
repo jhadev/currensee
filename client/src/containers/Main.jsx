@@ -559,6 +559,7 @@ class Main extends Component {
 
   tableSelectedChange = event => {
     this.setState({ selectedBudgetItem: event.value });
+    console.log(this.state.selectedBudgetItem);
   };
 
   rowClassName = rowData => {
