@@ -31,3 +31,11 @@
 .home {
   font-family: 'Righteous', cursive;
 }
+
+.dropdownCat {
+  width: 80%;
+}
+
+.catForm {
+  margin-top: -20px;
+}
