@@ -327,11 +327,11 @@ class SideNav extends Component {
                       <Input name="monthsRecurring" id="recurring-helper" />
                     }
                   >
-                    <MenuItem value={2}>Month Selected + 1 Month</MenuItem>
-                    <MenuItem value={3}>Month Selected + 2 Months</MenuItem>
-                    <MenuItem value={4}>Month Selected + 3 Months</MenuItem>
-                    <MenuItem value={5}>Month Selected + 4 Months</MenuItem>
-                    <MenuItem value={6}>Month Selected + 5 Months</MenuItem>
+                    <MenuItem value={2}>Date Selected + 1 Month</MenuItem>
+                    <MenuItem value={3}>Date Selected + 2 Months</MenuItem>
+                    <MenuItem value={4}>Date Selected + 3 Months</MenuItem>
+                    <MenuItem value={5}>Date Selected + 4 Months</MenuItem>
+                    <MenuItem value={6}>Date Selected + 5 Months</MenuItem>
                   </Select>
                   <FormHelperText>choose amount of months</FormHelperText>
                 </FormControl>
@@ -392,7 +392,9 @@ class SideNav extends Component {
                 type="submit"
                 onClick={this.handleFormSubmit}
               >
-                Submit Budget Item
+                {this.state.recurring
+                  ? "SUBMIT BUDGET ITEMS"
+                  : "SUBMIT BUDGET ITEM"}
               </Button>
             </Grid>
           </form>
