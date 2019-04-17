@@ -4,8 +4,10 @@ import moment from "moment";
 import API from "../utils/API";
 import SideNav from "../components/SideNav";
 import Charts from "../components/Charts";
+import BudgetTable from "../components/BudgetTable";
+import DataCard from "../components/DataCard";
+import WalmartSearch from "../components/WalmartSearch";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { DataTable, Column } from "primereact/datatable";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -22,8 +24,6 @@ import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
-// import WalmartModal from "../components/WalmartModal";
-// import BudgetTable from "../components/BudgetTable";
 
 const drawerWidth = 300;
 
@@ -81,7 +81,8 @@ class Main extends Component {
     monthLabels: [],
     modal: false,
     search: "",
-    value: ""
+    value: "",
+    selectedBudgetItem: {}
   };
 
   // Check login status on load
@@ -183,14 +184,14 @@ class Main extends Component {
 
       let cat1 = res.data.filter(function(item) {
         if (item._id.category === "Health") {
-          console.log(item._id.category);
+          //console.log(item._id.category);
           return true;
         }
       });
       cat1 = cat1.map(function(item) {
         return item.categoryTotal;
       });
-      console.log(cat1);
+      //console.log(cat1);
       let cat2 = res.data.filter(function(item) {
         if (item._id.category === "Home") {
           return true;
@@ -252,9 +253,8 @@ class Main extends Component {
           categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
         }
       }
-      console.log(
-        "CATEGORY SUM LIST ARRAY: " + JSON.stringify(categorySumList)
-      );
+      //console.log(
+      //  "CATEGORY SUM LIST ARRAY: " + JSON.stringify(categorySumList));
 
       this.setState({ arrayForPieChart: categorySumList });
     });
@@ -282,12 +282,12 @@ class Main extends Component {
       month1 = month1.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH ONE: " + JSON.stringify(month1));
+      //console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
         .subtract(1, "M")
         .format("MM");
-      console.log("COMPARE MONTH 2: " + monthCompare2);
+      //console.log("COMPARE MONTH 2: " + monthCompare2);
       month2 = res.data.filter(function(item) {
         if (item._id.month === monthCompare2) {
           return true;
@@ -296,20 +296,20 @@ class Main extends Component {
       month2 = month2.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH TWO: " + JSON.stringify(month2));
+      //console.log("MONTH TWO: " + JSON.stringify(month2));
 
       const monthCompare3 = moment().format("MM");
-      console.log("MONTH COMPARISON THREE: " + monthCompare3);
+      //console.log("MONTH COMPARISON THREE: " + monthCompare3);
       month3 = res.data.filter(function(item) {
         if (item._id.month === monthCompare3) {
           return true;
         }
-        console.log("ITEM.ID.MONTH THREE: " + item._id.month);
+        //console.log("ITEM.ID.MONTH THREE: " + item._id.month);
       });
       month3 = month3.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH THREE: " + JSON.stringify(month3));
+      //console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
         .add(1, "M")
@@ -322,7 +322,7 @@ class Main extends Component {
       month4 = month4.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH FOUR: " + JSON.stringify(month4));
+      //console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
         .add(2, "M")
@@ -335,7 +335,7 @@ class Main extends Component {
       month5 = month5.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH FIVE: " + JSON.stringify(month5));
+      //console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
         .add(3, "M")
@@ -348,10 +348,10 @@ class Main extends Component {
       month6 = month6.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH SIX: " + JSON.stringify(month6));
+      //console.log("MONTH SIX: " + JSON.stringify(month6));
 
       monthArray = [month1, month2, month3, month4, month5, month6];
-      console.log("FULL SIX MONTH ARRAY: " + monthArray);
+      //console.log("FULL SIX MONTH ARRAY: " + monthArray);
 
       this.setState({ arrayForTrueIncome: monthArray });
     });
@@ -379,7 +379,7 @@ class Main extends Component {
       month1 = month1.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH ONE: " + JSON.stringify(month1));
+      //console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
         .subtract(1, "M")
@@ -392,7 +392,7 @@ class Main extends Component {
       month2 = month2.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH TWO: " + JSON.stringify(month2));
+      //console.log("MONTH TWO: " + JSON.stringify(month2));
 
       const monthCompare3 = moment().format("MM");
       month3 = res.data.filter(function(item) {
@@ -403,7 +403,7 @@ class Main extends Component {
       month3 = month3.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH THREE: " + JSON.stringify(month3));
+      //console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
         .add(1, "M")
@@ -416,7 +416,7 @@ class Main extends Component {
       month4 = month4.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH FOUR: " + JSON.stringify(month4));
+      //console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
         .add(2, "M")
@@ -429,7 +429,7 @@ class Main extends Component {
       month5 = month5.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH FIVE: " + JSON.stringify(month5));
+      //console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
         .add(3, "M")
@@ -442,10 +442,10 @@ class Main extends Component {
       month6 = month6.map(function(item) {
         return item.budgetTotal;
       });
-      console.log("MONTH SIX: " + JSON.stringify(month6));
+      //console.log("MONTH SIX: " + JSON.stringify(month6));
 
       monthArray = [month1, month2, month3, month4, month5, month6];
-      console.log("FULL SIX MONTH ARRAY: " + monthArray);
+      //console.log("FULL SIX MONTH ARRAY: " + monthArray);
 
       this.setState({ arrayForFalseIncome: monthArray });
     });
@@ -454,16 +454,18 @@ class Main extends Component {
   handleItemDelete = event => {
     API.getDelete(event.data._id)
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         this.getCategorySum();
         this.getBudgetTable();
         this.getBudgetSum();
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
         this.createMonthLabels();
+        this.notifyRemoval();
       })
       .catch(err => {
         console.log(err);
+        this.notifyError();
       });
   };
 
@@ -485,7 +487,7 @@ class Main extends Component {
     this.toggle();
     API.getWalmart(this.state.itemToSearch)
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         this.setState({
           itemImages: res.data.items,
           itemToSearch: ""
@@ -498,7 +500,18 @@ class Main extends Component {
   };
 
   notifySubmit = () => {
-    toast.success("Walmart item successfully added to budget.", {
+    toast.success("Item successfully added to budget.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true
+    });
+  };
+
+  notifyRemoval = () => {
+    toast.error("Item successfully removed from budget.", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -535,8 +548,8 @@ class Main extends Component {
 
     API.budgetPost(walmartObject)
       .then(res => {
-        console.log(res);
-        console.warn("WALMART STATE OBJECT: " + this.state.walmart);
+        //console.log(res);
+        //console.warn("WALMART STATE OBJECT: " + this.state.walmart);
         this.getCategorySum();
         this.getBudgetTable();
         this.getBudgetSum();
@@ -552,18 +565,21 @@ class Main extends Component {
       });
   };
 
+  tableSelectedChange = event => {
+    this.setState({ selectedBudgetItem: event.value });
+  };
+
   rowClassName = rowData => {
     let incomeRow = rowData.income;
-
     return { highlightRed: incomeRow === "false" };
   };
 
-  amountTemplate(rowData, column) {
+  amountTemplate = (rowData, column) => {
     let amount = rowData.amount;
     let fontWeight = amount >= 500 ? "bold" : "normal";
 
     return <span style={{ fontWeight: fontWeight }}>{rowData.amount}</span>;
-  }
+  };
 
   createMonthLabels = () => {
     const barChartLabels = [];
@@ -587,7 +603,7 @@ class Main extends Component {
         .format("MMMM");
       barChartLabels.push(newMonth);
     }
-    console.log("MONTH LABELS: " + barChartLabels);
+    //console.log("MONTH LABELS: " + barChartLabels);
     this.setState({ monthLabels: barChartLabels });
   };
 
@@ -682,140 +698,28 @@ class Main extends Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <div className="row">
-            <div className="col">
-              <Grid container justify="center">
-                <Card className="total-sum">
-                  <CardContent style={{ marginBottom: -10 }}>
-                    <h3>
-                      DISPOSABLE INCOME: ${this.state.budgetTotal.toFixed(2)}
-                    </h3>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </div>
-          </div>
+          <DataCard budgetTotal={this.state.budgetTotal} />
           {/* BUDGET TABLE */}
-          <Card style={{ marginBottom: 20 }} className={classes.card}>
-            <CardContent>
-              <Typography
-                className="dashtext"
-                variant="p"
-                color="textPrimary"
-                gutterBottom
-              >
-                Budget Table
-              </Typography>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom
-              >
-                Click on headers to sort
-              </Typography>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom
-              >
-                Double click on corresponding table row to delete a budget item
-              </Typography>
-              <DataTable
-                className="budget-table"
-                paginator={true}
-                rows={10}
-                tableStyle={{ width: "100%" }}
-                value={this.state.arrayForBudgetTable}
-                rowClassName={this.rowClassName}
-                selectionMode="single"
-                selection={this.state.selectedBudgetItem}
-                onSelectionChange={e =>
-                  this.setState({ selectedBudgetItem: e.value })
-                }
-                onRowDoubleClick={this.handleItemDelete}
-              >
-                <Column
-                  className="table-data"
-                  field="date"
-                  sortable="true"
-                  header="Date"
-                />
-                <Column
-                  className="table-data"
-                  field="description"
-                  header="Description"
-                  sortable="true"
-                />
-                <Column
-                  className="table-data"
-                  field="amount"
-                  sortable="true"
-                  header="Amount"
-                  body={this.amountTemplate}
-                />
-                <Column
-                  className="table-data"
-                  field="category"
-                  header="Category"
-                  sortable="true"
-                />
-                <Column
-                  className="table-data"
-                  field="income"
-                  header="Income"
-                  sortable="true"
-                />
-              </DataTable>
-            </CardContent>
-          </Card>
+          <BudgetTable
+            arrayForBudgetTable={this.state.arrayForBudgetTable}
+            rowClassName={this.rowClassName}
+            selectedBudgetItem={this.state.selectedBudgetItem}
+            tableSelectedChange={this.tableSelectedChange}
+            handleItemDelete={this.handleItemDelete}
+            amountTemplate={this.amountTemplate}
+          />
           <Charts
             trueIncome={this.state.arrayForTrueIncome}
             falseIncome={this.state.arrayForFalseIncome}
             pieChart={this.state.arrayForPieChart}
             monthLabels={this.state.monthLabels}
           />
-          <div className="row justify-content-center">
-            <div className="col-md-6 col-12">
-              {/* <Grid container justify="center"> */}
-              <Card className="total-sum">
-                <CardContent>
-                  <div className="text-center text-primary">
-                    <img
-                      src="https://user-images.githubusercontent.com/42519030/56179504-f5e9f700-5fd3-11e9-9d89-ad7ee7800272.png"
-                      alt="walmart"
-                      className="img-fluid walmartLogo mb-2"
-                    />
-                  </div>
-                  <input
-                    className="form-control"
-                    value={this.state.itemToSearch}
-                    onChange={this.handleInputChange}
-                    name="itemToSearch"
-                    placeholder="Search for a product"
-                    type="text"
-                    list="item-list"
-                  />
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className="btn text-center btn-outline-primary my-2"
-                    onClick={this.handleSearch}
-                  >
-                    Search
-                  </Button>
-                </CardContent>
-              </Card>
-              {/* </Grid> */}
-            </div>
-          </div>
+          <WalmartSearch
+            itemToSearch={this.state.itemToSearch}
+            handleInputChange={this.handleInputChange}
+            handleSearch={this.handleSearch}
+          />
           <div>
-            {/* <WalmartModal
-              isOpen={this.state.modal}
-              toggle={this.toggle}
-              className="walmartModal"
-              itemImages={this.state.itemImages}
-              walmartSubmit={this.handleWalmartSubmit}
-            /> */}
             <Grid container justify="center">
               <Modal
                 style={{ marginTop: 80 }}

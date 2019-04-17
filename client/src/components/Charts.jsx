@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import "../containers/Main.css";
 
-const Charts = props => {
+const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
   const pieData = {
     responsive: true,
     labels: [
@@ -19,7 +19,7 @@ const Charts = props => {
     ],
     datasets: [
       {
-        data: props.pieChart,
+        data: pieChart,
         backgroundColor: [
           "#FF6384",
           "#36A2EB",
@@ -44,34 +44,34 @@ const Charts = props => {
 
   const barData = {
     responsive: true,
-    labels: props.monthLabels,
+    labels: monthLabels,
     datasets: [
       {
         label: "Income",
         backgroundColor: "rgb(4, 244, 12, 0.8)",
-        data: props.trueIncome
+        data: trueIncome
       },
       {
         label: "Expense",
         backgroundColor: "rgb(255, 0, 0, 0.8)",
-        data: props.falseIncome
+        data: falseIncome
       }
     ]
   };
 
   const lineData = {
     responsive: true,
-    labels: props.monthLabels,
+    labels: monthLabels,
     datasets: [
       {
         label: "Income",
-        data: props.trueIncome,
+        data: trueIncome,
         fill: false,
         borderColor: "#42A5F5"
       },
       {
         label: "Expenses",
-        data: props.falseIncome,
+        data: falseIncome,
         fill: true,
         borderColor: "#ff3059"
       }
@@ -98,7 +98,7 @@ const Charts = props => {
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
         pointHoverBorderColor: "rgba(255,99,132,1)",
-        data: props.pieChart
+        data: pieChart
       }
     ]
   };
@@ -153,18 +153,6 @@ const Charts = props => {
           </Card>
         </Grid>
       </div>
-      {/* <div className="col-12">
-        <Grid container justify="center">
-          <Card className="chartCard">
-            <CardContent>
-              <div className="content-section implementation">
-                <h3 className="text-center">Radar (Spending By Category)</h3>
-                <Chart className="chart" type="polarArea" data={pieData} />
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-      </div> */}
     </div>
   );
 };

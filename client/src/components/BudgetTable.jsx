@@ -5,9 +5,16 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-const BudgetTable = props => {
+const BudgetTable = ({
+  arrayForBudgetTable,
+  rowClassName,
+  selectedBudgetItem,
+  tableSelectedChange,
+  handleItemDelete,
+  amountTemplate
+}) => {
   return (
-    <Card style={{ marginBottom: 20 }} className={classes.card}>
+    <Card style={{ marginBottom: 20 }} className="tableCard">
       <CardContent>
         <Typography
           className="dashtext"
@@ -17,18 +24,10 @@ const BudgetTable = props => {
         >
           Budget Table
         </Typography>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
+        <Typography className="tableHeader" color="textSecondary" gutterBottom>
           Click on headers to sort
         </Typography>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
+        <Typography className="tableHeader" color="textSecondary" gutterBottom>
           Double click on corresponding table row to delete a budget item
         </Typography>
         <DataTable
@@ -36,14 +35,12 @@ const BudgetTable = props => {
           paginator={true}
           rows={10}
           tableStyle={{ width: "100%" }}
-          value={this.state.arrayForBudgetTable}
-          rowClassName={this.rowClassName}
+          value={arrayForBudgetTable}
+          rowClassName={rowClassName}
           selectionMode="single"
-          selection={this.state.selectedBudgetItem}
-          onSelectionChange={e =>
-            this.setState({ selectedBudgetItem: e.value })
-          }
-          onRowDoubleClick={this.handleItemDelete}
+          selection={selectedBudgetItem}
+          onSelectionChange={tableSelectedChange}
+          onRowDoubleClick={handleItemDelete}
         >
           <Column
             className="table-data"
@@ -62,7 +59,7 @@ const BudgetTable = props => {
             field="amount"
             sortable="true"
             header="Amount"
-            body={this.amountTemplate}
+            body={amountTemplate}
           />
           <Column
             className="table-data"
