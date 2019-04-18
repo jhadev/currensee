@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { Chart } from "primereact/chart";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -6,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import "../containers/Main.css";
 
 const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
+  const year = moment().format("YYYY");
   const pieData = {
     responsive: true,
     maintainAspectRatio: false,
@@ -126,7 +128,7 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
             <CardContent className="chartCardContent">
               <div className="content-section implementation">
                 <h3 className="text-center chartHeading">
-                  Income vs Expense By Month
+                  Income vs Expense By Month ({year})
                 </h3>
                 <Chart className="chart" type="bar" data={barData} />
               </div>
@@ -140,7 +142,7 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
             <CardContent className="chartCardContent">
               <div className="content-section implementation">
                 <h3 className="text-center chartHeading">
-                  Income vs Expense By Month
+                  Income vs Expense By Month ({year})
                 </h3>
                 <Chart className="chart" type="line" data={lineData} />
               </div>

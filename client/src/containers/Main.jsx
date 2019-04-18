@@ -181,6 +181,7 @@ class Main extends Component {
   getCategorySum = () => {
     API.getSumByCategory().then(res => {
       let categorySumList = [];
+      console.log(res.data);
 
       let cat1 = res.data.filter(function(item) {
         if (item._id.category === "Health") {
@@ -261,6 +262,8 @@ class Main extends Component {
   };
 
   getSumByMonthTrue = () => {
+    const thisYear = moment().format("YYYY");
+
     API.getSumByMonthTrue().then(res => {
       let month1 = 0;
       let month2 = 0;
@@ -275,7 +278,7 @@ class Main extends Component {
         .subtract(2, "M")
         .format("MM");
       month1 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare) {
+        if (item._id.month === monthCompare && item._id.year === thisYear) {
           return true;
         }
       });
@@ -289,7 +292,8 @@ class Main extends Component {
         .format("MM");
       //console.log("COMPARE MONTH 2: " + monthCompare2);
       month2 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare2) {
+        if (item._id.month === monthCompare2 && item._id.year === thisYear) {
+          console.log(month2);
           return true;
         }
       });
@@ -301,7 +305,7 @@ class Main extends Component {
       const monthCompare3 = moment().format("MM");
       //console.log("MONTH COMPARISON THREE: " + monthCompare3);
       month3 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare3) {
+        if (item._id.month === monthCompare3 && item._id.year === thisYear) {
           return true;
         }
         //console.log("ITEM.ID.MONTH THREE: " + item._id.month);
@@ -315,7 +319,7 @@ class Main extends Component {
         .add(1, "M")
         .format("MM");
       month4 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare4) {
+        if (item._id.month === monthCompare4 && item._id.year === thisYear) {
           return true;
         }
       });
@@ -328,7 +332,7 @@ class Main extends Component {
         .add(2, "M")
         .format("MM");
       month5 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare5) {
+        if (item._id.month === monthCompare5 && item._id.year === thisYear) {
           return true;
         }
       });
@@ -341,7 +345,7 @@ class Main extends Component {
         .add(3, "M")
         .format("MM");
       month6 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare6) {
+        if (item._id.month === monthCompare6 && item._id.year === thisYear) {
           return true;
         }
       });
@@ -358,6 +362,7 @@ class Main extends Component {
   };
 
   getSumByMonthFalse = () => {
+    const thisYear = moment().format("YYYY");
     API.getSumByMonthFalse().then(res => {
       let month1 = 0;
       let month2 = 0;
@@ -372,7 +377,7 @@ class Main extends Component {
         .subtract(2, "M")
         .format("MM");
       month1 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare) {
+        if (item._id.month === monthCompare && item._id.year === thisYear) {
           return true;
         }
       });
@@ -385,7 +390,7 @@ class Main extends Component {
         .subtract(1, "M")
         .format("MM");
       month2 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare2) {
+        if (item._id.month === monthCompare2 && item._id.year === thisYear) {
           return true;
         }
       });
@@ -396,7 +401,7 @@ class Main extends Component {
 
       const monthCompare3 = moment().format("MM");
       month3 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare3) {
+        if (item._id.month === monthCompare3 && item._id.year === thisYear) {
           return true;
         }
       });
@@ -409,7 +414,7 @@ class Main extends Component {
         .add(1, "M")
         .format("MM");
       month4 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare4) {
+        if (item._id.month === monthCompare4 && item._id.year === thisYear) {
           return true;
         }
       });
@@ -422,7 +427,7 @@ class Main extends Component {
         .add(2, "M")
         .format("MM");
       month5 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare5) {
+        if (item._id.month === monthCompare5 && item._id.year === thisYear) {
           return true;
         }
       });
@@ -435,7 +440,7 @@ class Main extends Component {
         .add(3, "M")
         .format("MM");
       month6 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare6) {
+        if (item._id.month === monthCompare6 && item._id.year === thisYear) {
           return true;
         }
       });

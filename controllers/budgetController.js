@@ -33,7 +33,8 @@ module.exports = {
           userID: 1,
           month: {
             $substrBytes: ["$date", 0, 2]
-          }
+          },
+          year: { $substrBytes: ["$date", 6, 8] }
           //convertedIncome: { $toString: "$income" }
         }
       }
@@ -156,7 +157,8 @@ module.exports = {
             income: "$income",
             month: {
               $substrBytes: ["$date", 0, 2]
-            }
+            },
+            year: { $substrBytes: ["$date", 6, 8] }
           },
           budgetTotal: {
             $sum: "$amount"
@@ -186,7 +188,8 @@ module.exports = {
             income: "$income",
             month: {
               $substrBytes: ["$date", 0, 2]
-            }
+            },
+            year: { $substrBytes: ["$date", 6, 8] }
           },
           budgetTotal: {
             $sum: "$amount"
@@ -213,7 +216,8 @@ module.exports = {
             income: "$income",
             month: {
               $substrBytes: ["$date", 0, 2]
-            }
+            },
+            year: { $substrBytes: ["$date", 6, 8] }
           },
           budgetTotal: {
             $sum: "$amount"
@@ -244,7 +248,8 @@ module.exports = {
             category: "$category",
             month: {
               $substrBytes: ["$date", 0, 2]
-            }
+            },
+            year: { $substrBytes: ["$date", 6, 8] }
           },
           categoryTotal: {
             $sum: "$amount"

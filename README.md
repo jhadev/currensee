@@ -19,11 +19,11 @@ _This app is designed to help the end-user monitor and manage all of his expense
 - **Recurring Transactions (up to 6 months forward from starting date)**
 - **Toast Notifications**
 - **Error Handling**
-- **Walmart Searches can be added to budget, default date is now, default category is shopping. API request needs to be routed differently to avoid CORS issue. Current implementation is slow.**
+- **Walmart searches can be added to budget, default date is now, default category is shopping. API request needs to be routed differently to avoid CORS issue. Current implementation is slow.**
 
 ### TODO
 
-- [ ] Rewrite logic for chart data to account for years.
+- [x] Rewrite logic for chart data to account for years. COMPLETED 4/17/2019 **Time based charts only account for current year.**
 - [ ] Global table filtering.
 - [ ] Sum totals with custom filters.
 - [ ] Edit table cells.
