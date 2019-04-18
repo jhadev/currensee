@@ -679,7 +679,7 @@ class Main extends Component {
         this.notifyError();
       });
 
-    this.setState({itemImages: []})
+    this.setState({ itemImages: [] });
   };
 
   tableSelectedChange = event => {
@@ -848,6 +848,7 @@ class Main extends Component {
             pieChart={this.state.arrayForPieChart}
             monthLabels={this.state.monthLabels}
             arrayForCatByCurrentMonth={this.state.arrayForCatByCurrentMonth}
+            budgetTotal={this.state.budgetTotal}
           />
           <WalmartSearch
             itemToSearch={this.state.itemToSearch}

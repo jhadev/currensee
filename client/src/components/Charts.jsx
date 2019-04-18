@@ -11,7 +11,8 @@ const Charts = ({
   trueIncome,
   falseIncome,
   pieChart,
-  arrayForCatByCurrentMonth
+  arrayForCatByCurrentMonth,
+  budgetTotal
 }) => {
   const month = moment().format("MMMM");
   const year = moment().format("YYYY");
@@ -150,7 +151,11 @@ const Charts = ({
     ]
   };
 
-  return (
+  return budgetTotal === 0 ? (
+    <h2 className="text-center text-light">
+      ADD ITEMS TO BUDGET TO SEE CHARTS
+    </h2>
+  ) : (
     <div className="row justify-content-center">
       <div className="col-12">
         <Grid container justify="center">

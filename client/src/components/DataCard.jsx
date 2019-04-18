@@ -10,7 +10,11 @@ const DataCard = ({ budgetTotal }) => {
         <Grid container justify="center">
           <Card className="total-sum">
             <CardContent style={{ marginBottom: -10 }}>
-              <h3>DISPOSABLE INCOME: ${budgetTotal.toFixed(2)}</h3>
+              {budgetTotal <= 0 ? (
+                <h3>BUDGET TOTAL: ${budgetTotal.toFixed(2)}</h3>
+              ) : (
+                <h3>DISPOSABLE INCOME: ${budgetTotal.toFixed(2)}</h3>
+              )}
             </CardContent>
           </Card>
         </Grid>

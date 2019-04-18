@@ -6,6 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { ToastContainer, toast } from "react-toastify";
 import "./Login.css";
 
 class Login extends Component {
@@ -31,7 +32,21 @@ class Login extends Component {
         console.log(res.data);
         this.setState({ isLoggedIn: res.data });
       })
-      .catch(err => console.log(err.response));
+      .catch(err => {
+        console.log(err.response);
+        this.notifyError();
+      });
+  };
+
+  notifyError = () => {
+    toast.error("User not found, please try again.", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true
+    });
   };
 
   render() {
@@ -45,6 +60,19 @@ class Login extends Component {
       <div className="background">
         <Navigation />
         <div className="container my-5">
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
+          {/* Same as */}
+          <ToastContainer />
           <div className="row justify-content-center">
             <div className="col-md-6 col-12">
               <Card className="loginCard shadow">
