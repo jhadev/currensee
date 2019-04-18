@@ -10,9 +10,27 @@ _This app is designed to help the end-user monitor and manage all of his expense
 
 **UPDATED 4/13/2019: Removed MongoDB 4.0 dependency**
 
-[View Demo on YouTube](https://youtu.be/FkLv9twceOU)
+### NEW FEATURES (4/17/2019)
 
-_This demo shows the added functionality of the table._
+- **Table Pagination**
+- **New Data Visualization: Line Chart**
+- **Export Budget as CSV**
+- **Date Picker (no more typing dates!)**
+- **Recurring Transactions (up to 6 months forward from starting date)**
+- **Toast Notifications**
+- **Error Handling**
+- **Walmart Searches can be added to budget, default date is now, default category is shopping. API request needs to be routed differently to avoid CORS issue. Current implementation is slow.**
+
+### TODO
+
+- [ ] Rewrite logic for chart data to account for years.
+- [ ] Global table filtering.
+- [ ] Sum totals with custom filters.
+- [ ] Edit table cells.
+- [ ] Data visualization by single category over time.
+- [ ] Data visualization for budget total breakdown by category for a singular month.
+- [ ] Wegman's API
+- [ ] Google OAuth.
 
 ## Overview
 
