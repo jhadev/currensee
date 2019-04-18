@@ -1,4 +1,4 @@
-# Curren\$ee budgeting app made with the MERN stack
+# curren\$ee budgeting app made with the MERN stack
 
 _This app is designed to help the end-user monitor and manage all of his expenses and investments through a secure browser application._
 
@@ -29,7 +29,7 @@ _This app is designed to help the end-user monitor and manage all of his expense
 - [ ] Edit table cells.
 - [ ] Data visualization by single category over time.
 - [ ] Data visualization for budget total breakdown by category for a singular month.
-- [ ] Wegman's API
+- [ ] Wegman's API.
 - [ ] Google OAuth.
 
 ## Overview
@@ -40,7 +40,9 @@ The overall project was developed with the highest industry standards in mind, i
 
 A users' experience can only be as good as the technology in the User Interface. For this reason we used a commbination of Reactstrap and Material UI. Both being the most popular and relevant libararies in the current tech environment. Especially because of the rise in popularity of React and their component based coding model which emphasizes modularity; for a better user and developer experience.
 
-![image](https://user-images.githubusercontent.com/42519030/49109709-68db1700-f259-11e8-8770-27a48af21584.png)
+![currensee-new](https://user-images.githubusercontent.com/42519030/56330569-98ca7e80-6156-11e9-816c-ba9e3b94d71d.jpg)
+
+![currensee-chart](https://user-images.githubusercontent.com/42519030/56330618-cdd6d100-6156-11e9-9a2d-33d7cfe2150b.jpg)
 
 ## Back-End
 
