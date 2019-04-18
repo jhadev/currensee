@@ -60,6 +60,7 @@ class SideNav extends Component {
     monthsRecurring: 0,
     recurring: false
   };
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -141,6 +142,7 @@ class SideNav extends Component {
           this.props.getBudgetSum();
           this.props.getSumByMonthFalse();
           this.props.getSumByMonthTrue();
+          this.props.getCategorySumForCurrentMonth();
         })
         .catch(err => console.log(err));
     } else if (this.state.recurring && this.state.monthsRecurring > 0) {

@@ -6,7 +6,14 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import "../containers/Main.css";
 
-const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
+const Charts = ({
+  monthLabels,
+  trueIncome,
+  falseIncome,
+  pieChart,
+  arrayForCatByCurrentMonth
+}) => {
+  const month = moment().format("MMMM");
   const year = moment().format("YYYY");
   const pieData = {
     responsive: true,
@@ -23,6 +30,43 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
     datasets: [
       {
         data: pieChart,
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#003366",
+          "#F0F8FF",
+          "#7FFFD4",
+          "#f48642"
+        ],
+        hoverBackgroundColor: [
+          "#ff3a64",
+          "#0291f2",
+          "#ffb80c",
+          "#001123",
+          "#d8edff",
+          "#38ffbc",
+          "#fc7019"
+        ]
+      }
+    ]
+  };
+
+  const doughnutForCurrentMonth = {
+    responsive: true,
+    maintainAspectRatio: false,
+    labels: [
+      "Health & Fitness",
+      "Home",
+      "Other",
+      "Savings",
+      "Shopping",
+      "Travel",
+      "Utilities"
+    ],
+    datasets: [
+      {
+        data: arrayForCatByCurrentMonth,
         backgroundColor: [
           "#FF6384",
           "#36A2EB",
@@ -117,6 +161,24 @@ const Charts = ({ monthLabels, trueIncome, falseIncome, pieChart }) => {
                   Total Spending by Category
                 </h3>
                 <Chart className="chart" type="pie" data={pieData} />
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      </div>
+      <div className="col-12">
+        <Grid container justify="center">
+          <Card className="chartCard">
+            <CardContent className="chartCardContent">
+              <div className="content-section implementation">
+                <h3 className="text-center chartHeading">
+                  Spending by Category for {month}, {year}
+                </h3>
+                <Chart
+                  className="chart"
+                  type="doughnut"
+                  data={doughnutForCurrentMonth}
+                />
               </div>
             </CardContent>
           </Card>

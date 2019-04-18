@@ -20,7 +20,6 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
-import { DataTable, Column } from "primereact/datatable";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
 
@@ -82,7 +81,8 @@ class Main extends Component {
     search: "",
     value: "",
     selectedBudgetItem: {},
-    globalFilter: null
+    globalFilter: null,
+    arrayForCatByCurrentMonth: []
   };
 
   // Check login status on load
@@ -112,6 +112,7 @@ class Main extends Component {
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
         this.createMonthLabels();
+        this.getCategorySumForCurrentMonth();
       })
       .catch(err => {
         console.log(err);
@@ -176,6 +177,119 @@ class Main extends Component {
     } else {
       this.setState({ budgetTotal: 0 });
     }
+  };
+
+  getCategorySumForCurrentMonth = () => {
+    const thisYear = moment().format("YYYY");
+    const thisMonth = moment().format("MM");
+
+    API.getSumByCategory().then(res => {
+      let categorySumList = [];
+      console.log(res.data);
+
+      let cat1 = res.data.filter(function(item) {
+        if (
+          item._id.category === "Health" &&
+          item._id.year === thisYear &&
+          item._id.month === thisMonth
+        ) {
+          //console.log(item._id.category);
+          return true;
+        }
+      });
+      cat1 = cat1.map(function(item) {
+        return item.categoryTotal;
+      });
+      //console.log(cat1);
+      let cat2 = res.data.filter(function(item) {
+        if (
+          item._id.category === "Home" &&
+          item._id.year === thisYear &&
+          item._id.month === thisMonth
+        ) {
+          return true;
+        }
+      });
+      cat2 = cat2.map(function(item) {
+        return item.categoryTotal;
+      });
+
+      let cat3 = res.data.filter(function(item) {
+        if (
+          item._id.category === "Other" &&
+          item._id.year === thisYear &&
+          item._id.month === thisMonth
+        ) {
+          return true;
+        }
+      });
+      cat3 = cat3.map(function(item) {
+        return item.categoryTotal;
+      });
+
+      let cat4 = res.data.filter(function(item) {
+        if (
+          item._id.category === "Savings" &&
+          item._id.year === thisYear &&
+          item._id.month === thisMonth
+        ) {
+          return true;
+        }
+      });
+      cat4 = cat4.map(function(item) {
+        return item.categoryTotal;
+      });
+
+      let cat5 = res.data.filter(function(item) {
+        if (
+          item._id.category === "Shopping" &&
+          item._id.year === thisYear &&
+          item._id.month === thisMonth
+        ) {
+          return true;
+        }
+      });
+      cat5 = cat5.map(function(item) {
+        return item.categoryTotal;
+      });
+
+      let cat6 = res.data.filter(function(item) {
+        if (
+          item._id.category === "Travel" &&
+          item._id.year === thisYear &&
+          item._id.month === thisMonth
+        ) {
+          return true;
+        }
+      });
+      cat6 = cat6.map(function(item) {
+        return item.categoryTotal;
+      });
+
+      let cat7 = res.data.filter(function(item) {
+        if (
+          item._id.category === "Utilities" &&
+          item._id.year === thisYear &&
+          item._id.month === thisMonth
+        ) {
+          return true;
+        }
+      });
+      cat7 = cat7.map(function(item) {
+        return item.categoryTotal;
+      });
+
+      categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
+      console.log(categorySumList);
+
+      for (let i = 0; i < categorySumList.length; i++) {
+        if (categorySumList[i].length > 1) {
+          categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
+        }
+      }
+
+      this.setState({ arrayForCatByCurrentMonth: categorySumList });
+    });
   };
 
   getCategorySum = () => {
@@ -466,6 +580,7 @@ class Main extends Component {
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
         this.createMonthLabels();
+        this.getCategorySumForCurrentMonth();
         this.notifyRemoval();
       })
       .catch(err => {
@@ -554,6 +669,7 @@ class Main extends Component {
         this.getBudgetSum();
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
+        this.getCategorySumForCurrentMonth();
         this.notifySubmit();
         this.toggle();
       })
@@ -682,6 +798,9 @@ class Main extends Component {
                 getBudgetTable={this.getBudgetTable}
                 getSumByMonthFalse={this.getSumByMonthFalse}
                 getSumByMonthTrue={this.getSumByMonthTrue}
+                getCategorySumForCurrentMonth={
+                  this.getCategorySumForCurrentMonth
+                }
               />
             </Drawer>
           </Hidden>
@@ -700,6 +819,9 @@ class Main extends Component {
                 getBudgetTable={this.getBudgetTable}
                 getSumByMonthFalse={this.getSumByMonthFalse}
                 getSumByMonthTrue={this.getSumByMonthTrue}
+                getCategorySumForCurrentMonth={
+                  this.getCategorySumForCurrentMonth
+                }
               />
             </Drawer>
           </Hidden>
@@ -723,6 +845,7 @@ class Main extends Component {
             falseIncome={this.state.arrayForFalseIncome}
             pieChart={this.state.arrayForPieChart}
             monthLabels={this.state.monthLabels}
+            arrayForCatByCurrentMonth={this.state.arrayForCatByCurrentMonth}
           />
           <WalmartSearch
             itemToSearch={this.state.itemToSearch}

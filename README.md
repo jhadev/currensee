@@ -28,7 +28,7 @@ _This app is designed to help the end-user monitor and manage all of his expense
 - [ ] Sum totals with custom filters.
 - [ ] Edit table cells.
 - [ ] Data visualization by single category over time.
-- [ ] Data visualization for budget total breakdown by category for a singular month.
+- [x] Data visualization for budget total breakdown by category for a singular month. ADDED 4/18/2019 **Dougnut chart for spending by category for current month.**
 - [ ] Wegman's API.
 - [ ] Google OAuth.
 
