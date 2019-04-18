@@ -894,8 +894,8 @@ class Main extends Component {
                                 {item.name}
                               </p>
                               <p className="itemDesc">
-                                {item.shortDescription.length > 100
-                                  ? `${item.shortDescription.slice(0, 100)}...`
+                                {item.shortDescription.length > 200
+                                  ? `${item.shortDescription.slice(0, 200)}...`
                                   : item.shortDescription}
                               </p>
                               <p className="itemPrice font-weight-bold">
