@@ -745,6 +745,8 @@ class Main extends Component {
       return <Redirect to="/login" />;
     }
 
+    console.log(this.state);
+
     const { classes, theme } = this.props;
 
     return (
@@ -849,6 +851,7 @@ class Main extends Component {
             monthLabels={this.state.monthLabels}
             arrayForCatByCurrentMonth={this.state.arrayForCatByCurrentMonth}
             budgetTotal={this.state.budgetTotal}
+            arrayForBudgetTable={this.state.arrayForBudgetTable}
           />
           <WalmartSearch
             itemToSearch={this.state.itemToSearch}
