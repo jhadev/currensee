@@ -1,3 +1,12 @@
+#modalContainer {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0;
+  left: 11%;
+  z-index: 10040;
+}
+
 .dashtext {
   font-family: 'Righteous', cursive;
   font-size: 20px;
@@ -27,13 +36,8 @@
   width: 35%;
 }
 
-#modalContainer {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0;
-  left: 11%;
-  z-index: 10040;
+.itemPrice {
+  font-size: 1.2rem;
 }
 
 .chartCard {

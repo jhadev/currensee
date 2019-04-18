@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Signup.css";
 
 class Signup extends Component {
@@ -33,12 +35,38 @@ class Signup extends Component {
         console.log(res.data);
         this.setState({ success: res.data });
       })
-      .catch(err => console.log(err.response.data));
+      .catch(err => {
+        console.log(err.response.data);
+        this.notifyError();
+      });
+  };
+
+  notifyError = () => {
+    toast.error("Signup failed. Please try again", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true
+    });
+  };
+
+  notifySuccess = () => {
+    toast.success("Success! Please login with your credentials", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true
+    });
   };
 
   render() {
     // If Register was a success, take them to the Login page
     if (this.state.success) {
+      this.notifySuccess();
       return <Redirect to="/login" />;
     }
 
@@ -46,6 +74,19 @@ class Signup extends Component {
       <div className="background">
         <Navigation />
         <div className="container my-5">
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
+          {/* Same as */}
+          <ToastContainer />
           <div className="row justify-content-center">
             <div className="col-md-6 col-12">
               <Card className="loginCard">

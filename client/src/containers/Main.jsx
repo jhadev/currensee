@@ -601,7 +601,6 @@ class Main extends Component {
     this.toggle();
     API.getWalmart(this.state.itemToSearch)
       .then(res => {
-        //console.log(res.data);
         this.setState({
           itemImages: res.data.items,
           itemToSearch: ""
@@ -880,40 +879,62 @@ class Main extends Component {
                       </React.Fragment>
                     ) : (
                       this.state.itemImages.map((item, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className="col-12 col-md-12 text-center"
-                          >
-                            <img
-                              src={item.largeImage}
-                              alt={item}
-                              className="img-fluid rounded border border-dark my-2 productImg"
-                            />
-                            <p className="itemName font-weight-bold">
-                              {item.name}
-                            </p>
-                            <p className="itemPrice font-weight-bold">
-                              ${item.salePrice}
-                            </p>
-                            <a
-                              target="_blank"
-                              href={item.productUrl}
-                              rel="noopener noreferrer"
-                              className="m-2 text-center btn btn-outline-dark"
+                        if (item.salePrice) {
+                          return (
+                            <div
+                              key={index}
+                              className="col-12 col-md-12 text-center"
                             >
-                              View on Walmart.com
-                            </a>
-                            <button
-                              className="m-2 text-center btn btn-dark"
-                              name={item.name}
-                              value={item.salePrice}
-                              onClick={this.handleWalmartSubmit}
-                            >
-                              Add to Budget
-                            </button>
-                          </div>
-                        );
+                              <img
+                                src={item.largeImage}
+                                alt={item}
+                                className="img-fluid rounded border border-dark my-2 productImg"
+                              />
+                              <p className="itemName font-weight-bold">
+                                {item.name}
+                              </p>
+                              <p className="itemDesc">
+                                {item.shortDescription.length > 100
+                                  ? `${item.shortDescription.slice(0, 100)}...`
+                                  : item.shortDescription}
+                              </p>
+                              <p className="itemPrice font-weight-bold">
+                                ${item.salePrice}
+                              </p>
+                              {item.standardShipRate === 0 ? (
+                                <p className="itemShip">FREE SHIPPING</p>
+                              ) : (
+                                <p className="itemShip">
+                                  SHIPPING: ${item.standardShipRate}
+                                </p>
+                              )}
+                              <a
+                                target="_blank"
+                                href={item.productUrl}
+                                rel="noopener noreferrer"
+                                className="my-2 mx-1 text-center btn btn-outline-dark"
+                              >
+                                View on Walmart.com
+                              </a>
+                              <a
+                                target="_blank"
+                                href={item.addToCartUrl}
+                                rel="noopener noreferrer"
+                                className="my-2 mx-1 text-center btn btn-outline-dark"
+                              >
+                                Add To Cart
+                              </a>
+                              <button
+                                className="my-2 mx-1 text-center btn btn-dark"
+                                name={item.name}
+                                value={item.salePrice}
+                                onClick={this.handleWalmartSubmit}
+                              >
+                                Add to Budget
+                              </button>
+                            </div>
+                          );
+                        }
                       })
                     )}
                   </div>
@@ -932,9 +953,6 @@ class Main extends Component {
           </div>
           <br />
           <br />
-          <div className="row justify-content-center">
-            <div className="col-12" />
-          </div>
         </main>
       </div>
     );
