@@ -678,6 +678,8 @@ class Main extends Component {
         this.toggle();
         this.notifyError();
       });
+
+    this.setState({itemImages: []})
   };
 
   tableSelectedChange = event => {
