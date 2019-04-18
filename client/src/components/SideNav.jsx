@@ -177,7 +177,7 @@ class SideNav extends Component {
     }
     this.setState({
       description: "",
-      amount: null,
+      amount: 0,
       date: new Date(),
       income: true,
       category: "",
