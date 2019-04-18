@@ -20,6 +20,7 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
+import { DataTable, Column } from "primereact/datatable";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
 
@@ -80,7 +81,8 @@ class Main extends Component {
     modal: false,
     search: "",
     value: "",
-    selectedBudgetItem: {}
+    selectedBudgetItem: {},
+    globalFilter: null
   };
 
   // Check login status on load
@@ -574,6 +576,14 @@ class Main extends Component {
     return <span style={{ fontWeight: fontWeight }}>{rowData.amount}</span>;
   };
 
+  exportBudget = () => {
+    this.dt.exportCSV();
+  };
+
+  createRef = el => {
+    this.dt = el;
+  };
+
   createMonthLabels = () => {
     const barChartLabels = [];
 
@@ -700,6 +710,8 @@ class Main extends Component {
             tableSelectedChange={this.tableSelectedChange}
             handleItemDelete={this.handleItemDelete}
             amountTemplate={this.amountTemplate}
+            exportBudget={this.exportBudget}
+            createRef={this.createRef}
           />
           <Charts
             trueIncome={this.state.arrayForTrueIncome}

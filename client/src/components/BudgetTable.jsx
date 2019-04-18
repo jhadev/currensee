@@ -1,8 +1,10 @@
 import React from "react";
 import { DataTable, Column } from "primereact/datatable";
+import { InputText } from "primereact/inputtext";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import "./BudgetTable.css";
 
 const BudgetTable = ({
@@ -11,19 +13,35 @@ const BudgetTable = ({
   selectedBudgetItem,
   tableSelectedChange,
   handleItemDelete,
-  amountTemplate
+  amountTemplate,
+  exportBudget,
+  createRef
 }) => {
   return (
     <Card style={{ marginBottom: 20 }} className="tableCard">
       <CardContent>
-        <Typography
-          className="dashtext"
-          variant="p"
-          color="textPrimary"
-          gutterBottom
-        >
-          Budget Table
-        </Typography>
+        <div className="d-flex">
+          <div className="tableHeader">
+            <Typography
+              className="dashtext"
+              variant="p"
+              color="textPrimary"
+              gutterBottom
+            >
+              Budget Table
+            </Typography>
+          </div>
+          <div className="buttonContainer ml-auto">
+            <Button
+              variant="contained"
+              className="button csvButton"
+              color="secondary"
+              onClick={exportBudget}
+            >
+              EXPORT CSV
+            </Button>
+          </div>
+        </div>
         <Typography className="tableHeader" color="textSecondary" gutterBottom>
           Click on headers to sort
         </Typography>
@@ -31,6 +49,7 @@ const BudgetTable = ({
           Double click on corresponding table row to delete a budget item
         </Typography>
         <DataTable
+          ref={createRef}
           className="budget-table"
           paginator={true}
           rows={10}

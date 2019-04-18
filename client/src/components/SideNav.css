@@ -45,3 +45,10 @@
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
+
+@media screen and (max-width: 500px) {
+  .textField {
+    margin-bottom: 20px;
+    width: 75%;
+  }
+}

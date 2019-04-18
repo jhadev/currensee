@@ -32,25 +32,28 @@
 .p-paginator-prev:disabled,
 .p-paginator-next:disabled {
   color: rgba(7, 7, 7, 0.4) !important;
+  background-color: transparent;
 }
 
 .p-paginator-first:before {
-  content: "⯇⯇";
+  content: "first";
   font-size: 0.8rem;
 }
 
+
+
 .p-paginator-last:before {
-  content: "⯈⯈";
+  content: "last";
   font-size: 0.8rem;
 }
 
 .p-paginator-prev:before {
-  content: "⯇";
+  content: "prev";
   font-size: 0.8rem;
 }
 
 .p-paginator-next:before {
-  content: "⯈";
+  content: "next";
   font-size: 0.8rem;
 }
 

@@ -293,9 +293,9 @@ class SideNav extends Component {
             /> */}
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
-                  className="mt-4"
+                  className="mt-4 textField"
                   value={this.state.date}
-                  label="Date Picker"
+                  label="Date"
                   margin="normal"
                   onChange={this.handleDateChange}
                   placeholderText="Click to select a date"
