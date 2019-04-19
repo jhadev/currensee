@@ -169,12 +169,16 @@ const Charts = ({
                     recurring transactions up to 6 months forward. You can also
                     search Walmart.com to find products and add them to your
                     budget or view them on Walmart.com.
-                    <hr />
+                  </p>
+                  <hr />
+                  <p className="welcomeMsg">
                     After you add a transaction this message will disappear and
                     charts will replace it like magic! Once you add income, your
                     time based charts will populate. Once you add an expense
                     your spending based charts will populate.
-                    <hr />
+                  </p>
+                  <hr />
+                  <p className="welcomeMsg">
                     The table above can be used to delete budget items
                     individually or to sort by relevant the column headers. The
                     budget total at the top will represent your disposable

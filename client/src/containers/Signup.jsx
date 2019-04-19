@@ -100,6 +100,7 @@ class Signup extends Component {
                           type="text"
                           label="Username"
                           className="user m-6"
+                          placeholder="Your email address"
                           value={this.state.username}
                           onChange={this.handleInputChange}
                           margin="normal"

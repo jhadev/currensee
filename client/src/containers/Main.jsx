@@ -7,6 +7,7 @@ import Charts from "../components/Charts";
 import BudgetTable from "../components/BudgetTable";
 import DataCard from "../components/DataCard";
 import WalmartSearch from "../components/WalmartSearch";
+import StockSearch from "../components/StockSearch";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -82,7 +83,9 @@ class Main extends Component {
     value: "",
     selectedBudgetItem: {},
     globalFilter: null,
-    arrayForCatByCurrentMonth: []
+    arrayForCatByCurrentMonth: [],
+    stockSearch: { symbol: "", lastRefreshed: "", lastTradePriceOnly: "" },
+    stockToSearch: ""
   };
 
   // Check login status on load
@@ -388,6 +391,19 @@ class Main extends Component {
 
       let monthArray = [];
 
+      // const monthCompare = moment()
+      //   .subtract(2, "M")
+      //   .format("MM YYYY");
+      // month1 = res.data.filter(function(item) {
+      //   let date = `${item._id.month} ${item._id.year}`;
+      //   if (date === monthCompare) {
+      //     return true;
+      //   }
+      // });
+      // month1 = month1.map(function(item) {
+      //   return item.budgetTotal;
+      // });
+
       const monthCompare = moment()
         .subtract(2, "M")
         .format("MM");
@@ -612,6 +628,29 @@ class Main extends Component {
       });
   };
 
+  handleStockSearch = () => {
+    API.getStockInfo(this.state.stockToSearch)
+      .then(res => {
+        const symbol = res.data["Meta Data"]["2. Symbol"];
+        const lastRefreshed = res.data["Meta Data"]["3. Last Refreshed"];
+        const lastTradePriceOnly =
+          res.data["Time Series (1min)"][lastRefreshed]["4. close"];
+
+        this.setState({
+          stockSearch: {
+            symbol: symbol,
+            lastRefreshed: lastRefreshed,
+            lastTradePriceOnly: parseFloat(lastTradePriceOnly).toFixed(2)
+          },
+          itemToSearch: ""
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        this.notifyError();
+      });
+  };
+
   notifySubmit = () => {
     toast.success("Item successfully added to budget.", {
       position: "top-right",
@@ -740,6 +779,7 @@ class Main extends Component {
 
   render() {
     // If user isn't logged in, don't let them see this page
+    console.log(this.state.stockSearch);
     if (!this.state.isLoggedIn) {
       return <Redirect to="/login" />;
     }
@@ -856,6 +896,12 @@ class Main extends Component {
             itemToSearch={this.state.itemToSearch}
             handleInputChange={this.handleInputChange}
             handleSearch={this.handleSearch}
+          />
+          <StockSearch
+            stockToSearch={this.state.stockToSearch}
+            handleInputChange={this.handleInputChange}
+            handleStockSearch={this.handleStockSearch}
+            stockSearchResult={this.state.stockSearch}
           />
           <div>
             <Grid container justify="center">
