@@ -893,11 +893,16 @@ class Main extends Component {
                               <p className="itemName font-weight-bold">
                                 {item.name}
                               </p>
-                              <p className="itemDesc">
-                                {item.shortDescription.length > 200
-                                  ? `${item.shortDescription.slice(0, 200)}...`
-                                  : item.shortDescription}
-                              </p>
+                              {item.shortDescription && (
+                                <p className="itemDesc">
+                                  {item.shortDescription.length > 200
+                                    ? `${item.shortDescription.slice(
+                                        0,
+                                        200
+                                      )}...`
+                                    : item.shortDescription}
+                                </p>
+                              )}
                               <p className="itemPrice font-weight-bold">
                                 ${item.salePrice}
                               </p>
