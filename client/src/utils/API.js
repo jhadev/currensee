@@ -45,12 +45,6 @@ export default {
     );
   },
 
-  getStockInfo: function(searchTerm) {
-    return axios.get(
-      `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${searchTerm}&interval=1min&apikey=TESSEDWF9MRZHWLA`
-    );
-  },
-
   getBudget: function() {
     return axios.get("api/budget");
   },
