@@ -20,6 +20,7 @@ _This app is designed to help the end-user monitor and manage all of his expense
 - **Toast Notifications**
 - **Error Handling**
 - **Walmart searches can be added to budget, default date is now, default category is shopping. API request needs to be routed differently to avoid CORS issue. Current implementation is slow.**
+- **Added stock search with TradingView charts**
 
 ### TODO
 
