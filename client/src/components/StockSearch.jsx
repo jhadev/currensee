@@ -41,19 +41,31 @@ const StockSearch = ({
                 Search
               </Button>
             ) : stockToSearch.length === 0 ? (
-              <Button
-                variant="contained"
-                color="secondary"
-                className="btn text-center btn-outline-primary my-2"
-                onClick={handleStockSearch}
-              >
-                Clear Chart
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="text-center my-2"
+                  onClick={handleStockSearch}
+                >
+                  Clear Chart
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="text-center yahooLink m-2"
+                  target="_blank"
+                  href={`https://finance.yahoo.com/quote/${stockToSend.toUpperCase()}?p=${stockToSend.toUpperCase()}&.tsrc=fin-srch`}
+                  rel="noopener noreferrer"
+                >
+                  View on Yahoo! Finance
+                </Button>
+              </div>
             ) : (
               <Button
                 variant="contained"
                 color="secondary"
-                className="btn text-center btn-outline-primary my-2"
+                className="text-center my-2"
                 onClick={handleStockSearch}
               >
                 Search Again

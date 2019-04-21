@@ -48,6 +48,10 @@
   margin-bottom: -50px;
 }
 
+.yahooLink:hover {
+  color: white;
+}
+
 .chartCard {
   width: 80%;
   margin-bottom: 20px;
