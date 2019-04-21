@@ -23,6 +23,7 @@ import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
+import Welcome from "../components/Welcome";
 
 const drawerWidth = 300;
 
@@ -852,27 +853,32 @@ class Main extends Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <DataCard budgetTotal={this.state.budgetTotal} />
-          {/* BUDGET TABLE */}
-          <BudgetTable
-            arrayForBudgetTable={this.state.arrayForBudgetTable}
-            rowClassName={this.rowClassName}
-            selectedBudgetItem={this.state.selectedBudgetItem}
-            tableSelectedChange={this.tableSelectedChange}
-            handleItemDelete={this.handleItemDelete}
-            amountTemplate={this.amountTemplate}
-            exportBudget={this.exportBudget}
-            createRef={this.createRef}
-          />
-          <Charts
-            trueIncome={this.state.arrayForTrueIncome}
-            falseIncome={this.state.arrayForFalseIncome}
-            pieChart={this.state.arrayForPieChart}
-            monthLabels={this.state.monthLabels}
-            arrayForCatByCurrentMonth={this.state.arrayForCatByCurrentMonth}
-            budgetTotal={this.state.budgetTotal}
-            arrayForBudgetTable={this.state.arrayForBudgetTable}
-          />
+          {this.state.arrayForBudgetTable.length === 0 ? (
+            <Welcome />
+          ) : (
+            <div>
+              <DataCard budgetTotal={this.state.budgetTotal} />
+              <BudgetTable
+                arrayForBudgetTable={this.state.arrayForBudgetTable}
+                rowClassName={this.rowClassName}
+                selectedBudgetItem={this.state.selectedBudgetItem}
+                tableSelectedChange={this.tableSelectedChange}
+                handleItemDelete={this.handleItemDelete}
+                amountTemplate={this.amountTemplate}
+                exportBudget={this.exportBudget}
+                createRef={this.createRef}
+              />
+              <Charts
+                trueIncome={this.state.arrayForTrueIncome}
+                falseIncome={this.state.arrayForFalseIncome}
+                pieChart={this.state.arrayForPieChart}
+                monthLabels={this.state.monthLabels}
+                arrayForCatByCurrentMonth={this.state.arrayForCatByCurrentMonth}
+                budgetTotal={this.state.budgetTotal}
+                arrayForBudgetTable={this.state.arrayForBudgetTable}
+              />
+            </div>
+          )}
           <WalmartSearch
             itemToSearch={this.state.itemToSearch}
             handleInputChange={this.handleInputChange}

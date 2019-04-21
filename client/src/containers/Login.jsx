@@ -58,7 +58,7 @@ class Login extends Component {
     }
 
     return (
-      <div className="background">
+      <div>
         <Navigation />
         <div className="container my-5">
           <ToastContainer

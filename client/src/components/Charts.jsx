@@ -153,9 +153,7 @@ const Charts = ({
     ]
   };
 
-  return arrayForBudgetTable.length === 0 ? (
-    <Welcome />
-  ) : (
+  return (
     <div className="row justify-content-center">
       <div className="col-12">
         <Grid container justify="center">

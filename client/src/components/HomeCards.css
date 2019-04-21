@@ -14,7 +14,7 @@
   opacity: 0.4;
 }
 
-.background {
+.background-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://images.pexels.com/photos/1345089/pexels-photo-1345089.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
   background-repeat: no-repeat;
   background-size: cover;
