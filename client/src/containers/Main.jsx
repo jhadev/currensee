@@ -761,7 +761,6 @@ class Main extends Component {
 
   render() {
     // If user isn't logged in, don't let them see this page
-    console.log(this.state.stockSearch);
     if (!this.state.isLoggedIn) {
       return <Redirect to="/login" />;
     }

@@ -27,7 +27,7 @@ const StockSearch = ({
               value={stockToSearch}
               onChange={handleInputChange}
               name="stockToSearch"
-              placeholder="Search for a stock symbol"
+              placeholder="Enter a symbol, ex: AAPL, BTC"
               type="text"
               list="item-list"
             />
@@ -47,7 +47,7 @@ const StockSearch = ({
                 className="btn text-center btn-outline-primary my-2"
                 onClick={handleStockSearch}
               >
-                CLEAR
+                Clear Chart
               </Button>
             ) : (
               <Button
@@ -56,7 +56,7 @@ const StockSearch = ({
                 className="btn text-center btn-outline-primary my-2"
                 onClick={handleStockSearch}
               >
-                Search
+                Search Again
               </Button>
             )}
           </CardContent>
@@ -65,7 +65,7 @@ const StockSearch = ({
       </div>
       <div className="col-md-8 col-12">
         {stockToSend !== "" && (
-          <Card className="mb-2">
+          <Card className="widgetCard">
             <CardContent className="test">
               <TradingViewWidget
                 symbol={stockToSend}

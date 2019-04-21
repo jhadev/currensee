@@ -40,12 +40,12 @@
   font-size: 1.2rem;
 }
 
-/* .stockSearch {
-  height: 500px;
-} */
-
 .test {
-  height: 500px;
+  height: 38rem;
+}
+
+.widgetCard {
+  margin-bottom: -50px;
 }
 
 .chartCard {
