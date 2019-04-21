@@ -12,6 +12,10 @@
   border-radius: 1px;
 }
 
+.budget-table {
+  cursor: pointer;
+}
+
 .p-paginator-first,
 .p-paginator-last,
 .p-paginator-prev,

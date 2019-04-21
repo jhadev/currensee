@@ -9,11 +9,13 @@
 //   .post((req, res) => {
 //     console.log(req.body);
 //     searchTerm = req.body;
-//     res.send(req.body);
+//     res.json(req.body);
 //   })
 //   .get((req, res) => {
 //     res.json(
-//       `https://api.walmartlabs.com/v1/search?apiKey=4vqcppc7kjbk8zsktvkry97c&query=${searchTerm}`
+//       `https://api.walmartlabs.com/v1/search?apiKey=4vqcppc7kjbk8zsktvkry97c&query=${
+//         req.body
+//       }`
 //     );
 //   });
 

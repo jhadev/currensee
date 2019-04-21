@@ -1,17 +1,22 @@
-.card{
+.card {
   width: 100%;
 }
-.card-img-top {
-  opacity: 0.4;
-  object-fit: contain;
-}
 
-.card-img-top:hover {
+.image:hover {
   opacity: 1;
   cursor: pointer;
 }
 
-.img {
-  min-height: 100%
+.image {
+  width: 100%;
+  object-fit: fill !important;
+  height: 100%;
+  opacity: 0.4;
 }
 
+.background {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://images.pexels.com/photos/1345089/pexels-photo-1345089.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right center;
+}
