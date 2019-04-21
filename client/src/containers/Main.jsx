@@ -84,8 +84,8 @@ class Main extends Component {
     selectedBudgetItem: {},
     globalFilter: null,
     arrayForCatByCurrentMonth: [],
-    stockSearch: { symbol: "", lastRefreshed: "", lastTradePriceOnly: "" },
-    stockToSearch: ""
+    stockToSearch: "",
+    stockToSend: ""
   };
 
   // Check login status on load
@@ -629,26 +629,8 @@ class Main extends Component {
   };
 
   handleStockSearch = () => {
-    API.getStockInfo(this.state.stockToSearch)
-      .then(res => {
-        const symbol = res.data["Meta Data"]["2. Symbol"];
-        const lastRefreshed = res.data["Meta Data"]["3. Last Refreshed"];
-        const lastTradePriceOnly =
-          res.data["Time Series (1min)"][lastRefreshed]["4. close"];
-
-        this.setState({
-          stockSearch: {
-            symbol: symbol,
-            lastRefreshed: lastRefreshed,
-            lastTradePriceOnly: parseFloat(lastTradePriceOnly).toFixed(2)
-          },
-          itemToSearch: ""
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        this.notifyError();
-      });
+    this.setState({ stockToSend: this.state.stockToSearch });
+    this.setState({ stockToSearch: "" });
   };
 
   notifySubmit = () => {
@@ -901,7 +883,7 @@ class Main extends Component {
             stockToSearch={this.state.stockToSearch}
             handleInputChange={this.handleInputChange}
             handleStockSearch={this.handleStockSearch}
-            stockSearchResult={this.state.stockSearch}
+            stockToSend={this.state.stockToSend}
           />
           <div>
             <Grid container justify="center">
