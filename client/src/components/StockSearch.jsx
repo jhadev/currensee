@@ -13,11 +13,15 @@ const StockSearch = ({
   return (
     <div className="row justify-content-center">
       <div className="col-md-6 col-12">
-        {/* <Grid container justify="center"> */}
         <Card className="stockSearch mb-3">
           <CardContent>
-            <h2 className="text-center mb-2">Stock Search</h2>
-            <div className="text-center text-primary" />
+            <div className="text-center">
+              <img
+                src="https://user-images.githubusercontent.com/42519030/56464903-1691c280-63c1-11e9-8c35-f067abeda506.png"
+                alt="tradingview"
+                className="img-fluid walmartLogo text-center my-4"
+              />
+            </div>
             <input
               className="form-control"
               value={stockToSearch}
