@@ -41,9 +41,7 @@ export default {
 
   getWalmart: function(searchTerm) {
     return axios.get(
-      `${"https://cors-anywhere.herokuapp.com/"}https://api.walmartlabs.com/v1/search?apiKey=${
-        process.env.REACT_APP_API_KEY
-      }&query=${searchTerm}`
+      `${"https://cors-anywhere.herokuapp.com/"}https://api.walmartlabs.com/v1/search?apiKey=4vqcppc7kjbk8zsktvkry97c&query=${searchTerm}`
     );
   },
 
