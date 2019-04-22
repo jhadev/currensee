@@ -9,7 +9,8 @@ import BudgetTable from "../components/BudgetTable";
 import DataCard from "../components/DataCard";
 import WalmartSearch from "../components/WalmartSearch";
 import StockSearch from "../components/StockSearch";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import WalmartModal from "../components/WalmartModal";
+import { Modal } from "reactstrap";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -20,7 +21,6 @@ import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
@@ -899,93 +899,12 @@ class Main extends Component {
                 className={this.props.className}
                 id="modalContainer"
               >
-                <ModalHeader toggle={this.toggle}>Walmart Results</ModalHeader>
-                <ModalBody className="scrollModal">
-                  <div className="row align-items-center">
-                    {this.state.itemImages.length === 0 ? (
-                      <React.Fragment>
-                        <h3 className="p-3 text-center">Product Results</h3>
-                        <p className="p-3 wait-msg">
-                          If search items don't show up quickly, Close this
-                          modal and try again.
-                        </p>
-                      </React.Fragment>
-                    ) : (
-                      this.state.itemImages.map((item, index) => {
-                        if (item.salePrice) {
-                          return (
-                            <div
-                              key={index}
-                              className="col-12 col-md-12 text-center"
-                            >
-                              <img
-                                src={item.largeImage}
-                                alt={item}
-                                className="img-fluid rounded border border-dark my-2 productImg"
-                              />
-                              <p className="itemName font-weight-bold">
-                                {item.name}
-                              </p>
-                              {item.shortDescription && (
-                                <p className="itemDesc">
-                                  {item.shortDescription.length > 200
-                                    ? `${item.shortDescription.slice(
-                                        0,
-                                        200
-                                      )}...`
-                                    : item.shortDescription}
-                                </p>
-                              )}
-                              <p className="itemPrice font-weight-bold">
-                                ${item.salePrice}
-                              </p>
-                              {item.standardShipRate === 0 ? (
-                                <p className="itemShip">FREE SHIPPING</p>
-                              ) : (
-                                <p className="itemShip">
-                                  SHIPPING: ${item.standardShipRate}
-                                </p>
-                              )}
-                              <a
-                                target="_blank"
-                                href={item.productUrl}
-                                rel="noopener noreferrer"
-                                className="my-2 mx-1 text-center btn btn-outline-dark"
-                              >
-                                View on Walmart.com
-                              </a>
-                              <a
-                                target="_blank"
-                                href={item.addToCartUrl}
-                                rel="noopener noreferrer"
-                                className="my-2 mx-1 text-center btn btn-outline-dark"
-                              >
-                                Add To Cart
-                              </a>
-                              <button
-                                className="my-2 mx-1 text-center btn btn-dark"
-                                name={item.name}
-                                value={item.salePrice}
-                                onClick={this.handleWalmartSubmit}
-                              >
-                                Add to Budget
-                              </button>
-                            </div>
-                          );
-                        }
-                      })
-                    )}
-                  </div>
-                </ModalBody>
-                <ModalFooter>
-                  <Button
-                    variant="contained"
-                    className="button"
-                    onClick={this.toggle}
-                  >
-                    Close
-                  </Button>
-                </ModalFooter>
+                <WalmartModal
+                  toggle={this.toggle}
+                  className="walmartModal"
+                  itemImages={this.state.itemImages}
+                  walmartSubmit={this.handleWalmartSubmit}
+                />
               </Modal>
             </Grid>
           </div>
