@@ -1,6 +1,5 @@
 import React from "react";
 import moment from "moment";
-import Welcome from "./Welcome";
 import { Chart } from "primereact/chart";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";

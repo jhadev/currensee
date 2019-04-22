@@ -12,7 +12,8 @@
   border-radius: 1px;
 }
 
-.budget-table {
+.budget-table,
+.p-datatable-row {
   cursor: pointer;
 }
 

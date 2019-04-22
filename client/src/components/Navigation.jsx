@@ -24,7 +24,7 @@ class Navigation extends Component {
 
   render() {
     return (
-      <div className="layer">
+      <div className="sticky-top layer">
         <Navbar className="shadow" dark fixed="fixed" expand="md">
           <NavbarBrand href="/">curren$ee</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />

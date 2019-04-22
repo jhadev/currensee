@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import moment from "moment";
 import API from "../utils/API";
 import SideNav from "../components/SideNav";
+import Welcome from "../components/Welcome";
 import Charts from "../components/Charts";
 import BudgetTable from "../components/BudgetTable";
 import DataCard from "../components/DataCard";
@@ -23,7 +24,6 @@ import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Main.css";
-import Welcome from "../components/Welcome";
 
 const drawerWidth = 300;
 

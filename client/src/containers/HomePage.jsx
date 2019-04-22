@@ -21,7 +21,7 @@ class HomePage extends Component {
         <Navigation />
         <div>
           <Jumbotron />
-          <div className="container-fluid ">
+          <div className="container-fluid background-image mb-1">
             <div className="row">
               <div className="col">
                 <div className="card-group">
