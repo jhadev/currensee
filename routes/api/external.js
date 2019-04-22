@@ -13,7 +13,7 @@
 //   })
 //   .get((req, res) => {
 //     res.json(
-//       `https://api.walmartlabs.com/v1/search?apiKey=4vqcppc7kjbk8zsktvkry97c&query=${
+//       `https://api.walmartlabs.com/v1/search?apiKey=API_KEY&query=${
 //         req.body
 //       }`
 //     );
