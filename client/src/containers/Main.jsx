@@ -110,6 +110,9 @@ class Main extends Component {
         })
       )
       .then(res => {
+        this.setState({
+          activePageHeader: `Dashboard // ${this.state.username}`
+        });
         this.getCategorySum();
         this.getBudgetTable();
         this.getBudgetSum();
