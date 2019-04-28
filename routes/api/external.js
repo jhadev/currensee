@@ -5,7 +5,7 @@ require("dotenv").config();
 // Matches with "/api/external/
 
 let searchTerm;
-let wegmansProductData = [];
+let wegmansProductLinks = [];
 
 router
   .route("/walmart")
@@ -49,36 +49,39 @@ router
         //ABSOLUTE MESS
         console.log(response.data);
         let data = response.data.results;
-
         const getData = async arr => {
           return await Promise.all(
             arr.map((item, index) => {
-              let route = JSON.stringify(item._links[0].href).slice(1, -1);
-
-              axios
-                .get(
-                  `https://api.wegmans.io${route}&subscription-key=${
-                    process.env.WEG_API_KEY
-                  }`
-                )
-                .then(response => {
-                  console.log(response.data);
-                  wegmansProductData.push(response.data);
-                  console.log(wegmansProductData);
-                  return wegmansProductData;
-                })
-                .catch(error => console.log(error));
+              let link = `https://api.wegmans.io${JSON.stringify(
+                item._links[0].href
+              ).slice(1, -1)}&subscription-key=${process.env.WEG_API_KEY}`;
+              wegmansProductLinks.push(link);
             })
           );
         };
-
-        getData(data);
-      })
-      .catch(error => console.log(error));
-
-    if (wegmansProductData.length === 10) {
-      res.json(wegmansProductData);
-    }
+        //eek gotta be an easier way
+        getData(data).then(response => {
+          axios
+            .all([
+              axios.get(wegmansProductLinks[0]),
+              axios.get(wegmansProductLinks[1]),
+              axios.get(wegmansProductLinks[2]),
+              axios.get(wegmansProductLinks[3]),
+              axios.get(wegmansProductLinks[4])
+            ])
+            .then(
+              axios.spread((first, second, third, fourth, fifth) => {
+                res.json([
+                  first.data,
+                  second.data,
+                  third.data,
+                  fourth.data,
+                  fifth.data
+                ]);
+              })
+            );
+        });
+      });
   });
 
 module.exports = router;
