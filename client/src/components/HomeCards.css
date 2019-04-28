@@ -10,7 +10,7 @@
 .image {
   width: 100%;
   object-fit: fill !important;
-  height: 100%;
+  height: 250px;
   opacity: 0.4;
 }
 
