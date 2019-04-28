@@ -10,6 +10,7 @@ router
   .route("/walmart")
   .post((req, res) => {
     searchTerm = JSON.stringify(req.body);
+    console.log(req.body);
     res.json(req.body);
   })
   .get((req, res) => {
@@ -21,6 +22,7 @@ router
         }&query=${searchTerm}`
       )
       .then(response => {
+        console.log(response.data.items);
         res.json(response.data.items);
       })
       .catch(error => console.log(error));
