@@ -39,14 +39,6 @@ export default {
     return axios.post("/api/budget", userInfo);
   },
 
-  getWalmart: function(searchTerm) {
-    return axios.get(
-      `${"https://cors-anywhere.herokuapp.com/"}https://api.walmartlabs.com/v1/search?apiKey=${
-        process.env.REACT_APP_API_KEY
-      }&query=${searchTerm}`
-    );
-  },
-
   getBudget: function() {
     return axios.get("api/budget");
   },
@@ -76,5 +68,13 @@ export default {
 
   getDelete: function(id) {
     return axios.delete(`api/budget/id/${id}`);
+  },
+
+  searchWalmart: function(searchTerm) {
+    return axios.post(`api/external/walmart`, searchTerm);
+  },
+
+  getWalmart: function() {
+    return axios.get(`api/external/walmart`);
   }
 };

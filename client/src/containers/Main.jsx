@@ -98,6 +98,10 @@ class Main extends Component {
     this.setState({
       modal: !this.state.modal
     });
+
+    if (!this.state.modal) {
+      this.setState({ itemImages: [] });
+    }
   };
 
   // Check login status
@@ -599,7 +603,6 @@ class Main extends Component {
         this.getBudgetSum();
         this.getSumByMonthFalse();
         this.getSumByMonthTrue();
-        this.createMonthLabels();
         this.getCategorySumForCurrentMonth();
         this.notifyRemoval();
       })
@@ -619,12 +622,16 @@ class Main extends Component {
   handleSearch = event => {
     event.preventDefault();
     this.toggle();
-    API.getWalmart(this.state.itemToSearch)
+    API.searchWalmart(this.state.itemToSearch)
       .then(res => {
-        this.setState({
-          itemImages: res.data.items,
-          itemToSearch: ""
-        });
+        API.getWalmart()
+          .then(res => {
+            this.setState({
+              itemImages: res.data,
+              itemToSearch: ""
+            });
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => {
         this.notifyError();
