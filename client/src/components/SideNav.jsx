@@ -51,7 +51,7 @@ const styles = theme => ({
 class SideNav extends Component {
   state = {
     description: "",
-    amount: null,
+    amount: 0,
     category: "",
     date: new Date(),
     income: true,
@@ -220,7 +220,7 @@ class SideNav extends Component {
         <Typography
           className="logo"
           align="center"
-          variant="p"
+          variant="h3"
           color="textPrimary"
         >
           curren$ee
@@ -228,7 +228,7 @@ class SideNav extends Component {
         <Divider />
         <Grid className="logout" container justify="center">
           <Button
-            variant="flat"
+            variant="text"
             size="small"
             color="secondary"
             className="button"
@@ -300,7 +300,7 @@ class SideNav extends Component {
                   label="Date"
                   margin="normal"
                   onChange={this.handleDateChange}
-                  placeholderText="Click to select a date"
+                  placeholder="Click to select a date"
                 />
               </MuiPickersUtilsProvider>
               <FormGroup row className="ml-2">

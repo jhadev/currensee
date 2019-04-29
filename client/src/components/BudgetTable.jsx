@@ -1,5 +1,6 @@
 import React from "react";
-import { DataTable, Column } from "primereact/datatable";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -23,7 +24,7 @@ const BudgetTable = ({
           <div className="tableHeader">
             <Typography
               className="dashtext"
-              variant="p"
+              variant="h4"
               color="textPrimary"
               gutterBottom
             >

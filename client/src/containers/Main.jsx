@@ -806,7 +806,12 @@ class Main extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="p" className="dashtext" color="inherit" noWrap>
+            <Typography
+              variant="subtitle1"
+              className="dashtext"
+              color="inherit"
+              noWrap
+            >
               {this.state.activePageHeader}
             </Typography>
           </Toolbar>
