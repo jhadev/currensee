@@ -40,7 +40,7 @@ router
     //testing api call
     axios
       .get(
-        `https://api.wegmans.io/products/search?query=apples&api-version=2018-10-18&results=10&subscription-key=${
+        `https://api.wegmans.io/products/search?query=${searchTerm}&api-version=2018-10-18&results=10&subscription-key=${
           process.env.WEG_API_KEY
         }`
       )
@@ -78,6 +78,7 @@ router
                   fourth.data,
                   fifth.data
                 ]);
+                wegmansProductLinks = [];
               })
             );
         });

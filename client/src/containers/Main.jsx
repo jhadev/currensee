@@ -8,6 +8,7 @@ import Charts from "../components/Charts";
 import BudgetTable from "../components/BudgetTable";
 import DataCard from "../components/DataCard";
 import WalmartSearch from "../components/WalmartSearch";
+import WegmansSearch from "../components/WegmansSearch";
 import StockSearch from "../components/StockSearch";
 import WalmartModal from "../components/WalmartModal";
 import { Modal } from "reactstrap";
@@ -67,6 +68,7 @@ class Main extends Component {
     username: "",
     itemToSearch: "",
     itemImages: [],
+    wegData: [],
     mobileOpen: false,
     walmart: {},
     categoryRange: "",
@@ -100,7 +102,7 @@ class Main extends Component {
     });
 
     if (!this.state.modal) {
-      this.setState({ itemImages: [] });
+      this.setState({ itemImages: [], wegData: [] });
     }
   };
 
@@ -639,6 +641,26 @@ class Main extends Component {
       });
   };
 
+  handleWegSearch = event => {
+    event.preventDefault();
+    this.toggle();
+    API.searchWegmans(this.state.itemToSearch)
+      .then(res => {
+        API.getWegmans()
+          .then(res => {
+            this.setState({
+              wegData: res.data,
+              itemToSearch: ""
+            });
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => {
+        this.notifyError();
+        console.log(err);
+      });
+  };
+
   handleStockSearch = () => {
     this.setState({ stockToSend: this.state.stockToSearch });
     this.setState({ stockToSearch: "" });
@@ -771,6 +793,7 @@ class Main extends Component {
   };
 
   render() {
+    console.log(this.state.wegData);
     // If user isn't logged in, don't let them see this page
     if (!this.state.isLoggedIn) {
       return <Redirect to="/login" />;
@@ -898,6 +921,11 @@ class Main extends Component {
             itemToSearch={this.state.itemToSearch}
             handleInputChange={this.handleInputChange}
             handleSearch={this.handleSearch}
+          />
+          <WegmansSearch
+            itemToSearch={this.state.itemToSearch}
+            handleInputChange={this.handleInputChange}
+            handleSearch={this.handleWegSearch}
           />
           <StockSearch
             stockToSearch={this.state.stockToSearch}

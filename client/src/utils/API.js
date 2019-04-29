@@ -76,5 +76,13 @@ export default {
 
   getWalmart: function() {
     return axios.get(`api/external/walmart`);
+  },
+
+  searchWegmans: function(searchTerm) {
+    return axios.post(`api/external/wegmans`, searchTerm);
+  },
+
+  getWegmans: function() {
+    return axios.get(`api/external/wegmans`);
   }
 };
