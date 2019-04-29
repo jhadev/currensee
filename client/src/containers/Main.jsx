@@ -11,6 +11,7 @@ import WalmartSearch from "../components/WalmartSearch";
 import WegmansSearch from "../components/WegmansSearch";
 import StockSearch from "../components/StockSearch";
 import WalmartModal from "../components/WalmartModal";
+import WegmansModal from "../components/WegmansModal";
 import { Modal } from "reactstrap";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -942,11 +943,20 @@ class Main extends Component {
                 className={this.props.className}
                 id="modalContainer"
               >
+                {/* {this.state.itemImages.length > 0 && ( */}
                 <WalmartModal
                   toggle={this.toggle}
                   className="walmartModal"
                   itemImages={this.state.itemImages}
                   walmartSubmit={this.handleWalmartSubmit}
+                />
+
+                {/* // {this.state.wegData.length > 0 && ( */}
+                <WegmansModal
+                  toggle={this.toggle}
+                  className="wegmansModal"
+                  wegData={this.state.wegData}
+                  wegSubmit={this.wegSubmit}
                 />
               </Modal>
             </Grid>
