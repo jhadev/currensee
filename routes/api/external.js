@@ -6,6 +6,7 @@ require("dotenv").config();
 
 let searchTerm;
 let wegmansProductLinks = [];
+let wegmansPriceLinks = [];
 
 router
   .route("/walmart")
@@ -71,13 +72,67 @@ router
             ])
             .then(
               axios.spread((first, second, third, fourth, fifth) => {
-                res.json([
+                let productData = [
                   first.data,
                   second.data,
                   third.data,
                   fourth.data,
                   fifth.data
-                ]);
+                ];
+
+                const getPriceData = async arr => {
+                  return await Promise.all(
+                    arr.map((item, index) => {
+                      let link = `https://api.wegmans.io${JSON.stringify(
+                        item._links[2].href
+                      ).slice(1, -1)}&subscription-key=${
+                        process.env.WEG_API_KEY
+                      }`;
+                      wegmansPriceLinks.push(link);
+                      console.log(wegmansPriceLinks);
+                    })
+                  );
+                };
+
+                getPriceData(productData)
+                  .then(response => {
+                    res.json(wegmansPriceLinks);
+                    axios.all([
+                      axios.get(wegmansPriceLinks[0]),
+                      axios.get(wegmansPriceLinks[1]),
+                      axios.get(wegmansPriceLinks[2]),
+                      axios.get(wegmansPriceLinks[3]),
+                      axios.get(wegmansPriceLinks[4])
+                    ]);
+                  })
+                  .then(
+                    axios.spread(
+                      (
+                        productOne,
+                        productTwo,
+                        productThree,
+                        productFour,
+                        productFive
+                      ) => {
+                        console.log(
+                          productOne,
+                          productTwo,
+                          productThree,
+                          productFour,
+                          productFive
+                        );
+                        wegmansPriceLinks = [];
+                        wegmansProductLinks = [];
+                        // res.json([
+                        //   first.data,
+                        //   second.data,
+                        //   third.data,
+                        //   fourth.data,
+                        //   fifth.data
+                        // ]);
+                      }
+                    )
+                  );
               })
             );
         });

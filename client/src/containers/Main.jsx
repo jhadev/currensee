@@ -17,7 +17,6 @@ import Hidden from "@material-ui/core/Hidden";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
@@ -114,9 +113,6 @@ class Main extends Component {
         })
       )
       .then(res => {
-        this.setState({
-          activePageHeader: `Dashboard // ${this.state.username}`
-        });
         this.getCategorySum();
         this.getBudgetTable();
         this.getBudgetSum();
@@ -196,99 +192,69 @@ class Main extends Component {
 
     API.getSumByCategory().then(res => {
       let categorySumList = [];
-      console.log(res.data);
 
-      let cat1 = res.data.filter(function(item) {
-        if (
-          item._id.category === "Health" &&
-          item._id.year === thisYear &&
-          item._id.month === thisMonth
-        ) {
-          //console.log(item._id.category);
-          return true;
-        }
-      });
-      cat1 = cat1.map(function(item) {
-        return item.categoryTotal;
-      });
-      //console.log(cat1);
-      let cat2 = res.data.filter(function(item) {
-        if (
-          item._id.category === "Home" &&
-          item._id.year === thisYear &&
-          item._id.month === thisMonth
-        ) {
-          return true;
-        }
-      });
-      cat2 = cat2.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat1 = res.data
+        .filter(
+          item =>
+            item._id.category === "Health" &&
+            item._id.year === thisYear &&
+            item._id.month === thisMonth
+        )
+        .map(item => item.categoryTotal);
 
-      let cat3 = res.data.filter(function(item) {
-        if (
-          item._id.category === "Other" &&
-          item._id.year === thisYear &&
-          item._id.month === thisMonth
-        ) {
-          return true;
-        }
-      });
-      cat3 = cat3.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat2 = res.data
+        .filter(
+          item =>
+            item._id.category === "Home" &&
+            item._id.year === thisYear &&
+            item._id.month === thisMonth
+        )
+        .map(item => item.categoryTotal);
 
-      let cat4 = res.data.filter(function(item) {
-        if (
-          item._id.category === "Savings" &&
-          item._id.year === thisYear &&
-          item._id.month === thisMonth
-        ) {
-          return true;
-        }
-      });
-      cat4 = cat4.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat3 = res.data
+        .filter(
+          item =>
+            item._id.category === "Other" &&
+            item._id.year === thisYear &&
+            item._id.month === thisMonth
+        )
+        .map(item => item.categoryTotal);
 
-      let cat5 = res.data.filter(function(item) {
-        if (
-          item._id.category === "Shopping" &&
-          item._id.year === thisYear &&
-          item._id.month === thisMonth
-        ) {
-          return true;
-        }
-      });
-      cat5 = cat5.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat4 = res.data
+        .filter(
+          item =>
+            item._id.category === "Savings" &&
+            item._id.year === thisYear &&
+            item._id.month === thisMonth
+        )
+        .map(item => item.categoryTotal);
 
-      let cat6 = res.data.filter(function(item) {
-        if (
-          item._id.category === "Travel" &&
-          item._id.year === thisYear &&
-          item._id.month === thisMonth
-        ) {
-          return true;
-        }
-      });
-      cat6 = cat6.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat5 = res.data
+        .filter(
+          item =>
+            item._id.category === "Shopping" &&
+            item._id.year === thisYear &&
+            item._id.month === thisMonth
+        )
+        .map(item => item.categoryTotal);
 
-      let cat7 = res.data.filter(function(item) {
-        if (
-          item._id.category === "Utilities" &&
-          item._id.year === thisYear &&
-          item._id.month === thisMonth
-        ) {
-          return true;
-        }
-      });
-      cat7 = cat7.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat6 = res.data
+        .filter(
+          item =>
+            item._id.category === "Travel" &&
+            item._id.year === thisYear &&
+            item._id.month === thisMonth
+        )
+        .map(item => item.categoryTotal);
+
+      let cat7 = res.data
+        .filter(
+          item =>
+            item._id.category === "Utilities" &&
+            item._id.year === thisYear &&
+            item._id.month === thisMonth
+        )
+        .map(item => item.categoryTotal);
 
       categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
       console.log(categorySumList);
@@ -308,69 +274,33 @@ class Main extends Component {
       let categorySumList = [];
       console.log(res.data);
 
-      let cat1 = res.data.filter(function(item) {
-        if (item._id.category === "Health") {
-          //console.log(item._id.category);
-          return true;
-        }
-      });
-      cat1 = cat1.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat1 = res.data
+        .filter(item => item._id.category === "Health")
+        .map(item => item.categoryTotal);
       //console.log(cat1);
-      let cat2 = res.data.filter(function(item) {
-        if (item._id.category === "Home") {
-          return true;
-        }
-      });
-      cat2 = cat2.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat2 = res.data
+        .filter(item => item._id.category === "Home")
+        .map(item => item.categoryTotal);
 
-      let cat3 = res.data.filter(function(item) {
-        if (item._id.category === "Other") {
-          return true;
-        }
-      });
-      cat3 = cat3.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat3 = res.data
+        .filter(item => item._id.category === "Other")
+        .map(item => item.categoryTotal);
 
-      let cat4 = res.data.filter(function(item) {
-        if (item._id.category === "Savings") {
-          return true;
-        }
-      });
-      cat4 = cat4.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat4 = res.data
+        .filter(item => item._id.category === "Savings")
+        .map(item => item.categoryTotal);
 
-      let cat5 = res.data.filter(function(item) {
-        if (item._id.category === "Shopping") {
-          return true;
-        }
-      });
-      cat5 = cat5.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat5 = res.data
+        .filter(item => item._id.category === "Shopping")
+        .map(item => item.categoryTotal);
 
-      let cat6 = res.data.filter(function(item) {
-        if (item._id.category === "Travel") {
-          return true;
-        }
-      });
-      cat6 = cat6.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat6 = res.data
+        .filter(item => item._id.category === "Travel")
+        .map(item => item.categoryTotal);
 
-      let cat7 = res.data.filter(function(item) {
-        if (item._id.category === "Utilities") {
-          return true;
-        }
-      });
-      cat7 = cat7.map(function(item) {
-        return item.categoryTotal;
-      });
+      let cat7 = res.data
+        .filter(item => item._id.category === "Utilities")
+        .map(item => item.categoryTotal);
 
       categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
 
@@ -415,81 +345,61 @@ class Main extends Component {
       const monthCompare = moment()
         .subtract(2, "M")
         .format("MM");
-      month1 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month1 = month1.map(function(item) {
-        return item.budgetTotal;
-      });
+      month1 = res.data
+        .filter(
+          item => item._id.month === monthCompare && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
         .subtract(1, "M")
         .format("MM");
       //console.log("COMPARE MONTH 2: " + monthCompare2);
-      month2 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare2 && item._id.year === thisYear) {
-          console.log(month2);
-          return true;
-        }
-      });
-      month2 = month2.map(function(item) {
-        return item.budgetTotal;
-      });
+      month2 = res.data
+        .filter(
+          item => item._id.month === monthCompare2 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH TWO: " + JSON.stringify(month2));
 
       const monthCompare3 = moment().format("MM");
       //console.log("MONTH COMPARISON THREE: " + monthCompare3);
-      month3 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare3 && item._id.year === thisYear) {
-          return true;
-        }
-        //console.log("ITEM.ID.MONTH THREE: " + item._id.month);
-      });
-      month3 = month3.map(function(item) {
-        return item.budgetTotal;
-      });
+      month3 = res.data
+        .filter(
+          item => item._id.month === monthCompare3 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
         .add(1, "M")
         .format("MM");
-      month4 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare4 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month4 = month4.map(function(item) {
-        return item.budgetTotal;
-      });
+      res.data
+        .filter(
+          item => item._id.month === monthCompare4 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
         .add(2, "M")
         .format("MM");
-      month5 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare5 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month5 = month5.map(function(item) {
-        return item.budgetTotal;
-      });
+      month5 = res.data
+        .filter(
+          item => item._id.month === monthCompare5 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
         .add(3, "M")
         .format("MM");
-      month6 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare6 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month6 = month6.map(function(item) {
-        return item.budgetTotal;
-      });
+      month6 = res.data
+        .filter(
+          item => item._id.month === monthCompare6 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH SIX: " + JSON.stringify(month6));
 
       monthArray = [month1, month2, month3, month4, month5, month6];
@@ -514,77 +424,59 @@ class Main extends Component {
       const monthCompare = moment()
         .subtract(2, "M")
         .format("MM");
-      month1 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month1 = month1.map(function(item) {
-        return item.budgetTotal;
-      });
+      month1 = res.data
+        .filter(
+          item => item._id.month === monthCompare && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
         .subtract(1, "M")
         .format("MM");
-      month2 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare2 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month2 = month2.map(function(item) {
-        return item.budgetTotal;
-      });
+      month2 = res.data
+        .filter(
+          item => item._id.month === monthCompare2 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH TWO: " + JSON.stringify(month2));
 
       const monthCompare3 = moment().format("MM");
-      month3 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare3 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month3 = month3.map(function(item) {
-        return item.budgetTotal;
-      });
+      month3 = res.data
+        .filter(
+          item => item._id.month === monthCompare3 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
         .add(1, "M")
         .format("MM");
-      month4 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare4 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month4 = month4.map(function(item) {
-        return item.budgetTotal;
-      });
+      month4 = res.data
+        .filter(
+          item => item._id.month === monthCompare4 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
         .add(2, "M")
         .format("MM");
-      month5 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare5 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month5 = month5.map(function(item) {
-        return item.budgetTotal;
-      });
+      month5 = res.data
+        .filter(
+          item => item._id.month === monthCompare5 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
         .add(3, "M")
         .format("MM");
-      month6 = res.data.filter(function(item) {
-        if (item._id.month === monthCompare6 && item._id.year === thisYear) {
-          return true;
-        }
-      });
-      month6 = month6.map(function(item) {
-        return item.budgetTotal;
-      });
+      month6 = res.data
+        .filter(
+          item => item._id.month === monthCompare6 && item._id.year === thisYear
+        )
+        .map(item => item.budgetTotal);
       //console.log("MONTH SIX: " + JSON.stringify(month6));
 
       monthArray = [month1, month2, month3, month4, month5, month6];
@@ -806,14 +698,13 @@ class Main extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              variant="subtitle1"
-              className="dashtext"
-              color="inherit"
-              noWrap
-            >
-              {this.state.activePageHeader}
-            </Typography>
+            <div className="d-flex">
+              <div className="dashtext">{this.state.activePageHeader}</div>
+              <div className="dashtext">
+                {"\u00A0"}
+                {`- ${this.state.username}`}
+              </div>
+            </div>
           </Toolbar>
         </AppBar>
         <nav className={classes.drawer}>
