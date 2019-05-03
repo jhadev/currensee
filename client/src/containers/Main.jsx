@@ -618,8 +618,14 @@ class Main extends Component {
   amountTemplate = (rowData, column) => {
     let amount = rowData.amount;
     let fontWeight = amount >= 500 ? "bold" : "normal";
-
     return <span style={{ fontWeight: fontWeight }}>{rowData.amount}</span>;
+  };
+
+  dateTemplate = rowData => {
+    let thisMonth = moment().format("MM");
+    let tableDate = rowData.date.substring(0, 2);
+    let fontWeight = tableDate === thisMonth ? "bold" : "normal";
+    return <span style={{ fontWeight: fontWeight }}>{rowData.date}</span>;
   };
 
   exportBudget = () => {
@@ -771,6 +777,7 @@ class Main extends Component {
                 tableSelectedChange={this.tableSelectedChange}
                 handleItemDelete={this.handleItemDelete}
                 amountTemplate={this.amountTemplate}
+                dateTemplate={this.dateTemplate}
                 exportBudget={this.exportBudget}
                 createRef={this.createRef}
               />

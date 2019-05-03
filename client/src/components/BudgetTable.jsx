@@ -14,8 +14,10 @@ const BudgetTable = ({
   tableSelectedChange,
   handleItemDelete,
   amountTemplate,
+  dateTemplate,
   exportBudget,
-  createRef
+  createRef,
+  editDesc
 }) => {
   return (
     <Card style={{ marginBottom: 20 }} className="tableCard">
@@ -66,6 +68,7 @@ const BudgetTable = ({
             field="date"
             sortable="true"
             header="Date"
+            body={dateTemplate}
           />
           <Column
             className="table-data"
