@@ -38,17 +38,21 @@ const BudgetTable = ({
     return dataForCurrentMonth;
   };
 
-  const footer = (
+  const totals = (
     <div className="mt-2 text-center">
       <div className="row justfy-content-center my-1">
         <div className="col-12">
           <span className="income m-1">
-            Total Income for {moment().format("MMMM, YYYY")}:{" "}
-            <strong>${dataForThisMonth("true").toFixed(2)}</strong>
+            Income for {moment().format("MMMM, YYYY")}: {/* COLOR HERE */}
+            <strong className="surplus1">
+              ${dataForThisMonth("true").toFixed(2)}
+            </strong>
           </span>
           <span className="expenses m-1">
-            Total Expenses for {moment().format("MMMM, YYYY")}:{" "}
-            <strong>${dataForThisMonth("false").toFixed(2)}</strong>
+            Expenses for {moment().format("MMMM, YYYY")}: {/* COLOR HERE */}
+            <strong className="deficit1">
+              ${dataForThisMonth("false").toFixed(2)}
+            </strong>
           </span>
         </div>
       </div>
@@ -109,7 +113,7 @@ const BudgetTable = ({
       <DataCard
         dataForThisMonth={dataForThisMonth}
         budgetTotal={budgetTotal}
-        breakdown={footer}
+        breakdown={totals}
       />
       <Card style={{ marginBottom: 20 }} className="tableCard">
         <CardContent>
@@ -161,7 +165,7 @@ const BudgetTable = ({
             selection={selectedBudgetItem}
             onSelectionChange={tableSelectedChange}
             onRowDoubleClick={handleItemDelete}
-            footer={footer}
+            footer={totals}
             sortMode="multiple"
             reorderableColumns={true}
           >
