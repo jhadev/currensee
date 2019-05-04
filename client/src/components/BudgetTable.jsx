@@ -18,8 +18,10 @@ const BudgetTable = ({
   createRef,
   income,
   expenses,
-  budgetTotal
+  budgetTotal,
+  deleteItem
 }) => {
+  console.log(arrayForBudgetTable);
   const thisMonth = moment().format("MM");
   const thisYear = moment().format("YYYY");
 
@@ -65,10 +67,15 @@ const BudgetTable = ({
 
   const actionTemplate = (rowData, column) => {
     return (
-      <div>
-        <Button variant="contained" className="button" color="primary">
+      <div className="wrap">
+        <button
+          className="btn deleteBtn"
+          value={rowData._id}
+          // value={selectedBudgetItem._id}
+          onClick={deleteItem}
+        >
           X
-        </Button>
+        </button>
       </div>
     );
   };
@@ -189,6 +196,12 @@ const BudgetTable = ({
               field="income"
               header="Income"
               sortable="true"
+            />
+            <Column
+              className="delete"
+              field="_id"
+              header="Delete"
+              body={actionTemplate}
             />
           </DataTable>
         </CardContent>

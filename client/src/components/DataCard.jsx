@@ -30,7 +30,7 @@ const DataCard = ({ budgetTotal, dataForThisMonth, breakdown }) => {
               <div>{children[1]}</div>
               <hr />
               <h3>
-                {total > 0 ? "SURPLUS" : "DEFICIT"} FOR {formattedDate} $
+                {total > 0 ? "SURPLUS" : "DEFICIT"} FOR {formattedDate}: $
                 {totalForThisMonth().toFixed(2)}
               </h3>
               <div>{children[0]}</div>

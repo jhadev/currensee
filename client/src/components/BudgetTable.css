@@ -62,3 +62,15 @@ table {
   border: 2px solid black;
   padding: 2px;
 }
+
+.deleteBtn {
+  background-color: #f50057 !important;
+  color: white !important;
+  font-size: 0.8rem;
+  border-color: #f50057 !important;
+
+}
+
+.delete {
+  width: 5%;
+}

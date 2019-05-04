@@ -86,7 +86,8 @@ class Main extends Component {
     globalFilter: null,
     arrayForCatByCurrentMonth: [],
     stockToSearch: "",
-    stockToSend: ""
+    stockToSend: "",
+    itemToDelete: ""
   };
 
   // Check login status on load
@@ -497,6 +498,29 @@ class Main extends Component {
     });
   };
 
+  deleteItem = event => {
+    const { value } = event.target;
+    this.setState({ itemToDelete: value }, this.handleClickDelete);
+  };
+
+  handleClickDelete = event => {
+    API.getDelete(this.state.itemToDelete)
+      .then(res => {
+        //console.log(res.data);
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.getCategorySumForCurrentMonth();
+        this.notifyRemoval();
+      })
+      .catch(err => {
+        console.log(err);
+        this.notifyError();
+      });
+  };
+
   handleItemDelete = event => {
     API.getDelete(event.data._id)
       .then(res => {
@@ -772,6 +796,7 @@ class Main extends Component {
                 expenses={this.state.totalExpense}
                 income={this.state.totalIncome}
                 budgetTotal={this.state.budgetTotal}
+                deleteItem={this.deleteItem}
               />
               <Charts
                 trueIncome={this.state.arrayForTrueIncome}
