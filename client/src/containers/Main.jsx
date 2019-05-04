@@ -6,7 +6,6 @@ import SideNav from "../components/SideNav";
 import Welcome from "../components/Welcome";
 import Charts from "../components/Charts";
 import BudgetTable from "../components/BudgetTable";
-import DataCard from "../components/DataCard";
 import WalmartSearch from "../components/WalmartSearch";
 import StockSearch from "../components/StockSearch";
 import WalmartModal from "../components/WalmartModal";
@@ -763,7 +762,6 @@ class Main extends Component {
             <Welcome />
           ) : (
             <div>
-              <DataCard budgetTotal={this.state.budgetTotal} />
               <BudgetTable
                 arrayForBudgetTable={this.state.arrayForBudgetTable}
                 selectedBudgetItem={this.state.selectedBudgetItem}
@@ -773,6 +771,7 @@ class Main extends Component {
                 createRef={this.createRef}
                 expenses={this.state.totalExpense}
                 income={this.state.totalIncome}
+                budgetTotal={this.state.budgetTotal}
               />
               <Charts
                 trueIncome={this.state.arrayForTrueIncome}

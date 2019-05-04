@@ -1,4 +1,5 @@
 import React from "react";
+import DataCard from "./DataCard";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Card from "@material-ui/core/Card";
@@ -16,7 +17,8 @@ const BudgetTable = ({
   exportBudget,
   createRef,
   income,
-  expenses
+  expenses,
+  budgetTotal
 }) => {
   const thisMonth = moment().format("MM");
   const thisYear = moment().format("YYYY");
@@ -40,11 +42,11 @@ const BudgetTable = ({
         <div className="col-12">
           <span className="expenses m-1">
             Total Income for {moment().format("MMMM, YYYY")}:{" "}
-            <strong>${dataForThisMonth("true").toFixed(2)}</strong>
+            <strong>${dataForThisMonth("true")}</strong>
           </span>
           <span className="expenses m-1">
             Total Expenses for {moment().format("MMMM, YYYY")}:{" "}
-            <strong>${dataForThisMonth("false").toFixed(2)}</strong>
+            <strong>${dataForThisMonth("false")}</strong>
           </span>
         </div>
       </div>
@@ -60,8 +62,6 @@ const BudgetTable = ({
       </div>
     </div>
   );
-
-  console.log(arrayForBudgetTable);
 
   const actionTemplate = (rowData, column) => {
     return (
@@ -98,87 +98,102 @@ const BudgetTable = ({
   };
 
   return (
-    <Card style={{ marginBottom: 20 }} className="tableCard">
-      <CardContent>
-        <div className="d-flex">
-          <div className="tableHeader">
-            <Typography
-              className="dashtext"
-              variant="h4"
-              color="textPrimary"
-              gutterBottom
-            >
-              Budget Table
-            </Typography>
+    <div>
+      <DataCard
+        dataForThisMonth={dataForThisMonth}
+        budgetTotal={budgetTotal}
+        breakdown={footer}
+      />
+      <Card style={{ marginBottom: 20 }} className="tableCard">
+        <CardContent>
+          <div className="d-flex">
+            <div className="tableHeader">
+              <Typography
+                className="dashtext"
+                variant="h4"
+                color="textPrimary"
+                gutterBottom
+              >
+                Budget Table
+              </Typography>
+            </div>
+            <div className="buttonContainer ml-auto">
+              <Button
+                variant="contained"
+                className="button csvButton"
+                color="secondary"
+                onClick={exportBudget}
+              >
+                EXPORT CSV
+              </Button>
+            </div>
           </div>
-          <div className="buttonContainer ml-auto">
-            <Button
-              variant="contained"
-              className="button csvButton"
-              color="secondary"
-              onClick={exportBudget}
-            >
-              EXPORT CSV
-            </Button>
-          </div>
-        </div>
-        <Typography className="tableHeader" color="textSecondary" gutterBottom>
-          Click on headers to sort
-        </Typography>
-        <Typography className="tableHeader" color="textSecondary" gutterBottom>
-          Double click on corresponding table row to delete a budget item
-        </Typography>
-        <DataTable
-          ref={createRef}
-          className="budget-table"
-          paginator={true}
-          rows={15}
-          tableStyle={{ width: "100%" }}
-          value={arrayForBudgetTable}
-          rowClassName={rowClassName}
-          selectionMode="single"
-          selection={selectedBudgetItem}
-          onSelectionChange={tableSelectedChange}
-          onRowDoubleClick={handleItemDelete}
-          footer={footer}
-          sortMode="multiple"
-          reorderableColumns={true}
-        >
-          <Column
-            className="table-data"
-            field="date"
-            sortable="true"
-            header="Date"
-            body={dateTemplate}
-          />
-          <Column
-            className="table-data"
-            field="description"
-            header="Description"
-            sortable="true"
-          />
-          <Column
-            className="table-data"
-            field="amount"
-            sortable="true"
-            header="Amount"
-            body={amountTemplate}
-          />
-          <Column
-            className="table-data"
-            field="category"
-            header="Category"
-            sortable="true"
-          />
-          <Column
-            className="table-data"
-            field="income"
-            header="Income"
-            sortable="true"
-          />
-        </DataTable>
-      </CardContent>
-    </Card>
+          <Typography
+            className="tableHeader"
+            color="textSecondary"
+            gutterBottom
+          >
+            Click on headers to sort
+          </Typography>
+          <Typography
+            className="tableHeader"
+            color="textSecondary"
+            gutterBottom
+          >
+            Double click on corresponding table row to delete a budget item
+          </Typography>
+          <DataTable
+            ref={createRef}
+            className="budget-table"
+            paginator={true}
+            rows={15}
+            tableStyle={{ width: "100%" }}
+            value={arrayForBudgetTable}
+            rowClassName={rowClassName}
+            selectionMode="single"
+            selection={selectedBudgetItem}
+            onSelectionChange={tableSelectedChange}
+            onRowDoubleClick={handleItemDelete}
+            footer={footer}
+            sortMode="multiple"
+            reorderableColumns={true}
+          >
+            <Column
+              className="table-data"
+              field="date"
+              sortable="true"
+              header="Date"
+              body={dateTemplate}
+            />
+            <Column
+              className="table-data"
+              field="description"
+              header="Description"
+              sortable="true"
+            />
+            <Column
+              className="table-data"
+              field="amount"
+              sortable="true"
+              header="Amount"
+              body={amountTemplate}
+            />
+            <Column
+              className="table-data"
+              field="category"
+              header="Category"
+              sortable="true"
+            />
+            <Column
+              className="table-data"
+              field="income"
+              header="Income"
+              sortable="true"
+            />
+          </DataTable>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
