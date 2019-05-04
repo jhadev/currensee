@@ -22,15 +22,11 @@ const Charts = ({
   arrayForBudgetTable
 }) => {
   const [chartChoice, setChart] = useState("pie");
+  const [timeChartChoice, setTimeChart] = useState("bar");
 
-  const handleChartChoice = event => {
-    const { name, value } = event.target;
-    setChart(value);
-  };
-
-  console.log(chartChoice);
   const month = moment().format("MMMM");
   const year = moment().format("YYYY");
+
   const pieData = {
     responsive: true,
     maintainAspectRatio: false,
@@ -141,6 +137,54 @@ const Charts = ({
     ]
   };
 
+  const comboData = {
+    labels: monthLabels,
+    datasets: [
+      {
+        type: "line",
+        label: "Income",
+        borderColor: "#2196F3",
+        borderWidth: 2,
+        fill: false,
+        data: trueIncome
+      },
+      {
+        type: "line",
+        label: "Expenses",
+        borderColor: "#ff3059",
+        borderWidth: 2,
+        fill: true,
+        data: falseIncome
+      },
+      {
+        type: "bar",
+        label: "Income",
+        backgroundColor: "#4CAF50",
+        data: trueIncome,
+        borderColor: "white",
+        borderWidth: 2
+      },
+      {
+        type: "bar",
+        label: "Expenses",
+        backgroundColor: "#FFC107",
+        data: falseIncome
+      }
+    ]
+  };
+
+  const options = {
+    responsive: true,
+    title: {
+      display: false,
+      text: "Combo Bar Line Chart"
+    },
+    tooltips: {
+      mode: "index",
+      intersect: true
+    }
+  };
+
   const radarData = {
     responsive: true,
     labels: [
@@ -168,7 +212,6 @@ const Charts = ({
 
   return (
     <div>
-      <div />
       <div className="row justify-content-center">
         <div className="col-12">
           <Grid container justify="center">
@@ -183,7 +226,7 @@ const Charts = ({
                       </InputLabel>
                       <Select
                         value={chartChoice}
-                        onChange={handleChartChoice}
+                        onChange={e => setChart(e.target.value)}
                         input={<Input name="chartChoice" id="chart-helper" />}
                       >
                         <MenuItem value={"pie"}>Pie Chart</MenuItem>
@@ -200,7 +243,6 @@ const Charts = ({
                   </h3>
                 </div>
               </div>
-
               <CardContent className="chartCardContent">
                 <div className="content-section implementation">
                   {chartChoice === "pie" ? (
@@ -236,26 +278,52 @@ const Charts = ({
         <div className="col-12">
           <Grid container justify="center">
             <Card className="chartCard">
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  <h3 className="text-center chartHeading">
-                    Income vs Expense By Month ({year})
-                  </h3>
-                  <Chart className="chart" type="bar" data={barData} />
+              <div className="row justify-content-start">
+                <div className="col-md-4 col-sm-8 col-8">
+                  {/* <Card className="pickerCard"> */}
+                  <div className="dropWrapper">
+                    <FormControl color="secondary" className="chartDrop">
+                      <InputLabel htmlFor="time-chart-helper">
+                        Choose Chart Type
+                      </InputLabel>
+                      <Select
+                        value={timeChartChoice}
+                        onChange={e => setTimeChart(e.target.value)}
+                        input={
+                          <Input
+                            name="timeChartChoice"
+                            id="time-chart-helper"
+                          />
+                        }
+                      >
+                        <MenuItem value={"bar"}>Bar Chart</MenuItem>
+                        <MenuItem value={"line"}>Line Chart</MenuItem>
+                        <MenuItem value={"combo"}>Combo Chart</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                  {/* </Card> */}
                 </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
-        <div className="col-12">
-          <Grid container justify="center">
-            <Card className="chartCard">
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  <h3 className="text-center chartHeading">
+                <div className="col-md-4 col-sm-12 col-12">
+                  <h3 className="text-center catChartHeader chartHeading">
                     Income vs Expense By Month ({year})
                   </h3>
-                  <Chart className="chart" type="line" data={lineData} />
+                </div>
+              </div>
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  {timeChartChoice === "bar" ? (
+                    <Chart className="chart" type="bar" data={barData} />
+                  ) : timeChartChoice === "line" ? (
+                    <Chart className="chart" type="line" data={lineData} />
+                  ) : timeChartChoice === "combo" ? (
+                    <Chart
+                      className="chart"
+                      type="bar"
+                      options={options}
+                      data={comboData}
+                    />
+                  ) : null}
                 </div>
               </CardContent>
             </Card>

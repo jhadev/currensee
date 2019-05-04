@@ -10,7 +10,7 @@ _This app is designed to help the end-user monitor and manage all of his expense
 
 **UPDATED 4/13/2019: Removed MongoDB 4.0 dependency**
 
-### NEW FEATURES (4/17/2019)
+### NEW FEATURES
 
 - **Table Pagination**
 - **New Data Visualization: Line Chart**
@@ -21,6 +21,7 @@ _This app is designed to help the end-user monitor and manage all of his expense
 - **Error Handling**
 - **Walmart searches can be added to budget, default date is now, default category is shopping.**
 - **Added stock search with TradingView charts**
+- **Added ability to choose chart types for Total Spending By Category (Pie, Radar, Polar Area) and Income vs Expenses By Month (Bar, Line, and Combo)**
 
 ### TODO
 
