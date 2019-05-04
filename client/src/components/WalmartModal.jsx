@@ -36,7 +36,7 @@ const WalmartModal = ({ toggle, itemImages, walmartSubmit }) => {
                       </p>
                     )}
                     <p className="itemPrice font-weight-bold">
-                      ${item.salePrice}
+                      ${item.salePrice.toFixed(2)}
                     </p>
                     {item.standardShipRate === 0 ? (
                       <p className="itemShip">FREE SHIPPING</p>
@@ -64,7 +64,7 @@ const WalmartModal = ({ toggle, itemImages, walmartSubmit }) => {
                     <button
                       className="my-2 mx-1 text-center btn btn-dark"
                       name={item.name}
-                      value={item.salePrice}
+                      value={item.salePrice.toFixed(2)}
                       onClick={walmartSubmit}
                     >
                       Add to Budget

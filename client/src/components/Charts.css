@@ -20,6 +20,10 @@
   /* background-color: #f50057 !important; */
 }
 
+.border-pink {
+  border-radius: 5px;
+}
+
 .chartGrid {
   padding: 1.2rem;
 }

@@ -219,8 +219,11 @@ const Charts = ({
                 <div className="col-md-4 col-sm-8 col-8">
                   {/* <Card className="pickerCard"> */}
                   <div className="dropWrapper">
-                    <FormControl color="secondary" className="chartDrop">
-                      <InputLabel htmlFor="chart-helper">
+                    <FormControl
+                      color="secondary"
+                      className="chartDrop p-3 border border-pink"
+                    >
+                      <InputLabel className="m-2" htmlFor="chart-helper">
                         Choose Chart Type
                       </InputLabel>
                       <Select
@@ -281,8 +284,11 @@ const Charts = ({
                 <div className="col-md-4 col-sm-8 col-8">
                   {/* <Card className="pickerCard"> */}
                   <div className="dropWrapper">
-                    <FormControl color="secondary" className="chartDrop">
-                      <InputLabel htmlFor="time-chart-helper">
+                    <FormControl
+                      color="secondary"
+                      className="chartDrop p-3 border border-pink"
+                    >
+                      <InputLabel className="m-2" htmlFor="time-chart-helper">
                         Choose Chart Type
                       </InputLabel>
                       <Select

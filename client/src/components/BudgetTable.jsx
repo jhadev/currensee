@@ -18,16 +18,50 @@ const BudgetTable = ({
   income,
   expenses
 }) => {
+  const thisMonth = moment().format("MM");
+  const thisYear = moment().format("YYYY");
+
+  const dataForThisMonth = str => {
+    let dataForCurrentMonth = arrayForBudgetTable
+      .filter(
+        income =>
+          income.income === str &&
+          income.month === thisMonth &&
+          income.year === thisYear
+      )
+      .map(income => income.amount)
+      .reduce((a, b) => a + b, 0);
+    return dataForCurrentMonth;
+  };
+
   const footer = (
     <div className="mt-2 text-center">
-      <span className="income m-1">
-        Total Income: <strong>${income.toFixed(2)}</strong>
-      </span>
-      <span className="expenses m-1">
-        Total Expenses: <strong>${expenses.toFixed(2)}</strong>
-      </span>
+      <div className="row justfy-content-center my-1">
+        <div className="col-12">
+          <span className="expenses m-1">
+            Total Income for {moment().format("MMMM, YYYY")}:{" "}
+            <strong>${dataForThisMonth("true").toFixed(2)}</strong>
+          </span>
+          <span className="expenses m-1">
+            Total Expenses for {moment().format("MMMM, YYYY")}:{" "}
+            <strong>${dataForThisMonth("false").toFixed(2)}</strong>
+          </span>
+        </div>
+      </div>
+      <div className="row justfy-content-center mt-1">
+        <div className="col-12">
+          <span className="income m-1">
+            Total Income: <strong>${income.toFixed(2)}</strong>
+          </span>
+          <span className="expenses m-1">
+            Total Expenses: <strong>${expenses.toFixed(2)}</strong>
+          </span>
+        </div>
+      </div>
     </div>
   );
+
+  console.log(arrayForBudgetTable);
 
   const actionTemplate = (rowData, column) => {
     return (
@@ -47,7 +81,12 @@ const BudgetTable = ({
   const amountTemplate = (rowData, column) => {
     const { amount } = rowData;
     const fontWeight = amount >= 500 ? "bold" : "normal";
-    return <span style={{ fontWeight: fontWeight }}>{rowData.amount}</span>;
+
+    return (
+      <span style={{ fontWeight: fontWeight }}>
+        {!Number.isInteger(amount) ? amount.toFixed(2) : amount}
+      </span>
+    );
   };
 
   const dateTemplate = rowData => {
@@ -55,7 +94,7 @@ const BudgetTable = ({
     const thisMonth = moment().format("MM");
     const tableDate = date.substring(0, 2);
     const fontWeight = tableDate === thisMonth ? "bold" : "normal";
-    return <span style={{ fontWeight: fontWeight }}>{rowData.date}</span>;
+    return <span style={{ fontWeight: fontWeight }}>{date}</span>;
   };
 
   return (
