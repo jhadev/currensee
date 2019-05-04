@@ -622,24 +622,6 @@ class Main extends Component {
     console.log(this.state.selectedBudgetItem);
   };
 
-  rowClassName = rowData => {
-    let incomeRow = rowData.income;
-    return { highlightRed: incomeRow === "false" };
-  };
-
-  amountTemplate = (rowData, column) => {
-    let amount = rowData.amount;
-    let fontWeight = amount >= 500 ? "bold" : "normal";
-    return <span style={{ fontWeight: fontWeight }}>{rowData.amount}</span>;
-  };
-
-  dateTemplate = rowData => {
-    let thisMonth = moment().format("MM");
-    let tableDate = rowData.date.substring(0, 2);
-    let fontWeight = tableDate === thisMonth ? "bold" : "normal";
-    return <span style={{ fontWeight: fontWeight }}>{rowData.date}</span>;
-  };
-
   exportBudget = () => {
     this.dt.exportCSV();
   };

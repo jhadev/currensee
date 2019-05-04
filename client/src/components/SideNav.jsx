@@ -177,23 +177,21 @@ class SideNav extends Component {
       income: true,
       category: "",
       value: "",
-      budget: {}
+      budget: {},
+      recurring: false
     });
   };
   //RADIO BUTTON METHODS
   handleChangeRadio = event => {
     this.setState({ value: event.target.value });
-    console.log(this.state.income);
   };
 
   handleInputTrue = event => {
     this.setState({ income: true });
-    console.log(this.state.income);
   };
 
   handleInputFalse = event => {
     this.setState({ income: false });
-    console.log(this.state.income);
   };
 
   render = () => {
@@ -335,7 +333,7 @@ class SideNav extends Component {
                 </FormControl>
               </Grid>
             )}
-            <Grid className="allMargin catForm" container justify="center">
+            <Grid className="allMargin catForm mt-1" container justify="center">
               <FormControl className="dropdownCat catForm">
                 <InputLabel htmlFor="category-helper">Category</InputLabel>
                 <Select
