@@ -42,13 +42,13 @@ const BudgetTable = ({
     <div className="mt-2 text-center">
       <div className="row justfy-content-center my-1">
         <div className="col-12">
-          <span className="expenses m-1">
+          <span className="income m-1">
             Total Income for {moment().format("MMMM, YYYY")}:{" "}
-            <strong>${dataForThisMonth("true")}</strong>
+            <strong>${dataForThisMonth("true").toFixed(2)}</strong>
           </span>
           <span className="expenses m-1">
             Total Expenses for {moment().format("MMMM, YYYY")}:{" "}
-            <strong>${dataForThisMonth("false")}</strong>
+            <strong>${dataForThisMonth("false").toFixed(2)}</strong>
           </span>
         </div>
       </div>

@@ -3,6 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import moment from "moment";
+import "./DataCard.css";
 
 const DataCard = ({ budgetTotal, dataForThisMonth, breakdown }) => {
   const totalForThisMonth = () => {
@@ -23,15 +24,25 @@ const DataCard = ({ budgetTotal, dataForThisMonth, breakdown }) => {
           <Card className="total-sum">
             <CardContent className="text-center" style={{ marginBottom: -10 }}>
               {budgetTotal <= 0 ? (
-                <h3>BUDGET TOTAL: ${budgetTotal.toFixed(2)}</h3>
+                <h3>
+                  BUDGET TOTAL:{" "}
+                  <span className="deficit">${budgetTotal.toFixed(2)}</span>
+                </h3>
               ) : (
-                <h3>DISPOSABLE INCOME: ${budgetTotal.toFixed(2)}</h3>
+                <h3>
+                  DISPOSABLE INCOME:{" "}
+                  <span className="surplus">${budgetTotal.toFixed(2)}</span>
+                </h3>
               )}
               <div>{children[1]}</div>
               <hr />
               <h3>
-                {total > 0 ? "SURPLUS" : "DEFICIT"} FOR {formattedDate}: $
-                {totalForThisMonth().toFixed(2)}
+                {total > 0 ? (
+                  <span className="surplus">SURPLUS</span>
+                ) : (
+                  <span className="deficit">DEFICIT</span>
+                )}{" "}
+                FOR {formattedDate}: ${totalForThisMonth().toFixed(2)}
               </h3>
               <div>{children[0]}</div>
             </CardContent>
