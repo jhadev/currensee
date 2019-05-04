@@ -6,3 +6,35 @@
   font-size: 1.1rem;
   line-height: 1.5;
 }
+
+.chartDrop {
+  width: 80%;
+}
+
+.dropWrapper {
+  padding: 2rem;
+}
+
+.pickerCard {
+  padding: 1.2rem;
+  /* background-color: #f50057 !important; */
+}
+
+.chartGrid {
+  padding: 1.2rem;
+}
+
+.catChartHeader {
+  margin-top: 2rem
+}
+
+.chartHeading {
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 990px) {
+  .dropWrapper {
+    padding: 1rem;
+  }
+
+}

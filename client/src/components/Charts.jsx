@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { Chart } from "primereact/chart";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Select from "@material-ui/core/Select";
 import "../containers/Main.css";
 import "./Charts.css";
 
@@ -15,6 +21,14 @@ const Charts = ({
   arrayForCatByCurrentMonth,
   arrayForBudgetTable
 }) => {
+  const [chartChoice, setChart] = useState("pie");
+
+  const handleChartChoice = event => {
+    const { name, value } = event.target;
+    setChart(value);
+  };
+
+  console.log(chartChoice);
   const month = moment().format("MMMM");
   const year = moment().format("YYYY");
   const pieData = {
@@ -153,80 +167,100 @@ const Charts = ({
   };
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-12">
-        <Grid container justify="center">
-          <Card className="chartCard">
-            <CardContent className="chartCardContent">
-              <div className="content-section implementation">
-                <h3 className="text-center chartHeading">
-                  Total Spending by Category
-                </h3>
-                <Chart className="chart" type="pie" data={pieData} />
+    <div>
+      <div />
+      <div className="row justify-content-center">
+        <div className="col-12">
+          <Grid container justify="center">
+            <Card className="chartCard">
+              <div className="row justify-content-start">
+                <div className="col-md-4 col-sm-8 col-8">
+                  {/* <Card className="pickerCard"> */}
+                  <div className="dropWrapper">
+                    <FormControl color="secondary" className="chartDrop">
+                      <InputLabel htmlFor="chart-helper">
+                        Choose Chart Type
+                      </InputLabel>
+                      <Select
+                        value={chartChoice}
+                        onChange={handleChartChoice}
+                        input={<Input name="chartChoice" id="chart-helper" />}
+                      >
+                        <MenuItem value={"pie"}>Pie Chart</MenuItem>
+                        <MenuItem value={"radar"}>Radar Chart</MenuItem>
+                        <MenuItem value={"polar"}>Polar Chart</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                  {/* </Card> */}
+                </div>
+                <div className="col-md-4 col-sm-12 col-12">
+                  <h3 className="text-center catChartHeader chartHeading">
+                    Total Spending by Category
+                  </h3>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </Grid>
-      </div>
-      <div className="col-12">
-        <Grid container justify="center">
-          <Card className="chartCard">
-            <CardContent className="chartCardContent">
-              <div className="content-section implementation">
-                <h3 className="text-center chartHeading">
-                  Spending by Category for {month}, {year}
-                </h3>
-                <Chart
-                  className="chart"
-                  type="doughnut"
-                  data={doughnutForCurrentMonth}
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-      </div>
-      <div className="col-12">
-        <Grid container justify="center">
-          <Card className="chartCard">
-            <CardContent className="chartCardContent">
-              <div className="content-section implementation">
-                <h3 className="text-center chartHeading">
-                  Income vs Expense By Month ({year})
-                </h3>
-                <Chart className="chart" type="bar" data={barData} />
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-      </div>
-      <div className="col-12">
-        <Grid container justify="center">
-          <Card className="chartCard">
-            <CardContent className="chartCardContent">
-              <div className="content-section implementation">
-                <h3 className="text-center chartHeading">
-                  Income vs Expense By Month ({year})
-                </h3>
-                <Chart className="chart" type="line" data={lineData} />
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-      </div>
-      <div className="col-12">
-        <Grid container justify="center">
-          <Card className="chartCard">
-            <CardContent className="chartCardContent">
-              <div className="content-section implementation">
-                <h3 className="text-center chartHeading">
-                  Radar (Spending By Category)
-                </h3>
-                <Chart className="chart" type="radar" data={radarData} />
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
+
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  {chartChoice === "pie" ? (
+                    <Chart className="chart" type="pie" data={pieData} />
+                  ) : chartChoice === "radar" ? (
+                    <Chart className="chart" type="radar" data={radarData} />
+                  ) : chartChoice === "polar" ? (
+                    <Chart className="chart" type="polarArea" data={pieData} />
+                  ) : null}
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        </div>
+        <div className="col-12">
+          <Grid container justify="center">
+            <Card className="chartCard">
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  <h3 className="text-center chartHeading">
+                    Spending by Category for {month}, {year}
+                  </h3>
+                  <Chart
+                    className="chart"
+                    type="doughnut"
+                    data={doughnutForCurrentMonth}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        </div>
+        <div className="col-12">
+          <Grid container justify="center">
+            <Card className="chartCard">
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  <h3 className="text-center chartHeading">
+                    Income vs Expense By Month ({year})
+                  </h3>
+                  <Chart className="chart" type="bar" data={barData} />
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        </div>
+        <div className="col-12">
+          <Grid container justify="center">
+            <Card className="chartCard">
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  <h3 className="text-center chartHeading">
+                    Income vs Expense By Month ({year})
+                  </h3>
+                  <Chart className="chart" type="line" data={lineData} />
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        </div>
       </div>
     </div>
   );

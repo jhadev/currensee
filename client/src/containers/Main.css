@@ -75,6 +75,10 @@
     left: 0px;
     z-index: 10040;
   }
+
+  .chartDrop {
+    width: 50%;
+  }
 }
 
 @media screen and (max-width: 500px) {
