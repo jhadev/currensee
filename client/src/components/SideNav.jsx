@@ -3,12 +3,7 @@ import API from "../utils/API";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
-import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from "@material-ui/icons/Home";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -239,17 +234,18 @@ class SideNav extends Component {
           </Button>
         </Grid>
         <Divider />
-        <Grid container justify="center">
-          <List className="homeContainer">
-            <Link to={`/`}>
-              <ListItem button>
-                <ListItemIcon>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText className="home" primary={"Home"} />
-              </ListItem>
-            </Link>
-          </List>
+        <Grid container className="logout" justify="center">
+          <Link to={"/"}>
+            <Button
+              variant="text"
+              size="small"
+              color="primary"
+              className="button"
+              type="submit"
+            >
+              Home
+            </Button>
+          </Link>
         </Grid>
         <Divider />
         <div className="container">

@@ -5,20 +5,59 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import moment from "moment";
 import "./BudgetTable.css";
 
 const BudgetTable = ({
   arrayForBudgetTable,
-  rowClassName,
   selectedBudgetItem,
   tableSelectedChange,
   handleItemDelete,
-  amountTemplate,
-  dateTemplate,
   exportBudget,
   createRef,
-  editDesc
+  income,
+  expenses
 }) => {
+  const footer = (
+    <div className="mt-2 text-center">
+      <span className="income m-1">
+        Total Income: <strong>${income.toFixed(2)}</strong>
+      </span>
+      <span className="expenses m-1">
+        Total Expenses: <strong>${expenses.toFixed(2)}</strong>
+      </span>
+    </div>
+  );
+
+  const actionTemplate = (rowData, column) => {
+    return (
+      <div>
+        <Button variant="contained" className="button" color="primary">
+          X
+        </Button>
+      </div>
+    );
+  };
+
+  const rowClassName = rowData => {
+    const { income } = rowData;
+    return { highlightRed: income === "false" };
+  };
+
+  const amountTemplate = (rowData, column) => {
+    const { amount } = rowData;
+    const fontWeight = amount >= 500 ? "bold" : "normal";
+    return <span style={{ fontWeight: fontWeight }}>{rowData.amount}</span>;
+  };
+
+  const dateTemplate = rowData => {
+    const { date } = rowData;
+    const thisMonth = moment().format("MM");
+    const tableDate = date.substring(0, 2);
+    const fontWeight = tableDate === thisMonth ? "bold" : "normal";
+    return <span style={{ fontWeight: fontWeight }}>{rowData.date}</span>;
+  };
+
   return (
     <Card style={{ marginBottom: 20 }} className="tableCard">
       <CardContent>
@@ -62,6 +101,9 @@ const BudgetTable = ({
           selection={selectedBudgetItem}
           onSelectionChange={tableSelectedChange}
           onRowDoubleClick={handleItemDelete}
+          footer={footer}
+          sortMode="multiple"
+          reorderableColumns={true}
         >
           <Column
             className="table-data"

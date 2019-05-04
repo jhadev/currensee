@@ -75,6 +75,8 @@ class Main extends Component {
     arrayForBudgetTable: [],
     arrayForSumByIncome: [],
     budgetTotal: 0,
+    totalIncome: 0,
+    totalExpense: 0,
     arrayForTrueIncome: [],
     arrayForFalseIncome: [],
     monthLabels: [],
@@ -159,27 +161,37 @@ class Main extends Component {
       arrayForSumByIncome[0]._id.income === false
     ) {
       this.setState({
-        budgetTotal: arrayForSumByIncome[0].budgetTotal * -1
+        budgetTotal: arrayForSumByIncome[0].budgetTotal * -1,
+        totalExpense: arrayForSumByIncome[0].budgetTotal
       });
     } else if (
       arrayForSumByIncome.length === 1 &&
       arrayForSumByIncome[0]._id.income === true
     ) {
       this.setState({
-        budgetTotal: arrayForSumByIncome[0].budgetTotal
+        budgetTotal: arrayForSumByIncome[0].budgetTotal,
+        totalIncome: arrayForSumByIncome[0].budgetTotal
       });
     } else if (arrayForSumByIncome.length === 2) {
       if (arrayForSumByIncome[0]._id.income === true) {
         let income = arrayForSumByIncome[0].budgetTotal;
         let expense = arrayForSumByIncome[1].budgetTotal;
         let budgetTotal = income - expense;
-        this.setState({ budgetTotal: budgetTotal });
+        this.setState({
+          budgetTotal: budgetTotal,
+          totalIncome: income,
+          totalExpense: expense
+        });
       }
       if (arrayForSumByIncome[0]._id.income === false) {
         let expense = arrayForSumByIncome[0].budgetTotal;
         let income = arrayForSumByIncome[1].budgetTotal;
         let budgetTotal = income - expense;
-        this.setState({ budgetTotal: budgetTotal });
+        this.setState({
+          budgetTotal: budgetTotal,
+          totalIncome: income,
+          totalExpense: expense
+        });
       }
     } else {
       this.setState({ budgetTotal: 0 });
@@ -772,14 +784,13 @@ class Main extends Component {
               <DataCard budgetTotal={this.state.budgetTotal} />
               <BudgetTable
                 arrayForBudgetTable={this.state.arrayForBudgetTable}
-                rowClassName={this.rowClassName}
                 selectedBudgetItem={this.state.selectedBudgetItem}
                 tableSelectedChange={this.tableSelectedChange}
                 handleItemDelete={this.handleItemDelete}
-                amountTemplate={this.amountTemplate}
-                dateTemplate={this.dateTemplate}
                 exportBudget={this.exportBudget}
                 createRef={this.createRef}
+                expenses={this.state.totalExpense}
+                income={this.state.totalIncome}
               />
               <Charts
                 trueIncome={this.state.arrayForTrueIncome}

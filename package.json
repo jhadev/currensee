@@ -36,6 +36,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.4.0",
+    "primeicons": "^1.0.0",
     "primereact": "^3.1.2",
     "react-datepicker": "^2.4.0",
     "react-moment": "^0.8.4",

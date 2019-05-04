@@ -16,6 +16,11 @@
   font-size: 1rem !important;
 }
 
+.income,
+.expenses {
+  font-size: 1.1rem;
+}
+
 .content-section {
   padding: 5px;
 }
@@ -76,6 +81,11 @@
   .chartCard {
     width: 100%;
     /* height: 300%; */
+  }
+
+  .income,
+  .expenses {
+    font-size: 1rem;
   }
 
   .scrollModal {

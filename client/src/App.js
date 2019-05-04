@@ -4,6 +4,7 @@ import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import Main from "./containers/Main";
 import HomePage from "./containers/HomePage";
+import "primeicons/primeicons.css";
 import "./App.css";
 
 //import Dashboard from "./containers/Dashboard";

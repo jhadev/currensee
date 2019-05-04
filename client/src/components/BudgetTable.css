@@ -1,3 +1,8 @@
+.budget-table,
+.p-datatable-row {
+  cursor: pointer;
+}
+
 .p-paginator-page {
   position: relative;
   display: inline-block;
@@ -10,11 +15,6 @@
   font-weight: bold;
   margin-top: 3px;
   border-radius: 1px;
-}
-
-.budget-table,
-.p-datatable-row {
-  cursor: pointer;
 }
 
 .p-paginator-first,
@@ -38,26 +38,6 @@
 .p-paginator-next:disabled {
   color: rgba(7, 7, 7, 0.4) !important;
   background-color: transparent;
-}
-
-.p-paginator-first:before {
-  content: "first";
-  font-size: 0.8rem;
-}
-
-.p-paginator-last:before {
-  content: "last";
-  font-size: 0.8rem;
-}
-
-.p-paginator-prev:before {
-  content: "prev";
-  font-size: 0.8rem;
-}
-
-.p-paginator-next:before {
-  content: "next";
-  font-size: 0.8rem;
 }
 
 .p-highlight {
