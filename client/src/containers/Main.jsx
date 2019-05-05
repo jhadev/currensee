@@ -87,7 +87,10 @@ class Main extends Component {
     arrayForCatByCurrentMonth: [],
     stockToSearch: "",
     stockToSend: "",
-    itemToDelete: ""
+    itemToDelete: "",
+    arrayForCatSumList: [],
+    topCatChart: [],
+    topCategory: ""
   };
 
   // Check login status on load
@@ -131,25 +134,13 @@ class Main extends Component {
 
   getBudgetTable = () => {
     API.getMonth().then(res => {
-      // console.log("BUDGET DATA" + JSON.stringify(res.data));
-
       this.setState({ arrayForBudgetTable: res.data });
-      console.log(
-        "ARRAY FOR BUDGET DATA: " +
-          JSON.stringify(this.state.arrayForBudgetTable)
-      );
     });
   };
 
   getBudgetSum = () => {
     API.getSumByIncome().then(res => {
-      console.log("BUDGET DATA" + JSON.stringify(res.data));
-
       this.setState({ arrayForSumByIncome: res.data }, this.setBudgetSum);
-      console.log(
-        "ARRAY FOR BUDGET SUM: " +
-          JSON.stringify(this.state.arrayForSumByIncome)
-      );
     });
   };
 
@@ -268,31 +259,12 @@ class Main extends Component {
 
   getCategorySum = () => {
     API.getSumByCategory().then(res => {
+      this.setState({ arrayForCatSumList: res.data });
       let categorySumList = [];
-      // const catList = [
-      //   "Health",
-      //   "Home",
-      //   "Other",
-      //   "Savings",
-      //   "Shopping",
-      //   "Travel",
-      //   "Utilities"
-      // ];
-
-      // const data = res.data;
-
-      // for (let i = 0; i < catList.length; i++) {
-      //   let eachCategory = data
-      //     .filter(item => item._id.category === catList[i])
-      //     .map(item => item.categoryTotal);
-      //   eachCategory = [eachCategory];
-      //   categorySumList.push(eachCategory);
-      // }
-
       let cat1 = res.data
         .filter(item => item._id.category === "Health")
         .map(item => item.categoryTotal);
-      //console.log(cat1);
+
       let cat2 = res.data
         .filter(item => item._id.category === "Home")
         .map(item => item.categoryTotal);
@@ -324,18 +296,144 @@ class Main extends Component {
           categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
         }
       }
-      this.setState({ arrayForPieChart: categorySumList });
+      this.setState(
+        { arrayForPieChart: categorySumList },
+        this.getTopCategoryOverTime
+      );
     });
   };
 
   getTopCategoryOverTime = () => {
-    //map over getSumByCategory, store it in state
-    //map over that array in state return category, fullDate, and categoryTotal
-    //reduce and sum by categoryTotal
-    //group in array as objects with category and sum
-    //find the category that has the highest sum and store a ref to it in a variable
-    //use that category to filter state again and return where date equals dates for chart.
-    //setState with that data
+    //destructure array of arrays in state
+    let [
+      health,
+      home,
+      other,
+      savings,
+      shopping,
+      travel,
+      utilities
+    ] = this.state.arrayForPieChart;
+
+    //destructure arrays to get only sums
+    let [healthSum] = health;
+    let [homeSum] = home;
+    let [otherSum] = other;
+    let [savingsSum] = savings;
+    let [shoppingSum] = shopping;
+    let [travelSum] = travel;
+    let [utilitiesSum] = utilities;
+    //put them back in an array
+    let sumArr = [
+      healthSum,
+      homeSum,
+      otherSum,
+      savingsSum,
+      shoppingSum,
+      travelSum,
+      utilitiesSum
+    ];
+
+    //if there is no value set to 0
+    for (let i = 0; i < sumArr.length; i++) {
+      if (sumArr[i] === undefined) {
+        sumArr[i] = 0;
+      }
+    }
+    //find index for the max value
+    let topCatIndex = sumArr.indexOf(Math.max(...sumArr));
+    //declare top category
+    let topCategory = "";
+    //turn index into category name
+    switch (topCatIndex) {
+      case 0:
+        topCategory = "Health";
+        break;
+      case 1:
+        topCategory = "Home";
+        break;
+      case 2:
+        topCategory = "Other";
+        break;
+      case 3:
+        topCategory = "Savings";
+        break;
+      case 4:
+        topCategory = "Shopping";
+        break;
+      case 5:
+        topCategory = "Travel";
+        break;
+      case 6:
+        topCategory = "Utilities";
+        break;
+    }
+
+    let filterByTopCategory = this.state.arrayForCatSumList.filter(
+      category => category._id.category === topCategory
+    );
+
+    let month1 = 0;
+    let month2 = 0;
+    let month3 = 0;
+    let month4 = 0;
+    let month5 = 0;
+    let month6 = 0;
+
+    let monthArray = [];
+
+    const monthCompare = moment()
+      .subtract(2, "M")
+      .format("MM/YYYY");
+
+    month1 = filterByTopCategory
+      .filter(item => item._id.fullDate === monthCompare)
+      .map(item => item.categoryTotal);
+    //console.log("MONTH ONE: " + JSON.stringify(month1));
+
+    const monthCompare2 = moment()
+      .subtract(1, "M")
+      .format("MM/YYYY");
+    //console.log("COMPARE MONTH 2: " + monthCompare2);
+    month2 = filterByTopCategory
+      .filter(item => item._id.fullDate === monthCompare2)
+      .map(item => item.categoryTotal);
+    //console.log("MONTH TWO: " + JSON.stringify(month2));
+
+    const monthCompare3 = moment().format("MM/YYYY");
+    //console.log("MONTH COMPARISON THREE: " + monthCompare3);
+    month3 = filterByTopCategory
+      .filter(item => item._id.fullDate === monthCompare3)
+      .map(item => item.categoryTotal);
+    //console.log("MONTH THREE: " + JSON.stringify(month3));
+
+    const monthCompare4 = moment()
+      .add(1, "M")
+      .format("MM/YYYY");
+    month4 = filterByTopCategory
+      .filter(item => item._id.fullDate === monthCompare4)
+      .map(item => item.categoryTotal);
+    //console.log("MONTH FOUR: " + JSON.stringify(month4));
+
+    const monthCompare5 = moment()
+      .add(2, "M")
+      .format("MM/YYYY");
+    month5 = filterByTopCategory
+      .filter(item => item._id.fullDate === monthCompare5)
+      .map(item => item.categoryTotal);
+    //console.log("MONTH FIVE: " + JSON.stringify(month5));
+
+    const monthCompare6 = moment()
+      .add(3, "M")
+      .format("MM/YYYY");
+    month6 = filterByTopCategory
+      .filter(item => item._id.fullDate === monthCompare6)
+      .map(item => item.categoryTotal);
+    //console.log("MONTH SIX: " + JSON.stringify(month6));
+
+    monthArray = [month1, month2, month3, month4, month5, month6];
+
+    this.setState({ topCatChart: monthArray, topCategory: topCategory });
   };
 
   getSumByMonthTrue = () => {
@@ -542,6 +640,7 @@ class Main extends Component {
     this.setState({ stockToSearch: "" });
   };
 
+  //START NOTIFICATIONS
   notifySubmit = () => {
     toast.success("Item successfully added to budget.", {
       position: "top-right",
@@ -574,6 +673,7 @@ class Main extends Component {
       draggable: true
     });
   };
+  //END NOTIFICATIONS
 
   handleWalmartSubmit = event => {
     event.preventDefault();
@@ -665,8 +765,6 @@ class Main extends Component {
     console.log(this.state);
 
     const { classes, theme } = this.props;
-
-    console.log(classes, theme);
 
     return (
       <div className={classes.root}>
@@ -779,6 +877,8 @@ class Main extends Component {
                 arrayForCatByCurrentMonth={this.state.arrayForCatByCurrentMonth}
                 budgetTotal={this.state.budgetTotal}
                 arrayForBudgetTable={this.state.arrayForBudgetTable}
+                topCategory={this.state.topCategory}
+                topCatChart={this.state.topCatChart}
               />
             </div>
           )}

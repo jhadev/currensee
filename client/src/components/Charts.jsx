@@ -18,7 +18,9 @@ const Charts = ({
   falseIncome,
   pieChart,
   arrayForCatByCurrentMonth,
-  arrayForBudgetTable
+  arrayForBudgetTable,
+  topCategory,
+  topCatChart
 }) => {
   const [chartChoice, setChart] = useState("pie");
   const [timeChartChoice, setTimeChart] = useState("bar");
@@ -113,6 +115,18 @@ const Charts = ({
         label: "Expense",
         backgroundColor: "rgb(255, 0, 0, 0.8)",
         data: falseIncome
+      }
+    ]
+  };
+
+  const topCatData = {
+    responsive: true,
+    labels: monthLabels,
+    datasets: [
+      {
+        label: "Total Spending",
+        backgroundColor: "#6320EE",
+        data: topCatChart
       }
     ]
   };
@@ -273,6 +287,25 @@ const Charts = ({
                     type="doughnut"
                     data={doughnutForCurrentMonth}
                   />
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        </div>
+        <div className="col-12">
+          <Grid container justify="center">
+            <Card className="chartCard">
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  <h3 className="text-center chartHeading">
+                    Spending for {topCategory} Over Time
+                  </h3>
+                  <h6 className="text-center">
+                    This chart tracks your most active category and gives you a
+                    breakdown of your spending for 2 months trailing and 3
+                    months forward.
+                  </h6>
+                  <Chart className="chart" type="bar" data={topCatData} />
                 </div>
               </CardContent>
             </Card>

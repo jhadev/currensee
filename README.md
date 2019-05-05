@@ -22,6 +22,7 @@ _This app is designed to help the end-user monitor and manage all of his expense
 - **Walmart searches can be added to budget, default date is now, default category is shopping.**
 - **Added stock search with TradingView charts**
 - **Added ability to choose chart types for Total Spending By Category (Pie, Radar, Polar Area) and Income vs Expenses By Month (Bar, Line, and Combo)**
+- **Added bar chart to track the user's most active category and display their spending for that category over time.**
 
 ### TODO
 
@@ -29,7 +30,7 @@ _This app is designed to help the end-user monitor and manage all of his expense
 - [ ] Global table filtering.
 - [ ] Sum totals with custom filters.
 - [ ] Edit table cells.
-- [ ] Data visualization by single category over time.
+- [x] Data visualization by single category over time. ADDED 5/5/2019
 - [x] Data visualization for budget total breakdown by category for a singular month. ADDED 4/18/2019 **Doughnut chart for spending by category for current month.**
 - [ ] Wegman's API.
 - [ ] Google OAuth.

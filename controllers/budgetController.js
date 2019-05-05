@@ -34,7 +34,16 @@ module.exports = {
           month: {
             $substrBytes: ["$date", 0, 2]
           },
-          year: { $substrBytes: ["$date", 6, 8] }
+          year: { $substrBytes: ["$date", 6, 8] },
+          fullDate: {
+            $concat: [
+              {
+                $substrBytes: ["$date", 0, 2]
+              },
+              "/",
+              { $substrBytes: ["$date", 6, 8] }
+            ]
+          }
           //convertedIncome: { $toString: "$income" }
         }
       }
