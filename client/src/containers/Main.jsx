@@ -279,7 +279,7 @@ class Main extends Component {
       //   "Utilities"
       // ];
 
-      // const { data } = res;
+      // const data = res.data;
 
       // for (let i = 0; i < catList.length; i++) {
       //   let eachCategory = data
@@ -288,10 +288,6 @@ class Main extends Component {
       //   eachCategory = [eachCategory];
       //   categorySumList.push(eachCategory);
       // }
-
-      // const categorySumList[0]
-      // let categorySumList = [];
-      // console.log(res.data);
 
       let cat1 = res.data
         .filter(item => item._id.category === "Health")
@@ -381,7 +377,7 @@ class Main extends Component {
       const monthCompare4 = moment()
         .add(1, "M")
         .format("MM/YYYY");
-      res.data
+      month4 = res.data
         .filter(item => item._id.fullDate === monthCompare4)
         .map(item => item.budgetTotal);
       //console.log("MONTH FOUR: " + JSON.stringify(month4));
@@ -669,6 +665,8 @@ class Main extends Component {
     console.log(this.state);
 
     const { classes, theme } = this.props;
+
+    console.log(classes, theme);
 
     return (
       <div className={classes.root}>
