@@ -46,7 +46,7 @@ const Charts = ({
           "#36A2EB",
           "#FFCE56",
           "#003366",
-          "#F0F8FF",
+          "#336D2B",
           "#7FFFD4",
           "#f48642"
         ],
@@ -55,7 +55,7 @@ const Charts = ({
           "#0291f2",
           "#ffb80c",
           "#001123",
-          "#d8edff",
+          "#38772F",
           "#38ffbc",
           "#fc7019"
         ]
@@ -83,7 +83,7 @@ const Charts = ({
           "#36A2EB",
           "#FFCE56",
           "#003366",
-          "#F0F8FF",
+          "#336D2B",
           "#7FFFD4",
           "#f48642"
         ],
@@ -92,7 +92,7 @@ const Charts = ({
           "#0291f2",
           "#ffb80c",
           "#001123",
-          "#d8edff",
+          "#38772F",
           "#38ffbc",
           "#fc7019"
         ]
@@ -125,13 +125,15 @@ const Charts = ({
         label: "Income",
         data: trueIncome,
         fill: false,
-        borderColor: "#42A5F5"
+        borderColor: "#42A5F5",
+        borderWidth: 3
       },
       {
         label: "Expenses",
         data: falseIncome,
         fill: true,
-        borderColor: "#ff3059"
+        borderColor: "#ff3059",
+        borderWidth: 3
       }
     ]
   };
@@ -143,7 +145,7 @@ const Charts = ({
         type: "line",
         label: "Income",
         borderColor: "#2196F3",
-        borderWidth: 2,
+        borderWidth: 3,
         fill: false,
         data: trueIncome
       },
@@ -151,22 +153,21 @@ const Charts = ({
         type: "line",
         label: "Expenses",
         borderColor: "#ff3059",
-        borderWidth: 2,
+        borderWidth: 3,
         fill: true,
         data: falseIncome
       },
       {
         type: "bar",
         label: "Income",
-        backgroundColor: "#4CAF50",
+        backgroundColor: "#00272B",
         data: trueIncome,
-        borderColor: "white",
-        borderWidth: 2
+        borderColor: "white"
       },
       {
         type: "bar",
         label: "Expenses",
-        backgroundColor: "#FFC107",
+        backgroundColor: "#E0FF4F",
         data: falseIncome
       }
     ]

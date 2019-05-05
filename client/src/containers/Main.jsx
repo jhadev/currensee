@@ -329,9 +329,17 @@ class Main extends Component {
     });
   };
 
-  getSumByMonthTrue = () => {
-    const thisYear = moment().format("YYYY");
+  getTopCategoryOverTime = () => {
+    //map over getSumByCategory, store it in state
+    //map over that array in state return category, fullDate, and categoryTotal
+    //reduce and sum by categoryTotal
+    //group in array as objects with category and sum
+    //find the category that has the highest sum and store a ref to it in a variable
+    //use that category to filter state again and return where date equals dates for chart.
+    //setState with that data
+  };
 
+  getSumByMonthTrue = () => {
     API.getSumByMonthTrue().then(res => {
       let month1 = 0;
       let month2 = 0;
@@ -342,76 +350,52 @@ class Main extends Component {
 
       let monthArray = [];
 
-      // const monthCompare = moment()
-      //   .subtract(2, "M")
-      //   .format("MM YYYY");
-      // month1 = res.data.filter(function(item) {
-      //   let date = `${item._id.month} ${item._id.year}`;
-      //   if (date === monthCompare) {
-      //     return true;
-      //   }
-      // });
-      // month1 = month1.map(function(item) {
-      //   return item.budgetTotal;
-      // });
-
       const monthCompare = moment()
         .subtract(2, "M")
-        .format("MM");
+        .format("MM/YYYY");
+
       month1 = res.data
-        .filter(
-          item => item._id.month === monthCompare && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare)
         .map(item => item.budgetTotal);
       //console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
         .subtract(1, "M")
-        .format("MM");
+        .format("MM/YYYY");
       //console.log("COMPARE MONTH 2: " + monthCompare2);
       month2 = res.data
-        .filter(
-          item => item._id.month === monthCompare2 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare2)
         .map(item => item.budgetTotal);
       //console.log("MONTH TWO: " + JSON.stringify(month2));
 
-      const monthCompare3 = moment().format("MM");
+      const monthCompare3 = moment().format("MM/YYYY");
       //console.log("MONTH COMPARISON THREE: " + monthCompare3);
       month3 = res.data
-        .filter(
-          item => item._id.month === monthCompare3 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare3)
         .map(item => item.budgetTotal);
       //console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
         .add(1, "M")
-        .format("MM");
+        .format("MM/YYYY");
       res.data
-        .filter(
-          item => item._id.month === monthCompare4 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare4)
         .map(item => item.budgetTotal);
       //console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
         .add(2, "M")
-        .format("MM");
+        .format("MM/YYYY");
       month5 = res.data
-        .filter(
-          item => item._id.month === monthCompare5 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare5)
         .map(item => item.budgetTotal);
       //console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
         .add(3, "M")
-        .format("MM");
+        .format("MM/YYYY");
       month6 = res.data
-        .filter(
-          item => item._id.month === monthCompare6 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare6)
         .map(item => item.budgetTotal);
       //console.log("MONTH SIX: " + JSON.stringify(month6));
 
@@ -423,7 +407,6 @@ class Main extends Component {
   };
 
   getSumByMonthFalse = () => {
-    const thisYear = moment().format("YYYY");
     API.getSumByMonthFalse().then(res => {
       let month1 = 0;
       let month2 = 0;
@@ -436,59 +419,47 @@ class Main extends Component {
 
       const monthCompare = moment()
         .subtract(2, "M")
-        .format("MM");
+        .format("MM/YYYY");
       month1 = res.data
-        .filter(
-          item => item._id.month === monthCompare && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare)
         .map(item => item.budgetTotal);
       //console.log("MONTH ONE: " + JSON.stringify(month1));
 
       const monthCompare2 = moment()
         .subtract(1, "M")
-        .format("MM");
+        .format("MM/YYYY");
       month2 = res.data
-        .filter(
-          item => item._id.month === monthCompare2 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare2)
         .map(item => item.budgetTotal);
       //console.log("MONTH TWO: " + JSON.stringify(month2));
 
-      const monthCompare3 = moment().format("MM");
+      const monthCompare3 = moment().format("MM/YYYY");
       month3 = res.data
-        .filter(
-          item => item._id.month === monthCompare3 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare3)
         .map(item => item.budgetTotal);
       //console.log("MONTH THREE: " + JSON.stringify(month3));
 
       const monthCompare4 = moment()
         .add(1, "M")
-        .format("MM");
+        .format("MM/YYYY");
       month4 = res.data
-        .filter(
-          item => item._id.month === monthCompare4 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare4)
         .map(item => item.budgetTotal);
       //console.log("MONTH FOUR: " + JSON.stringify(month4));
 
       const monthCompare5 = moment()
         .add(2, "M")
-        .format("MM");
+        .format("MM/YYYY");
       month5 = res.data
-        .filter(
-          item => item._id.month === monthCompare5 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare5)
         .map(item => item.budgetTotal);
       //console.log("MONTH FIVE: " + JSON.stringify(month5));
 
       const monthCompare6 = moment()
         .add(3, "M")
-        .format("MM");
+        .format("MM/YYYY");
       month6 = res.data
-        .filter(
-          item => item._id.month === monthCompare6 && item._id.year === thisYear
-        )
+        .filter(item => item._id.fullDate === monthCompare6)
         .map(item => item.budgetTotal);
       //console.log("MONTH SIX: " + JSON.stringify(month6));
 
@@ -575,7 +546,7 @@ class Main extends Component {
   notifySubmit = () => {
     toast.success("Item successfully added to budget.", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -586,7 +557,7 @@ class Main extends Component {
   notifyRemoval = () => {
     toast.error("Item successfully removed from budget.", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,

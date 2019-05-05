@@ -40,7 +40,7 @@ class Login extends Component {
   };
 
   notifyError = () => {
-    toast.error("User not found, please try again.", {
+    toast.error("User not found or password is incorrect. Please try again.", {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,

@@ -158,7 +158,16 @@ module.exports = {
             month: {
               $substrBytes: ["$date", 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] }
+            year: { $substrBytes: ["$date", 6, 8] },
+            fullDate: {
+              $concat: [
+                {
+                  $substrBytes: ["$date", 0, 2]
+                },
+                "/",
+                { $substrBytes: ["$date", 6, 8] }
+              ]
+            }
           },
           budgetTotal: {
             $sum: "$amount"
@@ -166,7 +175,9 @@ module.exports = {
         }
       }
     ])
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        res.json(dbModel);
+      })
       .catch(err => {
         console.log(err);
         res.status(422).json(err);
@@ -189,7 +200,16 @@ module.exports = {
             month: {
               $substrBytes: ["$date", 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] }
+            year: { $substrBytes: ["$date", 6, 8] },
+            fullDate: {
+              $concat: [
+                {
+                  $substrBytes: ["$date", 0, 2]
+                },
+                "/",
+                { $substrBytes: ["$date", 6, 8] }
+              ]
+            }
           },
           budgetTotal: {
             $sum: "$amount"
@@ -217,7 +237,16 @@ module.exports = {
             month: {
               $substrBytes: ["$date", 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] }
+            year: { $substrBytes: ["$date", 6, 8] },
+            fullDate: {
+              $concat: [
+                {
+                  $substrBytes: ["$date", 0, 2]
+                },
+                "/",
+                { $substrBytes: ["$date", 6, 8] }
+              ]
+            }
           },
           budgetTotal: {
             $sum: "$amount"
@@ -249,7 +278,16 @@ module.exports = {
             month: {
               $substrBytes: ["$date", 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] }
+            year: { $substrBytes: ["$date", 6, 8] },
+            fullDate: {
+              $concat: [
+                {
+                  $substrBytes: ["$date", 0, 2]
+                },
+                "/",
+                { $substrBytes: ["$date", 6, 8] }
+              ]
+            }
           },
           categoryTotal: {
             $sum: "$amount"
