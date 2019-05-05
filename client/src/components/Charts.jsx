@@ -158,7 +158,7 @@ const Charts = ({
       {
         type: "line",
         label: "Income",
-        borderColor: "#2196F3",
+        borderColor: "#2EC4B6",
         borderWidth: 3,
         fill: false,
         data: trueIncome
@@ -166,7 +166,7 @@ const Charts = ({
       {
         type: "line",
         label: "Expenses",
-        borderColor: "#ff3059",
+        borderColor: "#E71D36",
         borderWidth: 3,
         fill: true,
         data: falseIncome
@@ -174,14 +174,14 @@ const Charts = ({
       {
         type: "bar",
         label: "Income",
-        backgroundColor: "#00272B",
+        backgroundColor: "#011627",
         data: trueIncome,
         borderColor: "white"
       },
       {
         type: "bar",
         label: "Expenses",
-        backgroundColor: "#E0FF4F",
+        backgroundColor: "#FF9F1C",
         data: falseIncome
       }
     ]
@@ -191,24 +191,24 @@ const Charts = ({
     labels: monthLabels,
     datasets: [
       {
+        type: "line",
+        label: `Spending for ${topCategory}`,
+        borderWidth: 3,
+        borderColor: "#58355E",
+        fill: false,
+        data: topCatChart
+      },
+      {
         type: "bar",
         label: "Income",
-        backgroundColor: "#2196F3",
+        backgroundColor: "#5998C5",
         data: trueIncome
       },
       {
         type: "bar",
         label: "Expenses",
-        backgroundColor: "#ff3059",
+        backgroundColor: "#E03616",
         data: falseIncome
-      },
-      {
-        type: "line",
-        label: `Spending for ${topCategory}`,
-        borderWidth: 3,
-        borderColor: "#00272B",
-        fill: false,
-        data: topCatChart
       }
     ]
   };
@@ -303,9 +303,9 @@ const Charts = ({
                     <h6 className="text-center">
                       This chart tracks your income and expenses for 2 months
                       trailing and 3 months forward. You can switch to a line,
-                      bar or combo chart or use this chart to view your income
-                      and expenses vs your most active category in the dropdown
-                      menu.
+                      bar or combo chart or view your income and expenses vs
+                      your category with the highest total spending in the
+                      dropdown menu.
                     </h6>
                   </div>
                 </div>
@@ -327,7 +327,7 @@ const Charts = ({
                     <Chart
                       className="chart"
                       type="bar"
-                      // options={options}
+                      options={options}
                       data={comboDataTopCat}
                     />
                   ) : null}
