@@ -21,7 +21,6 @@ const BudgetTable = ({
   budgetTotal,
   deleteItem
 }) => {
-  console.log(arrayForBudgetTable);
   const thisMonth = moment().format("MM");
   const thisYear = moment().format("YYYY");
 

@@ -145,12 +145,11 @@ class Main extends Component {
     API.getSumByIncome().then(res => {
       console.log("BUDGET DATA" + JSON.stringify(res.data));
 
-      this.setState({ arrayForSumByIncome: res.data });
+      this.setState({ arrayForSumByIncome: res.data }, this.setBudgetSum);
       console.log(
         "ARRAY FOR BUDGET SUM: " +
           JSON.stringify(this.state.arrayForSumByIncome)
       );
-      this.setBudgetSum();
     });
   };
 
@@ -162,7 +161,8 @@ class Main extends Component {
     ) {
       this.setState({
         budgetTotal: arrayForSumByIncome[0].budgetTotal * -1,
-        totalExpense: arrayForSumByIncome[0].budgetTotal
+        totalExpense: arrayForSumByIncome[0].budgetTotal,
+        totalIncome: 0
       });
     } else if (
       arrayForSumByIncome.length === 1 &&
@@ -170,7 +170,8 @@ class Main extends Component {
     ) {
       this.setState({
         budgetTotal: arrayForSumByIncome[0].budgetTotal,
-        totalIncome: arrayForSumByIncome[0].budgetTotal
+        totalIncome: arrayForSumByIncome[0].budgetTotal,
+        totalExpense: 0
       });
     } else if (arrayForSumByIncome.length === 2) {
       if (arrayForSumByIncome[0]._id.income === true) {
