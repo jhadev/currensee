@@ -46,6 +46,11 @@ module.exports = {
           }
           //convertedIncome: { $toString: "$income" }
         }
+      },
+      {
+        $sort: {
+          date: -1
+        }
       }
     ])
       .then(dbModel => {

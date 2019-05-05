@@ -52,6 +52,8 @@ const Charts = ({
       case "Utilities":
         color = "#454E9E";
         break;
+      default:
+        color = "#003366";
     }
     return color;
   };
