@@ -419,9 +419,9 @@ const Charts = ({
                     Spending for {topCategory} Over Time
                   </h3>
                   <h6 className="text-center">
-                    This chart tracks your most active category and gives you a
-                    breakdown of your spending for 2 months trailing and 3
-                    months forward.
+                    This chart tracks your category with the highest total
+                    spending and gives you a breakdown of your spending for 2
+                    months trailing and 3 months forward.
                   </h6>
                   <Chart className="chart" type="bar" data={topCatData} />
                 </div>
