@@ -40,7 +40,7 @@ const DataCard = ({ budgetTotal, dataForThisMonth, breakdown }) => {
                 {total > 0 ? (
                   <React.Fragment>
                     <span className="surplus">SURPLUS</span>{" "}
-                    <span>FOR {formattedDate}</span>
+                    <span>FOR {formattedDate}:</span>
                     <span className="surplus">
                       {" "}
                       ${totalForThisMonth().toFixed(2)}
@@ -49,7 +49,7 @@ const DataCard = ({ budgetTotal, dataForThisMonth, breakdown }) => {
                 ) : total < 0 ? (
                   <React.Fragment>
                     <span className="deficit">DEFICIT</span>{" "}
-                    <span>FOR {formattedDate}</span>
+                    <span>FOR {formattedDate}:</span>
                     <span className="deficit">
                       {" "}
                       ${totalForThisMonth().toFixed(2)}

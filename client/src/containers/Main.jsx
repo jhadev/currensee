@@ -200,8 +200,7 @@ class Main extends Component {
   };
 
   getCategorySumForCurrentMonth = () => {
-    const thisYear = moment().format("YYYY");
-    const thisMonth = moment().format("MM");
+    const thisMonth = moment().format("MM/YYYY");
 
     API.getSumByCategory().then(res => {
       let categorySumList = [];
@@ -209,68 +208,53 @@ class Main extends Component {
       let cat1 = res.data
         .filter(
           item =>
-            item._id.category === "Health" &&
-            item._id.year === thisYear &&
-            item._id.month === thisMonth
+            item._id.category === "Health" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       let cat2 = res.data
         .filter(
           item =>
-            item._id.category === "Home" &&
-            item._id.year === thisYear &&
-            item._id.month === thisMonth
+            item._id.category === "Home" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       let cat3 = res.data
         .filter(
           item =>
-            item._id.category === "Other" &&
-            item._id.year === thisYear &&
-            item._id.month === thisMonth
+            item._id.category === "Other" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       let cat4 = res.data
         .filter(
           item =>
-            item._id.category === "Savings" &&
-            item._id.year === thisYear &&
-            item._id.month === thisMonth
+            item._id.category === "Savings" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       let cat5 = res.data
         .filter(
           item =>
-            item._id.category === "Shopping" &&
-            item._id.year === thisYear &&
-            item._id.month === thisMonth
+            item._id.category === "Shopping" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       let cat6 = res.data
         .filter(
           item =>
-            item._id.category === "Travel" &&
-            item._id.year === thisYear &&
-            item._id.month === thisMonth
+            item._id.category === "Travel" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       let cat7 = res.data
         .filter(
           item =>
-            item._id.category === "Utilities" &&
-            item._id.year === thisYear &&
-            item._id.month === thisMonth
+            item._id.category === "Utilities" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
-      console.log(categorySumList);
 
       for (let i = 0; i < categorySumList.length; i++) {
         if (categorySumList[i].length > 1) {
@@ -285,7 +269,29 @@ class Main extends Component {
   getCategorySum = () => {
     API.getSumByCategory().then(res => {
       let categorySumList = [];
-      console.log(res.data);
+      // const catList = [
+      //   "Health",
+      //   "Home",
+      //   "Other",
+      //   "Savings",
+      //   "Shopping",
+      //   "Travel",
+      //   "Utilities"
+      // ];
+
+      // const { data } = res;
+
+      // for (let i = 0; i < catList.length; i++) {
+      //   let eachCategory = data
+      //     .filter(item => item._id.category === catList[i])
+      //     .map(item => item.categoryTotal);
+      //   eachCategory = [eachCategory];
+      //   categorySumList.push(eachCategory);
+      // }
+
+      // const categorySumList[0]
+      // let categorySumList = [];
+      // console.log(res.data);
 
       let cat1 = res.data
         .filter(item => item._id.category === "Health")
@@ -322,9 +328,6 @@ class Main extends Component {
           categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
         }
       }
-      //console.log(
-      //  "CATEGORY SUM LIST ARRAY: " + JSON.stringify(categorySumList));
-
       this.setState({ arrayForPieChart: categorySumList });
     });
   };

@@ -199,9 +199,9 @@ const Charts = ({
     datasets: [
       {
         label: "Amount in $",
-        backgroundColor: "rgba(255,99,132,0.2)",
+        backgroundColor: "rgba(7,16,19, 0.4)",
         borderColor: "rgba(255,99,132,1)",
-        pointBackgroundColor: "rgba(255,99,132,1)",
+        pointBackgroundColor: "rgba(7,16,19, 0.4)",
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
         pointHoverBorderColor: "rgba(255,99,132,1)",
