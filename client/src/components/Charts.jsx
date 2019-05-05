@@ -28,6 +28,34 @@ const Charts = ({
   const month = moment().format("MMMM");
   const year = moment().format("YYYY");
 
+  const colorForTopCat = () => {
+    let color = "";
+    switch (topCategory) {
+      case "Health":
+        color = "#F26419";
+        break;
+      case "Home":
+        color = "#33658A";
+        break;
+      case "Other":
+        color = "#F6AE2D";
+        break;
+      case "Savings":
+        color = "#295723";
+        break;
+      case "Shopping":
+        color = "#FF6384";
+        break;
+      case "Travel":
+        color = "#86BBD8";
+        break;
+      case "Utilities":
+        color = "#454E9E";
+        break;
+    }
+    return color;
+  };
+
   const pieData = {
     responsive: true,
     maintainAspectRatio: false,
@@ -125,7 +153,7 @@ const Charts = ({
     datasets: [
       {
         label: "Total Spending",
-        backgroundColor: "#6320EE",
+        backgroundColor: colorForTopCat(),
         data: topCatChart
       }
     ]

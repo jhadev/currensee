@@ -333,7 +333,7 @@ class Main extends Component {
       travelSum,
       utilitiesSum
     ];
-
+    console.log(sumArr);
     //if there is no value set to 0
     for (let i = 0; i < sumArr.length; i++) {
       if (sumArr[i] === undefined) {
