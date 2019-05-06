@@ -1,10 +1,10 @@
 import React from "react";
 import "./HomeCards.css";
 
-const HomeCard = props => {
+const HomeCard = ({ image, name }) => {
   return (
     <div className="card img-card bg-dark border-light">
-      <img className="card-img-top image" src={props.image} alt={props.name} />
+      <img className="card-img-top image" src={image} alt={name} />
     </div>
   );
 };

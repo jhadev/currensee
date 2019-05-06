@@ -12,6 +12,18 @@ import Select from "@material-ui/core/Select";
 import "../containers/Main.css";
 import "./Charts.css";
 
+const Wrap = ({ children }) => (
+  <div className="col-12">
+    <Grid container justify="center">
+      <Card className="chartCard">
+        <CardContent className="chartCardContent">
+          <div className="content-section implementation">{children}</div>
+        </CardContent>
+      </Card>
+    </Grid>
+  </div>
+);
+
 const Charts = ({
   monthLabels,
   trueIncome,
@@ -20,17 +32,20 @@ const Charts = ({
   arrayForCatByCurrentMonth,
   arrayForBudgetTable,
   topCategory,
-  topCatChart
+  topCatChart,
+  mostActiveCategory,
+  mostActiveChart
 }) => {
   const [chartChoice, setChart] = useState("pie");
   const [timeChartChoice, setTimeChart] = useState("bar");
+  const [activeOrTop, setActiveOrTop] = useState("top");
 
   const month = moment().format("MMMM");
   const year = moment().format("YYYY");
 
-  const colorForTopCat = () => {
+  const pickColors = choice => {
     let color = "";
-    switch (topCategory) {
+    switch (choice) {
       case "Health":
         color = "#F26419";
         break;
@@ -155,8 +170,20 @@ const Charts = ({
     datasets: [
       {
         label: "Total Spending",
-        backgroundColor: colorForTopCat(),
+        backgroundColor: pickColors(topCategory),
         data: topCatChart
+      }
+    ]
+  };
+
+  const activeCatData = {
+    responsive: true,
+    labels: monthLabels,
+    datasets: [
+      {
+        label: "Total Spending",
+        backgroundColor: pickColors(mostActiveCategory),
+        data: mostActiveChart
       }
     ]
   };
@@ -224,20 +251,28 @@ const Charts = ({
         type: "line",
         label: `Spending for ${topCategory}`,
         borderWidth: 3,
-        borderColor: "#58355E",
+        borderColor: pickColors(topCategory),
         fill: false,
         data: topCatChart
       },
       {
+        type: "line",
+        label: `Spending for ${mostActiveCategory}`,
+        borderWidth: 3,
+        borderColor: pickColors(mostActiveCategory),
+        fill: false,
+        data: mostActiveChart
+      },
+      {
         type: "bar",
         label: "Income",
-        backgroundColor: "#5998C5",
+        backgroundColor: "#018E42",
         data: trueIncome
       },
       {
         type: "bar",
         label: "Expenses",
-        backgroundColor: "#E03616",
+        backgroundColor: "#BF1A2F",
         data: falseIncome
       }
     ]
@@ -312,7 +347,7 @@ const Charts = ({
                         <MenuItem value={"line"}>Line Chart</MenuItem>
                         <MenuItem value={"combo"}>Combo Chart</MenuItem>
                         <MenuItem value={"comboTopCat"}>
-                          Income vs Expense vs Top Category
+                          Combo With Top Categories
                         </MenuItem>
                       </Select>
                     </FormControl>
@@ -322,7 +357,7 @@ const Charts = ({
                 <div className="col-md-4 col-sm-12 col-12">
                   <h3 className="text-center catChartHeader chartHeading">
                     {timeChartChoice === "comboTopCat"
-                      ? `Income vs Expense vs Spending for ${topCategory} By Month (${year})`
+                      ? `Income vs Expense vs Spending for ${topCategory} & ${mostActiveCategory}`
                       : `Income vs Expense By Month (${year})`}
                   </h3>
                 </div>
@@ -333,9 +368,9 @@ const Charts = ({
                     <h6 className="text-center">
                       This chart tracks your income and expenses for 2 months
                       trailing and 3 months forward. You can switch to a line,
-                      bar or combo chart or view your income and expenses vs
-                      your category with the highest total spending in the
-                      dropdown menu.
+                      bar or combo chart or view your income and expenses vs the
+                      category with the highest total spending and category with
+                      the most activity in the dropdown menu.
                     </h6>
                   </div>
                 </div>
@@ -417,43 +452,67 @@ const Charts = ({
           </Grid>
         </div>
         {/* START CATEGORIES FOR CURRENT MONTH */}
+        <Wrap>
+          <h3 className="text-center chartHeading">
+            Spending by Category for {month}, {year}
+          </h3>
+          <h6 className="text-center">
+            This chart is a breakdown of your total spending for each category
+            for the current month and year.
+          </h6>
+          <Chart
+            className="chart"
+            type="doughnut"
+            data={doughnutForCurrentMonth}
+          />
+        </Wrap>
         <div className="col-12">
           <Grid container justify="center">
             <Card className="chartCard">
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  <h3 className="text-center chartHeading">
-                    Spending by Category for {month}, {year}
-                  </h3>
-                  <h6 className="text-center">
-                    This chart is a breakdown of your total spending for each
-                    category for the current month and year.
-                  </h6>
-                  <Chart
-                    className="chart"
-                    type="doughnut"
-                    data={doughnutForCurrentMonth}
-                  />
+              <div className="row justify-content-start">
+                <div className="col-md-4 col-sm-8 col-8">
+                  <div className="dropWrapper">
+                    <FormControl
+                      color="secondary"
+                      className="chartDrop p-3 border border-pink"
+                    >
+                      <InputLabel className="m-2" htmlFor="chart-helper">
+                        Choose Chart Type
+                      </InputLabel>
+                      <Select
+                        value={activeOrTop}
+                        onChange={e => setActiveOrTop(e.target.value)}
+                        input={<Input name="chartChoice" id="chart-helper" />}
+                      >
+                        <MenuItem value={"top"}>Top Spending Category</MenuItem>
+                        <MenuItem value={"active"}>
+                          Most Active Category
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
-        {/* START TOP CATEGORY OVER TIME */}
-        <div className="col-12">
-          <Grid container justify="center">
-            <Card className="chartCard">
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  <h3 className="text-center chartHeading">
-                    Spending for {topCategory} Over Time
+                <div className="col-md-4 col-sm-12 col-12">
+                  <h3 className="text-center catChartHeader chartHeading">
+                    {activeOrTop === "top"
+                      ? `Spending for ${topCategory}`
+                      : `Spending for ${mostActiveCategory}`}
                   </h3>
                   <h6 className="text-center">
                     This chart tracks your category with the highest total
-                    spending and gives you a breakdown of your spending for 2
-                    months trailing and 3 months forward.
+                    spending or your most active category and gives you a
+                    breakdown of your spending for 2 months trailing and 3
+                    months forward.
                   </h6>
-                  <Chart className="chart" type="bar" data={topCatData} />
+                </div>
+              </div>
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  {activeOrTop === "top" ? (
+                    <Chart className="chart" type="bar" data={topCatData} />
+                  ) : activeOrTop === "active" ? (
+                    <Chart className="chart" type="bar" data={activeCatData} />
+                  ) : null}
                 </div>
               </CardContent>
             </Card>

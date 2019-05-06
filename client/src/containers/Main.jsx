@@ -90,7 +90,9 @@ class Main extends Component {
     itemToDelete: "",
     arrayForCatSumList: [],
     topCatChart: [],
-    topCategory: ""
+    topCategory: "",
+    mostActiveCategory: "",
+    mostActiveChart: []
   };
 
   // Check login status on load
@@ -134,7 +136,10 @@ class Main extends Component {
 
   getBudgetTable = () => {
     API.getMonth().then(res => {
-      this.setState({ arrayForBudgetTable: res.data });
+      this.setState(
+        { arrayForBudgetTable: res.data },
+        this.getMostActiveCategory
+      );
     });
   };
 
@@ -303,6 +308,41 @@ class Main extends Component {
     });
   };
 
+  getMostActiveCategory = () => {
+    let counts = {};
+    let compare = 0;
+    let mostActiveCategory;
+
+    const { arrayForBudgetTable } = this.state;
+
+    for (let i = 0; i < arrayForBudgetTable.length; i++) {
+      let category = arrayForBudgetTable[i].category;
+
+      if (counts[category] === undefined) {
+        counts[category] = 1;
+      } else {
+        counts[category] = counts[category] + 1;
+      }
+      if (counts[category] > compare) {
+        compare = counts[category];
+        mostActiveCategory = arrayForBudgetTable[i].category;
+      }
+    }
+
+    //filter budget table by most active category
+    let filterByMostActive = this.state.arrayForCatSumList.filter(
+      category => category._id.category === mostActiveCategory
+    );
+
+    let monthArray = [];
+    monthArray = this.timeChartCompare(filterByMostActive, "categoryTotal");
+
+    this.setState({
+      mostActiveChart: monthArray,
+      mostActiveCategory: mostActiveCategory
+    });
+  };
+
   getTopCategoryOverTime = () => {
     //destructure array of arrays in state
     let [
@@ -333,7 +373,7 @@ class Main extends Component {
       travelSum,
       utilitiesSum
     ];
-    console.log(sumArr);
+
     //if there is no value set to 0
     for (let i = 0; i < sumArr.length; i++) {
       if (sumArr[i] === undefined) {
@@ -373,6 +413,12 @@ class Main extends Component {
       category => category._id.category === topCategory
     );
 
+    let monthArray = [];
+    monthArray = this.timeChartCompare(filterByTopCategory, "categoryTotal");
+    this.setState({ topCatChart: monthArray, topCategory: topCategory });
+  };
+
+  timeChartCompare = (arr, total) => {
     let month1 = 0;
     let month2 = 0;
     let month3 = 0;
@@ -385,184 +431,65 @@ class Main extends Component {
     const monthCompare = moment()
       .subtract(2, "M")
       .format("MM/YYYY");
-
-    month1 = filterByTopCategory
+    month1 = arr
       .filter(item => item._id.fullDate === monthCompare)
-      .map(item => item.categoryTotal);
+      .map(item => item[total]);
     //console.log("MONTH ONE: " + JSON.stringify(month1));
 
     const monthCompare2 = moment()
       .subtract(1, "M")
       .format("MM/YYYY");
-    //console.log("COMPARE MONTH 2: " + monthCompare2);
-    month2 = filterByTopCategory
+    month2 = arr
       .filter(item => item._id.fullDate === monthCompare2)
-      .map(item => item.categoryTotal);
+      .map(item => item[total]);
     //console.log("MONTH TWO: " + JSON.stringify(month2));
 
     const monthCompare3 = moment().format("MM/YYYY");
-    //console.log("MONTH COMPARISON THREE: " + monthCompare3);
-    month3 = filterByTopCategory
+    month3 = arr
       .filter(item => item._id.fullDate === monthCompare3)
-      .map(item => item.categoryTotal);
+      .map(item => item[total]);
     //console.log("MONTH THREE: " + JSON.stringify(month3));
 
     const monthCompare4 = moment()
       .add(1, "M")
       .format("MM/YYYY");
-    month4 = filterByTopCategory
+    month4 = arr
       .filter(item => item._id.fullDate === monthCompare4)
-      .map(item => item.categoryTotal);
+      .map(item => item[total]);
     //console.log("MONTH FOUR: " + JSON.stringify(month4));
 
     const monthCompare5 = moment()
       .add(2, "M")
       .format("MM/YYYY");
-    month5 = filterByTopCategory
+    month5 = arr
       .filter(item => item._id.fullDate === monthCompare5)
-      .map(item => item.categoryTotal);
+      .map(item => item[total]);
     //console.log("MONTH FIVE: " + JSON.stringify(month5));
 
     const monthCompare6 = moment()
       .add(3, "M")
       .format("MM/YYYY");
-    month6 = filterByTopCategory
+    month6 = arr
       .filter(item => item._id.fullDate === monthCompare6)
-      .map(item => item.categoryTotal);
+      .map(item => item[total]);
     //console.log("MONTH SIX: " + JSON.stringify(month6));
 
     monthArray = [month1, month2, month3, month4, month5, month6];
-
-    this.setState({ topCatChart: monthArray, topCategory: topCategory });
+    return monthArray;
   };
 
   getSumByMonthTrue = () => {
     API.getSumByMonthTrue().then(res => {
-      let month1 = 0;
-      let month2 = 0;
-      let month3 = 0;
-      let month4 = 0;
-      let month5 = 0;
-      let month6 = 0;
-
       let monthArray = [];
-
-      const monthCompare = moment()
-        .subtract(2, "M")
-        .format("MM/YYYY");
-
-      month1 = res.data
-        .filter(item => item._id.fullDate === monthCompare)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH ONE: " + JSON.stringify(month1));
-
-      const monthCompare2 = moment()
-        .subtract(1, "M")
-        .format("MM/YYYY");
-      //console.log("COMPARE MONTH 2: " + monthCompare2);
-      month2 = res.data
-        .filter(item => item._id.fullDate === monthCompare2)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH TWO: " + JSON.stringify(month2));
-
-      const monthCompare3 = moment().format("MM/YYYY");
-      //console.log("MONTH COMPARISON THREE: " + monthCompare3);
-      month3 = res.data
-        .filter(item => item._id.fullDate === monthCompare3)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH THREE: " + JSON.stringify(month3));
-
-      const monthCompare4 = moment()
-        .add(1, "M")
-        .format("MM/YYYY");
-      month4 = res.data
-        .filter(item => item._id.fullDate === monthCompare4)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH FOUR: " + JSON.stringify(month4));
-
-      const monthCompare5 = moment()
-        .add(2, "M")
-        .format("MM/YYYY");
-      month5 = res.data
-        .filter(item => item._id.fullDate === monthCompare5)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH FIVE: " + JSON.stringify(month5));
-
-      const monthCompare6 = moment()
-        .add(3, "M")
-        .format("MM/YYYY");
-      month6 = res.data
-        .filter(item => item._id.fullDate === monthCompare6)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH SIX: " + JSON.stringify(month6));
-
-      monthArray = [month1, month2, month3, month4, month5, month6];
-      //console.log("FULL SIX MONTH ARRAY: " + monthArray);
-
+      monthArray = this.timeChartCompare(res.data, "budgetTotal");
       this.setState({ arrayForTrueIncome: monthArray });
     });
   };
 
   getSumByMonthFalse = () => {
     API.getSumByMonthFalse().then(res => {
-      let month1 = 0;
-      let month2 = 0;
-      let month3 = 0;
-      let month4 = 0;
-      let month5 = 0;
-      let month6 = 0;
-
       let monthArray = [];
-
-      const monthCompare = moment()
-        .subtract(2, "M")
-        .format("MM/YYYY");
-      month1 = res.data
-        .filter(item => item._id.fullDate === monthCompare)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH ONE: " + JSON.stringify(month1));
-
-      const monthCompare2 = moment()
-        .subtract(1, "M")
-        .format("MM/YYYY");
-      month2 = res.data
-        .filter(item => item._id.fullDate === monthCompare2)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH TWO: " + JSON.stringify(month2));
-
-      const monthCompare3 = moment().format("MM/YYYY");
-      month3 = res.data
-        .filter(item => item._id.fullDate === monthCompare3)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH THREE: " + JSON.stringify(month3));
-
-      const monthCompare4 = moment()
-        .add(1, "M")
-        .format("MM/YYYY");
-      month4 = res.data
-        .filter(item => item._id.fullDate === monthCompare4)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH FOUR: " + JSON.stringify(month4));
-
-      const monthCompare5 = moment()
-        .add(2, "M")
-        .format("MM/YYYY");
-      month5 = res.data
-        .filter(item => item._id.fullDate === monthCompare5)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH FIVE: " + JSON.stringify(month5));
-
-      const monthCompare6 = moment()
-        .add(3, "M")
-        .format("MM/YYYY");
-      month6 = res.data
-        .filter(item => item._id.fullDate === monthCompare6)
-        .map(item => item.budgetTotal);
-      //console.log("MONTH SIX: " + JSON.stringify(month6));
-
-      monthArray = [month1, month2, month3, month4, month5, month6];
-      //console.log("FULL SIX MONTH ARRAY: " + monthArray);
-
+      monthArray = this.timeChartCompare(res.data, "budgetTotal");
       this.setState({ arrayForFalseIncome: monthArray });
     });
   };
@@ -879,6 +806,8 @@ class Main extends Component {
                 arrayForBudgetTable={this.state.arrayForBudgetTable}
                 topCategory={this.state.topCategory}
                 topCatChart={this.state.topCatChart}
+                mostActiveCategory={this.state.mostActiveCategory}
+                mostActiveChart={this.state.mostActiveChart}
               />
             </div>
           )}
