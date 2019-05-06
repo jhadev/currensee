@@ -266,13 +266,13 @@ const Charts = ({
       {
         type: "bar",
         label: "Income",
-        backgroundColor: "#5998C5",
+        backgroundColor: "#018E42",
         data: trueIncome
       },
       {
         type: "bar",
         label: "Expenses",
-        backgroundColor: "#E03616",
+        backgroundColor: "#BF1A2F",
         data: falseIncome
       }
     ]
@@ -347,7 +347,7 @@ const Charts = ({
                         <MenuItem value={"line"}>Line Chart</MenuItem>
                         <MenuItem value={"combo"}>Combo Chart</MenuItem>
                         <MenuItem value={"comboTopCat"}>
-                          Income vs Expense vs Top Category
+                          Combo With Top Categories
                         </MenuItem>
                       </Select>
                     </FormControl>
@@ -357,7 +357,7 @@ const Charts = ({
                 <div className="col-md-4 col-sm-12 col-12">
                   <h3 className="text-center catChartHeader chartHeading">
                     {timeChartChoice === "comboTopCat"
-                      ? `Income vs Expense vs Spending for ${topCategory} By Month (${year})`
+                      ? `Income vs Expense vs Spending for ${topCategory} & ${mostActiveCategory}`
                       : `Income vs Expense By Month (${year})`}
                   </h3>
                 </div>
@@ -368,9 +368,9 @@ const Charts = ({
                     <h6 className="text-center">
                       This chart tracks your income and expenses for 2 months
                       trailing and 3 months forward. You can switch to a line,
-                      bar or combo chart or view your income and expenses vs
-                      your category with the highest total spending in the
-                      dropdown menu.
+                      bar or combo chart or view your income and expenses vs the
+                      category with the highest total spending and category with
+                      the most activity in the dropdown menu.
                     </h6>
                   </div>
                 </div>
@@ -495,8 +495,8 @@ const Charts = ({
                 <div className="col-md-4 col-sm-12 col-12">
                   <h3 className="text-center catChartHeader chartHeading">
                     {activeOrTop === "top"
-                      ? `Spending for ${topCategory} Over Time`
-                      : `Spending for ${mostActiveCategory} Over Time`}
+                      ? `Spending for ${topCategory}`
+                      : `Spending for ${mostActiveCategory}`}
                   </h3>
                   <h6 className="text-center">
                     This chart tracks your category with the highest total
