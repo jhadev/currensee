@@ -39,7 +39,7 @@ const BudgetTable = ({
 
   const totals = (
     <div className="mt-2 text-center">
-      <div className="row justfy-content-center my-1">
+      <div className="row justify-content-center my-1">
         <div className="col-12">
           <span className="income m-1">
             Income for {moment().format("MMMM, YYYY")}: {/* COLOR HERE */}
@@ -55,7 +55,7 @@ const BudgetTable = ({
           </span>
         </div>
       </div>
-      <div className="row justfy-content-center mt-1">
+      <div className="row justify-content-center mt-1">
         <div className="col-12">
           <span className="income m-1">
             Total Income: <strong>${income.toFixed(2)}</strong>

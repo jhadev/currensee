@@ -12,6 +12,18 @@ import Select from "@material-ui/core/Select";
 import "../containers/Main.css";
 import "./Charts.css";
 
+const Wrap = ({ children }) => (
+  <div className="col-12">
+    <Grid container justify="center">
+      <Card className="chartCard">
+        <CardContent className="chartCardContent">
+          <div className="content-section implementation">{children}</div>
+        </CardContent>
+      </Card>
+    </Grid>
+  </div>
+);
+
 const Charts = ({
   monthLabels,
   trueIncome,
@@ -20,10 +32,13 @@ const Charts = ({
   arrayForCatByCurrentMonth,
   arrayForBudgetTable,
   topCategory,
-  topCatChart
+  topCatChart,
+  mostActiveCategory,
+  mostActiveChart
 }) => {
   const [chartChoice, setChart] = useState("pie");
   const [timeChartChoice, setTimeChart] = useState("bar");
+  const [activeOrTop, setActiveOrTop] = useState("top");
 
   const month = moment().format("MMMM");
   const year = moment().format("YYYY");
@@ -157,6 +172,18 @@ const Charts = ({
         label: "Total Spending",
         backgroundColor: colorForTopCat(),
         data: topCatChart
+      }
+    ]
+  };
+
+  const activeCatData = {
+    responsive: true,
+    labels: monthLabels,
+    datasets: [
+      {
+        label: "Total Spending",
+        backgroundColor: "#E03616",
+        data: mostActiveChart
       }
     ]
   };
@@ -417,48 +444,58 @@ const Charts = ({
           </Grid>
         </div>
         {/* START CATEGORIES FOR CURRENT MONTH */}
-        <div className="col-12">
-          <Grid container justify="center">
-            <Card className="chartCard">
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  <h3 className="text-center chartHeading">
-                    Spending by Category for {month}, {year}
-                  </h3>
-                  <h6 className="text-center">
-                    This chart is a breakdown of your total spending for each
-                    category for the current month and year.
-                  </h6>
-                  <Chart
-                    className="chart"
-                    type="doughnut"
-                    data={doughnutForCurrentMonth}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
+        <Wrap>
+          <h3 className="text-center chartHeading">
+            Spending by Category for {month}, {year}
+          </h3>
+          <h6 className="text-center">
+            This chart is a breakdown of your total spending for each category
+            for the current month and year.
+          </h6>
+          <Chart
+            className="chart"
+            type="doughnut"
+            data={doughnutForCurrentMonth}
+          />
+        </Wrap>
         {/* START TOP CATEGORY OVER TIME */}
-        <div className="col-12">
-          <Grid container justify="center">
-            <Card className="chartCard">
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  <h3 className="text-center chartHeading">
-                    Spending for {topCategory} Over Time
-                  </h3>
-                  <h6 className="text-center">
-                    This chart tracks your category with the highest total
-                    spending and gives you a breakdown of your spending for 2
-                    months trailing and 3 months forward.
-                  </h6>
-                  <Chart className="chart" type="bar" data={topCatData} />
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
+        <Wrap>
+          <div className="d-flex">
+            <div className="mr-auto">
+              <FormControl
+                color="secondary"
+                className="chartDrop p-3 border border-pink"
+              >
+                <InputLabel className="m-2" htmlFor="chart-helper">
+                  Choose Chart Type
+                </InputLabel>
+                <Select
+                  value={activeOrTop}
+                  onChange={e => setActiveOrTop(e.target.value)}
+                  input={<Input name="chartChoice" id="chart-helper" />}
+                >
+                  <MenuItem value={"top"}>Top Spending Category</MenuItem>
+                  <MenuItem value={"active"}>Most Active Category</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          <h3 className="text-center chartHeading">
+            {activeOrTop === "top"
+              ? `Spending for ${topCategory} Over Time`
+              : `Spending for ${mostActiveCategory} Over Time`}
+          </h3>
+          <h6 className="text-center">
+            This chart tracks your category with the highest total spending or
+            your most active category and gives you a breakdown of your spending
+            for 2 months trailing and 3 months forward.
+          </h6>
+          {activeOrTop === "top" ? (
+            <Chart className="chart" type="bar" data={topCatData} />
+          ) : activeOrTop === "active" ? (
+            <Chart className="chart" type="bar" data={activeCatData} />
+          ) : null}
+        </Wrap>
       </div>
     </div>
   );

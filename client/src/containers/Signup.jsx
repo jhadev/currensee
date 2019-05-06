@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import API from "../utils/API";
+import Wrapper from "../components/common/Wrapper";
 import Navigation from "../components/Navigation";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -87,59 +88,57 @@ class Signup extends Component {
           />
           {/* Same as */}
           <ToastContainer />
-          <div className="row justify-content-center">
-            <div className="col-md-6 col-12">
-              <Card className="loginCard">
-                <CardContent>
-                  <form>
-                    <h3 className="logFont2">Register</h3>
-                    <div className="row justify-content-center">
-                      <div className="col-12">
-                        <TextField
-                          id="standard-user"
-                          type="text"
-                          label="Username"
-                          className="user m-6"
-                          placeholder="Your email address"
-                          value={this.state.username}
-                          onChange={this.handleInputChange}
-                          margin="normal"
-                          name="username"
-                        />
-                      </div>
-                      <div className="col-12">
-                        <TextField
-                          id="standard-pass"
-                          type="password"
-                          label="Password"
-                          className="pass"
-                          onChange={this.handleInputChange}
-                          value={this.state.password}
-                          margin="normal"
-                          name="password"
-                        />
-                      </div>
-                      <div className="col-12">
-                        <Button
-                          disabled={
-                            this.state.username === "" ||
-                            this.state.password === ""
-                          }
-                          variant="contained"
-                          color="secondary"
-                          className="submitButton text-center mt-2"
-                          type="submit"
-                          onClick={this.register}
-                        >
-                          Register
-                        </Button>
-                      </div>
+          <Wrapper>
+            <Card className="loginCard">
+              <CardContent>
+                <form>
+                  <h3 className="logFont2">Register</h3>
+                  <div className="row justify-content-center">
+                    <div className="col-12">
+                      <TextField
+                        id="standard-user"
+                        type="text"
+                        label="Username"
+                        className="user m-6"
+                        placeholder="Your email address"
+                        value={this.state.username}
+                        onChange={this.handleInputChange}
+                        margin="normal"
+                        name="username"
+                      />
                     </div>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+                    <div className="col-12">
+                      <TextField
+                        id="standard-pass"
+                        type="password"
+                        label="Password"
+                        className="pass"
+                        onChange={this.handleInputChange}
+                        value={this.state.password}
+                        margin="normal"
+                        name="password"
+                      />
+                    </div>
+                    <div className="col-12">
+                      <Button
+                        disabled={
+                          this.state.username === "" ||
+                          this.state.password === ""
+                        }
+                        variant="contained"
+                        color="secondary"
+                        className="submitButton text-center mt-2"
+                        type="submit"
+                        onClick={this.register}
+                      >
+                        Register
+                      </Button>
+                    </div>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </Wrapper>
         </div>
       </div>
     );

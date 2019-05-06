@@ -90,7 +90,9 @@ class Main extends Component {
     itemToDelete: "",
     arrayForCatSumList: [],
     topCatChart: [],
-    topCategory: ""
+    topCategory: "",
+    mostActiveCategory: "",
+    mostActiveChart: []
   };
 
   // Check login status on load
@@ -134,7 +136,10 @@ class Main extends Component {
 
   getBudgetTable = () => {
     API.getMonth().then(res => {
-      this.setState({ arrayForBudgetTable: res.data });
+      this.setState(
+        { arrayForBudgetTable: res.data },
+        this.getMostActiveCategory
+      );
     });
   };
 
@@ -303,6 +308,91 @@ class Main extends Component {
     });
   };
 
+  getMostActiveCategory = () => {
+    let counts = {};
+    let compare = 0;
+    let mostActiveCategory;
+
+    const { arrayForBudgetTable } = this.state;
+
+    for (let i = 0; i < arrayForBudgetTable.length; i++) {
+      let category = arrayForBudgetTable[i].category;
+
+      if (counts[category] === undefined) {
+        counts[category] = 1;
+      } else {
+        counts[category] = counts[category] + 1;
+      }
+      if (counts[category] > compare) {
+        compare = counts[category];
+        mostActiveCategory = arrayForBudgetTable[i].category;
+      }
+    }
+
+    //filter budget table by most active category
+    let filterByMostActive = this.state.arrayForCatSumList.filter(
+      category => category._id.category === mostActiveCategory
+    );
+
+    let month1 = 0;
+    let month2 = 0;
+    let month3 = 0;
+    let month4 = 0;
+    let month5 = 0;
+    let month6 = 0;
+
+    let monthArray = [];
+
+    const monthCompare = moment()
+      .subtract(2, "M")
+      .format("MM/YYYY");
+
+    month1 = filterByMostActive
+      .filter(item => item._id.fullDate === monthCompare)
+      .map(item => item.categoryTotal);
+
+    const monthCompare2 = moment()
+      .subtract(1, "M")
+      .format("MM/YYYY");
+
+    month2 = filterByMostActive
+      .filter(item => item._id.fullDate === monthCompare2)
+      .map(item => item.categoryTotal);
+
+    const monthCompare3 = moment().format("MM/YYYY");
+    month3 = filterByMostActive
+      .filter(item => item._id.fullDate === monthCompare3)
+      .map(item => item.categoryTotal);
+
+    const monthCompare4 = moment()
+      .add(1, "M")
+      .format("MM/YYYY");
+    month4 = filterByMostActive
+      .filter(item => item._id.fullDate === monthCompare4)
+      .map(item => item.categoryTotal);
+
+    const monthCompare5 = moment()
+      .add(2, "M")
+      .format("MM/YYYY");
+    month5 = filterByMostActive
+      .filter(item => item._id.fullDate === monthCompare5)
+      .map(item => item.categoryTotal);
+
+    const monthCompare6 = moment()
+      .add(3, "M")
+      .format("MM/YYYY");
+    month6 = filterByMostActive
+      .filter(item => item._id.fullDate === monthCompare6)
+      .map(item => item.categoryTotal);
+
+    monthArray = [month1, month2, month3, month4, month5, month6];
+
+    this.setState({
+      mostActiveChart: monthArray,
+      mostActiveCategory: mostActiveCategory
+    });
+  };
+
   getTopCategoryOverTime = () => {
     //destructure array of arrays in state
     let [
@@ -333,7 +423,7 @@ class Main extends Component {
       travelSum,
       utilitiesSum
     ];
-    console.log(sumArr);
+
     //if there is no value set to 0
     for (let i = 0; i < sumArr.length; i++) {
       if (sumArr[i] === undefined) {
@@ -879,6 +969,8 @@ class Main extends Component {
                 arrayForBudgetTable={this.state.arrayForBudgetTable}
                 topCategory={this.state.topCategory}
                 topCatChart={this.state.topCatChart}
+                mostActiveCategory={this.state.mostActiveCategory}
+                mostActiveChart={this.state.mostActiveChart}
               />
             </div>
           )}
