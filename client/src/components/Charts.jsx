@@ -43,9 +43,9 @@ const Charts = ({
   const month = moment().format("MMMM");
   const year = moment().format("YYYY");
 
-  const colorForTopCat = () => {
+  const pickColors = choice => {
     let color = "";
-    switch (topCategory) {
+    switch (choice) {
       case "Health":
         color = "#F26419";
         break;
@@ -170,7 +170,7 @@ const Charts = ({
     datasets: [
       {
         label: "Total Spending",
-        backgroundColor: colorForTopCat(),
+        backgroundColor: pickColors(topCategory),
         data: topCatChart
       }
     ]
@@ -182,7 +182,7 @@ const Charts = ({
     datasets: [
       {
         label: "Total Spending",
-        backgroundColor: "#E03616",
+        backgroundColor: pickColors(mostActiveCategory),
         data: mostActiveChart
       }
     ]
@@ -251,9 +251,17 @@ const Charts = ({
         type: "line",
         label: `Spending for ${topCategory}`,
         borderWidth: 3,
-        borderColor: "#58355E",
+        borderColor: pickColors(topCategory),
         fill: false,
         data: topCatChart
+      },
+      {
+        type: "line",
+        label: `Spending for ${mostActiveCategory}`,
+        borderWidth: 3,
+        borderColor: pickColors(mostActiveCategory),
+        fill: false,
+        data: mostActiveChart
       },
       {
         type: "bar",
@@ -458,44 +466,58 @@ const Charts = ({
             data={doughnutForCurrentMonth}
           />
         </Wrap>
-        {/* START TOP CATEGORY OVER TIME */}
-        <Wrap>
-          <div className="d-flex">
-            <div className="mr-auto">
-              <FormControl
-                color="secondary"
-                className="chartDrop p-3 border border-pink"
-              >
-                <InputLabel className="m-2" htmlFor="chart-helper">
-                  Choose Chart Type
-                </InputLabel>
-                <Select
-                  value={activeOrTop}
-                  onChange={e => setActiveOrTop(e.target.value)}
-                  input={<Input name="chartChoice" id="chart-helper" />}
-                >
-                  <MenuItem value={"top"}>Top Spending Category</MenuItem>
-                  <MenuItem value={"active"}>Most Active Category</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <h3 className="text-center chartHeading">
-            {activeOrTop === "top"
-              ? `Spending for ${topCategory} Over Time`
-              : `Spending for ${mostActiveCategory} Over Time`}
-          </h3>
-          <h6 className="text-center">
-            This chart tracks your category with the highest total spending or
-            your most active category and gives you a breakdown of your spending
-            for 2 months trailing and 3 months forward.
-          </h6>
-          {activeOrTop === "top" ? (
-            <Chart className="chart" type="bar" data={topCatData} />
-          ) : activeOrTop === "active" ? (
-            <Chart className="chart" type="bar" data={activeCatData} />
-          ) : null}
-        </Wrap>
+        <div className="col-12">
+          <Grid container justify="center">
+            <Card className="chartCard">
+              <div className="row justify-content-start">
+                <div className="col-md-4 col-sm-8 col-8">
+                  <div className="dropWrapper">
+                    <FormControl
+                      color="secondary"
+                      className="chartDrop p-3 border border-pink"
+                    >
+                      <InputLabel className="m-2" htmlFor="chart-helper">
+                        Choose Chart Type
+                      </InputLabel>
+                      <Select
+                        value={activeOrTop}
+                        onChange={e => setActiveOrTop(e.target.value)}
+                        input={<Input name="chartChoice" id="chart-helper" />}
+                      >
+                        <MenuItem value={"top"}>Top Spending Category</MenuItem>
+                        <MenuItem value={"active"}>
+                          Most Active Category
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                </div>
+                <div className="col-md-4 col-sm-12 col-12">
+                  <h3 className="text-center catChartHeader chartHeading">
+                    {activeOrTop === "top"
+                      ? `Spending for ${topCategory} Over Time`
+                      : `Spending for ${mostActiveCategory} Over Time`}
+                  </h3>
+                  <h6 className="text-center">
+                    This chart tracks your category with the highest total
+                    spending or your most active category and gives you a
+                    breakdown of your spending for 2 months trailing and 3
+                    months forward.
+                  </h6>
+                </div>
+              </div>
+              <CardContent className="chartCardContent">
+                <div className="content-section implementation">
+                  {activeOrTop === "top" ? (
+                    <Chart className="chart" type="bar" data={topCatData} />
+                  ) : activeOrTop === "active" ? (
+                    <Chart className="chart" type="bar" data={activeCatData} />
+                  ) : null}
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        </div>
       </div>
     </div>
   );
