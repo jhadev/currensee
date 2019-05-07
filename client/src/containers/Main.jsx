@@ -84,6 +84,7 @@ class Main extends Component {
     value: "",
     selectedBudgetItem: {},
     globalFilter: null,
+    categoryPick: null,
     arrayForCatByCurrentMonth: [],
     stockToSearch: "",
     stockToSend: "",
@@ -654,6 +655,16 @@ class Main extends Component {
     this.dt = el;
   };
 
+  onPickedCategoryChange = event => {
+    this.dt.filter(event.value, "category", "equals");
+    this.setState({ categoryPick: event.value });
+  };
+
+  globalFilterChange = event => {
+    const { value } = event.target;
+    this.setState({ globalFilter: value });
+  };
+
   createMonthLabels = () => {
     const barChartLabels = [];
     for (let i = -2; i < 4; i++) {
@@ -783,6 +794,10 @@ class Main extends Component {
                 income={this.state.totalIncome}
                 budgetTotal={this.state.budgetTotal}
                 deleteItem={this.deleteItem}
+                onPickedCategoryChange={this.onPickedCategoryChange}
+                categoryPick={this.state.categoryPick}
+                globalFilter={this.state.globalFilter}
+                globalFilterChange={this.globalFilterChange}
               />
               <Charts
                 trueIncome={this.state.arrayForTrueIncome}

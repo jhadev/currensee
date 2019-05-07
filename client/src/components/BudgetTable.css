@@ -1,4 +1,4 @@
-.budget-table,
+/* .budget-table,
 .p-datatable-row {
   cursor: pointer;
 }
@@ -40,8 +40,9 @@
   background-color: transparent;
 }
 
+*/
 .p-highlight {
-  color: rgba(7, 7, 7, 0.9) !important;
+  background-color: rgba(7, 7, 7, 0.9) !important;
 }
 
 table {
@@ -53,7 +54,7 @@ table {
 }
 
 .highlightRed {
-  background-color: rgba(255, 0, 17, 0.226);
+  color: rgba(255, 0, 17, 0.9);
   padding: 2px;
 }
 
@@ -72,5 +73,9 @@ table {
 }
 
 .delete {
-  width: 5%;
+  width: 6%;
+}
+
+.income-expense {
+  width: 8%
 }

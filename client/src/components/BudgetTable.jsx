@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DataCard from "./DataCard";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -7,12 +7,11 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
 import "./BudgetTable.css";
+import "primereact/resources/themes/nova-light/theme.css";
+import "primereact/resources/primereact.min.css";
 
 const BudgetTable = ({
   arrayForBudgetTable,
@@ -24,9 +23,44 @@ const BudgetTable = ({
   income,
   expenses,
   budgetTotal,
-  deleteItem
+  deleteItem,
+  categoryPick,
+  onPickedCategoryChange,
+  globalFilter,
+  globalFilterChange
 }) => {
-  const [rowSize, setRowSize] = useState(5);
+  let categories = [
+    { label: "All Categories", value: null },
+    { label: "Health", value: "Health" },
+    { label: "Home", value: "Home" },
+    { label: "Income", value: "Income" },
+    { label: "Other", value: "Other" },
+    { label: "Savings", value: "Savings" },
+    { label: "Shopping", value: "Shopping" },
+    { label: "Travel", value: "Travel" },
+    { label: "Utilities", value: "Utilities" }
+  ];
+
+  let header = (
+    <div style={{ textAlign: "left" }}>
+      <i className="pi pi-search" style={{ margin: "4px 4px 0 0" }} />
+      <InputText
+        type="search"
+        onInput={globalFilterChange}
+        placeholder="Global Search"
+        size="50"
+      />
+    </div>
+  );
+
+  let categoryFilter = (
+    <Dropdown
+      style={{ width: "100%" }}
+      value={categoryPick}
+      options={categories}
+      onChange={onPickedCategoryChange}
+    />
+  );
 
   const thisMonth = moment().format("MM");
   const thisYear = moment().format("YYYY");
@@ -96,11 +130,12 @@ const BudgetTable = ({
   };
 
   const amountTemplate = (rowData, column) => {
-    const { amount } = rowData;
+    const { amount, income } = rowData;
+    const color = income === "false" ? "red" : "black";
     const fontWeight = amount >= 500 ? "bold" : "normal";
 
     return (
-      <span style={{ fontWeight: fontWeight }}>
+      <span style={{ fontWeight: fontWeight, color: color }}>
         {!Number.isInteger(amount) ? amount.toFixed(2) : amount}
       </span>
     );
@@ -143,24 +178,6 @@ const BudgetTable = ({
               >
                 EXPORT CSV
               </Button>
-              <FormControl
-                color="secondary"
-                className="chartDrop p-3 border border-pink"
-              >
-                <InputLabel className="m-2" htmlFor="row-size-helper">
-                  Choose Chart Type
-                </InputLabel>
-                <Select
-                  value={rowSize}
-                  onChange={e => setRowSize(e.target.value)}
-                  input={<Input name="rowSize" id="row-size-helper" />}
-                >
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={15}>15</MenuItem>
-                  <MenuItem value={20}>20</MenuItem>
-                </Select>
-              </FormControl>
             </div>
           </div>
           <Typography
@@ -178,10 +195,13 @@ const BudgetTable = ({
             Double click on corresponding table row to delete a budget item
           </Typography>
           <DataTable
+            header={header}
+            globalFilter={globalFilter}
             ref={createRef}
+            responsive={true}
             className="budget-table"
             paginator={true}
-            rows={rowSize}
+            rows={10}
             tableStyle={{ width: "100%" }}
             value={arrayForBudgetTable}
             rowClassName={rowClassName}
@@ -218,9 +238,11 @@ const BudgetTable = ({
               field="category"
               header="Category"
               sortable="true"
+              filter={true}
+              filterElement={categoryFilter}
             />
             <Column
-              className="table-data"
+              className="income-expense"
               field="income"
               header="Income"
               sortable="true"
