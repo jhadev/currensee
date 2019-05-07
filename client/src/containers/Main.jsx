@@ -422,62 +422,20 @@ class Main extends Component {
   };
 
   timeChartCompare = (arr, total) => {
-    let month1 = 0;
-    let month2 = 0;
-    let month3 = 0;
-    let month4 = 0;
-    let month5 = 0;
-    let month6 = 0;
-
     let monthArray = [];
 
-    const monthCompare = moment()
-      .subtract(2, "M")
-      .format("MM/YYYY");
-    month1 = arr
-      .filter(item => item._id.fullDate === monthCompare)
-      .map(item => item[total]);
-    //console.log("MONTH ONE: " + JSON.stringify(month1));
+    for (let i = -2; i < 4; i++) {
+      let month = moment()
+        .add(i, "M")
+        .format("MM/YYYY");
 
-    const monthCompare2 = moment()
-      .subtract(1, "M")
-      .format("MM/YYYY");
-    month2 = arr
-      .filter(item => item._id.fullDate === monthCompare2)
-      .map(item => item[total]);
-    //console.log("MONTH TWO: " + JSON.stringify(month2));
+      let data = arr
+        .filter(item => item._id.fullDate === month)
+        .map(item => item[total]);
 
-    const monthCompare3 = moment().format("MM/YYYY");
-    month3 = arr
-      .filter(item => item._id.fullDate === monthCompare3)
-      .map(item => item[total]);
-    //console.log("MONTH THREE: " + JSON.stringify(month3));
+      monthArray.push(data);
+    }
 
-    const monthCompare4 = moment()
-      .add(1, "M")
-      .format("MM/YYYY");
-    month4 = arr
-      .filter(item => item._id.fullDate === monthCompare4)
-      .map(item => item[total]);
-    //console.log("MONTH FOUR: " + JSON.stringify(month4));
-
-    const monthCompare5 = moment()
-      .add(2, "M")
-      .format("MM/YYYY");
-    month5 = arr
-      .filter(item => item._id.fullDate === monthCompare5)
-      .map(item => item[total]);
-    //console.log("MONTH FIVE: " + JSON.stringify(month5));
-
-    const monthCompare6 = moment()
-      .add(3, "M")
-      .format("MM/YYYY");
-    month6 = arr
-      .filter(item => item._id.fullDate === monthCompare6)
-      .map(item => item[total]);
-    //console.log("MONTH SIX: " + JSON.stringify(month6));
-
-    monthArray = [month1, month2, month3, month4, month5, month6];
     return monthArray;
   };
 
