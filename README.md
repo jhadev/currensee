@@ -6,14 +6,11 @@ _This app is designed to help the end-user monitor and manage all of his expense
 
 [View on Heroku](https://pacific-ridge-46060.herokuapp.com/)
 
-~~_Since Heroku mLab Sandbox uses MongoDB version 3.6 we lost some functionality of our data table with this deployment. A few aggregation pipeline operators we used are exclusive to version 4.0+. Part of the backend will need to be rewritten to compensate._~~
-
-**UPDATED 4/13/2019: Removed MongoDB 4.0 dependency**
-
 ### NEW FEATURES
 
 - **Table Pagination**
-- **New Data Visualization: Line Chart**
+- **Table Filtering**
+- **New Data Visualizations**
 - **Export Budget as CSV**
 - **Date Picker (no more typing dates!)**
 - **Recurring Transactions (up to 6 months forward from starting date)**
@@ -26,11 +23,11 @@ _This app is designed to help the end-user monitor and manage all of his expense
 
 ### TODO
 
-- [ ] Global table filtering.
+- [x] Data visualization for budget total breakdown by category for a singular month. ADDED 4/18/2019 **Doughnut chart for spending by category for current month.**
+- [x] Global table filtering. ADDED 5/7/2019
+- [x] Data visualization by single category over time. ADDED 5/5/2019 **Category with highest activity and category with highest total spending can now be visualized**
 - [ ] Sum totals with custom filters.
 - [ ] Edit table cells.
-- [x] Data visualization by single category over time. ADDED 5/5/2019
-- [x] Data visualization for budget total breakdown by category for a singular month. ADDED 4/18/2019 **Doughnut chart for spending by category for current month.**
 - [ ] Google OAuth.
 
 ## Overview
@@ -41,9 +38,9 @@ The overall project was developed with the highest industry standards in mind, i
 
 A users' experience can only be as good as the technology in the User Interface. For this reason we used a commbination of Reactstrap and Material UI. Both being the most popular and relevant libararies in the current tech environment. Especially because of the rise in popularity of React and their component based coding model which emphasizes modularity; for a better user and developer experience.
 
-![currensee-new](https://user-images.githubusercontent.com/42519030/56330569-98ca7e80-6156-11e9-816c-ba9e3b94d71d.jpg)
+![currensee-table](https://user-images.githubusercontent.com/42519030/57336511-2c5af380-70f4-11e9-8aff-66b13a1a219b.jpg)
 
-![currensee-chart](https://user-images.githubusercontent.com/42519030/56330618-cdd6d100-6156-11e9-9a2d-33d7cfe2150b.jpg)
+![currensee](https://user-images.githubusercontent.com/42519030/57336512-2cf38a00-70f4-11e9-9e00-909f9d0670fe.gif)
 
 ## Back-End
 
