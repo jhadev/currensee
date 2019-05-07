@@ -90,8 +90,8 @@ class Main extends Component {
     stockToSend: "",
     itemToDelete: "",
     arrayForCatSumList: [],
-    topCatChart: [],
     topCategory: "",
+    topCatChart: [],
     mostActiveCategory: "",
     mostActiveChart: []
   };
@@ -100,17 +100,6 @@ class Main extends Component {
   componentDidMount() {
     this.loginCheck();
   }
-
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal
-    });
-
-    if (!this.state.modal) {
-      this.setState({ itemImages: [] });
-    }
-  };
-
   // Check login status
   loginCheck = () => {
     API.loginCheck()
@@ -135,6 +124,7 @@ class Main extends Component {
       });
   };
 
+  //START API CALLS
   getBudgetTable = () => {
     API.getMonth().then(res => {
       this.setState(
@@ -144,56 +134,109 @@ class Main extends Component {
     });
   };
 
-  getBudgetSum = () => {
-    API.getSumByIncome().then(res => {
-      this.setState({ arrayForSumByIncome: res.data }, this.setBudgetSum);
-    });
+  handleClickDelete = event => {
+    API.getDelete(this.state.itemToDelete)
+      .then(res => {
+        //console.log(res.data);
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.getCategorySumForCurrentMonth();
+        this.notify(
+          "error",
+          "Item successfully removed from budget",
+          "top-right"
+        );
+        this.setState({ itemToDelete: "" });
+      })
+      .catch(err => {
+        console.log(err);
+        this.notify("error", "Error. Please try again", "top-left");
+      });
   };
 
-  setBudgetSum = () => {
-    const { arrayForSumByIncome } = this.state;
-    if (
-      arrayForSumByIncome.length === 1 &&
-      arrayForSumByIncome[0]._id.income === false
-    ) {
-      this.setState({
-        budgetTotal: arrayForSumByIncome[0].budgetTotal * -1,
-        totalExpense: arrayForSumByIncome[0].budgetTotal,
-        totalIncome: 0
+  handleItemDelete = event => {
+    API.getDelete(event.data._id)
+      .then(res => {
+        //console.log(res.data);
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.getCategorySumForCurrentMonth();
+        this.notify(
+          "error",
+          "Item successfully removed from budget",
+          "top-right"
+        );
+      })
+      .catch(err => {
+        console.log(err);
+        this.notify("error", "Error. Please try again", "top-left");
       });
-    } else if (
-      arrayForSumByIncome.length === 1 &&
-      arrayForSumByIncome[0]._id.income === true
-    ) {
-      this.setState({
-        budgetTotal: arrayForSumByIncome[0].budgetTotal,
-        totalIncome: arrayForSumByIncome[0].budgetTotal,
-        totalExpense: 0
+  };
+
+  handleSearch = event => {
+    event.preventDefault();
+    this.toggle();
+    API.searchWalmart(this.state.itemToSearch)
+      .then(res => {
+        API.getWalmart()
+          .then(res => {
+            this.setState({
+              itemImages: res.data,
+              itemToSearch: ""
+            });
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => {
+        this.notify("error", "Error. Please try again", "top-left");
+        console.log(err);
       });
-    } else if (arrayForSumByIncome.length === 2) {
-      if (arrayForSumByIncome[0]._id.income === true) {
-        let income = arrayForSumByIncome[0].budgetTotal;
-        let expense = arrayForSumByIncome[1].budgetTotal;
-        let budgetTotal = income - expense;
-        this.setState({
-          budgetTotal: budgetTotal,
-          totalIncome: income,
-          totalExpense: expense
-        });
-      }
-      if (arrayForSumByIncome[0]._id.income === false) {
-        let expense = arrayForSumByIncome[0].budgetTotal;
-        let income = arrayForSumByIncome[1].budgetTotal;
-        let budgetTotal = income - expense;
-        this.setState({
-          budgetTotal: budgetTotal,
-          totalIncome: income,
-          totalExpense: expense
-        });
-      }
-    } else {
-      this.setState({ budgetTotal: 0 });
-    }
+  };
+
+  handleWalmartSubmit = event => {
+    event.preventDefault();
+    const { value, name } = event.target;
+
+    let walmartObject = {
+      description: name,
+      amount: value,
+      date: moment().format("L"),
+      income: false,
+      category: "Shopping"
+    };
+
+    this.setState({ walmart: walmartObject });
+
+    API.budgetPost(walmartObject)
+      .then(res => {
+        //console.log(res);
+        //console.warn("WALMART STATE OBJECT: " + this.state.walmart);
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.getCategorySumForCurrentMonth();
+        this.notify(
+          "success",
+          "Item successfully added to budget.",
+          "top-left"
+        );
+        this.toggle();
+      })
+      .catch(err => {
+        console.log(err);
+        this.toggle();
+        this.notify("error", "Error. Please try again", "top-left");
+      });
+
+    this.setState({ itemImages: [] });
   };
 
   getCategorySumForCurrentMonth = () => {
@@ -202,49 +245,49 @@ class Main extends Component {
     API.getSumByCategory().then(res => {
       let categorySumList = [];
 
-      let cat1 = res.data
+      const cat1 = res.data
         .filter(
           item =>
             item._id.category === "Health" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
-      let cat2 = res.data
+      const cat2 = res.data
         .filter(
           item =>
             item._id.category === "Home" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
-      let cat3 = res.data
+      const cat3 = res.data
         .filter(
           item =>
             item._id.category === "Other" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
-      let cat4 = res.data
+      const cat4 = res.data
         .filter(
           item =>
             item._id.category === "Savings" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
-      let cat5 = res.data
+      const cat5 = res.data
         .filter(
           item =>
             item._id.category === "Shopping" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
-      let cat6 = res.data
+      const cat6 = res.data
         .filter(
           item =>
             item._id.category === "Travel" && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
-      let cat7 = res.data
+      const cat7 = res.data
         .filter(
           item =>
             item._id.category === "Utilities" && item._id.fullDate === thisMonth
@@ -267,31 +310,31 @@ class Main extends Component {
     API.getSumByCategory().then(res => {
       this.setState({ arrayForCatSumList: res.data });
       let categorySumList = [];
-      let cat1 = res.data
+      const cat1 = res.data
         .filter(item => item._id.category === "Health")
         .map(item => item.categoryTotal);
 
-      let cat2 = res.data
+      const cat2 = res.data
         .filter(item => item._id.category === "Home")
         .map(item => item.categoryTotal);
 
-      let cat3 = res.data
+      const cat3 = res.data
         .filter(item => item._id.category === "Other")
         .map(item => item.categoryTotal);
 
-      let cat4 = res.data
+      const cat4 = res.data
         .filter(item => item._id.category === "Savings")
         .map(item => item.categoryTotal);
 
-      let cat5 = res.data
+      const cat5 = res.data
         .filter(item => item._id.category === "Shopping")
         .map(item => item.categoryTotal);
 
-      let cat6 = res.data
+      const cat6 = res.data
         .filter(item => item._id.category === "Travel")
         .map(item => item.categoryTotal);
 
-      let cat7 = res.data
+      const cat7 = res.data
         .filter(item => item._id.category === "Utilities")
         .map(item => item.categoryTotal);
 
@@ -307,6 +350,76 @@ class Main extends Component {
         this.getTopCategoryOverTime
       );
     });
+  };
+
+  getSumByMonthTrue = () => {
+    API.getSumByMonthTrue().then(res => {
+      let monthArray = [];
+      monthArray = this.timeChartCompare(res.data, "budgetTotal");
+      this.setState({ arrayForTrueIncome: monthArray });
+    });
+  };
+
+  getSumByMonthFalse = () => {
+    API.getSumByMonthFalse().then(res => {
+      let monthArray = [];
+      monthArray = this.timeChartCompare(res.data, "budgetTotal");
+      this.setState({ arrayForFalseIncome: monthArray });
+    });
+  };
+
+  getBudgetSum = () => {
+    API.getSumByIncome().then(res => {
+      this.setState({ arrayForSumByIncome: res.data }, this.setBudgetSum);
+    });
+  };
+  //END API CALLS
+
+  //START DATA AND LOGIC HANDLING
+  setBudgetSum = () => {
+    const { arrayForSumByIncome } = this.state;
+    if (
+      arrayForSumByIncome.length === 1 &&
+      arrayForSumByIncome[0]._id.income === false
+    ) {
+      this.setState({
+        budgetTotal: arrayForSumByIncome[0].budgetTotal * -1,
+        totalExpense: arrayForSumByIncome[0].budgetTotal,
+        totalIncome: 0
+      });
+    } else if (
+      arrayForSumByIncome.length === 1 &&
+      arrayForSumByIncome[0]._id.income === true
+    ) {
+      this.setState({
+        budgetTotal: arrayForSumByIncome[0].budgetTotal,
+        totalIncome: arrayForSumByIncome[0].budgetTotal,
+        totalExpense: 0
+      });
+    } else if (arrayForSumByIncome.length === 2) {
+      if (arrayForSumByIncome[0]._id.income === true) {
+        const income = arrayForSumByIncome[0].budgetTotal;
+        const expense = arrayForSumByIncome[1].budgetTotal;
+        const budgetTotal = income - expense;
+        this.setState({
+          budgetTotal: budgetTotal,
+          totalIncome: income,
+          totalExpense: expense
+        });
+      }
+      if (arrayForSumByIncome[0]._id.income === false) {
+        const expense = arrayForSumByIncome[0].budgetTotal;
+        const income = arrayForSumByIncome[1].budgetTotal;
+        const budgetTotal = income - expense;
+        this.setState({
+          budgetTotal: budgetTotal,
+          totalIncome: income,
+          totalExpense: expense
+        });
+      }
+    } else {
+      this.setState({ budgetTotal: 0 });
+    }
   };
 
   getMostActiveCategory = () => {
@@ -357,15 +470,15 @@ class Main extends Component {
     ] = this.state.arrayForPieChart;
 
     //destructure arrays to get only sums
-    let [healthSum] = health;
-    let [homeSum] = home;
-    let [otherSum] = other;
-    let [savingsSum] = savings;
-    let [shoppingSum] = shopping;
-    let [travelSum] = travel;
-    let [utilitiesSum] = utilities;
+    const [healthSum] = health;
+    const [homeSum] = home;
+    const [otherSum] = other;
+    const [savingsSum] = savings;
+    const [shoppingSum] = shopping;
+    const [travelSum] = travel;
+    const [utilitiesSum] = utilities;
     //put them back in an array
-    let sumArr = [
+    const sumArr = [
       healthSum,
       homeSum,
       otherSum,
@@ -382,7 +495,7 @@ class Main extends Component {
       }
     }
     //find index for the max value
-    let topCatIndex = sumArr.indexOf(Math.max(...sumArr));
+    const topCatIndex = sumArr.indexOf(Math.max(...sumArr));
     //declare top category
     let topCategory = "";
     //turn index into category name
@@ -412,7 +525,7 @@ class Main extends Component {
         console.log("stop yelling at me");
     }
 
-    let filterByTopCategory = this.state.arrayForCatSumList.filter(
+    const filterByTopCategory = this.state.arrayForCatSumList.filter(
       category => category._id.category === topCategory
     );
 
@@ -425,76 +538,40 @@ class Main extends Component {
     let monthArray = [];
 
     for (let i = -2; i < 4; i++) {
-      let month = moment()
+      const month = moment()
         .add(i, "M")
         .format("MM/YYYY");
 
-      let data = arr
+      const data = arr
         .filter(item => item._id.fullDate === month)
         .map(item => item[total]);
 
       monthArray.push(data);
     }
-
     return monthArray;
   };
 
-  getSumByMonthTrue = () => {
-    API.getSumByMonthTrue().then(res => {
-      let monthArray = [];
-      monthArray = this.timeChartCompare(res.data, "budgetTotal");
-      this.setState({ arrayForTrueIncome: monthArray });
+  createMonthLabels = () => {
+    const barChartLabels = [];
+    for (let i = -2; i < 4; i++) {
+      let newMonth = moment()
+        .add(i, "M")
+        .format("MMMM");
+      barChartLabels.push(newMonth);
+    }
+    this.setState({ monthLabels: barChartLabels });
+  };
+  //END DATA AND LOGIC HANDLING
+
+  //START VARIOUS STATE CHANGES
+  handleDrawerToggle = () => {
+    this.setState({
+      mobileOpen: !this.state.mobileOpen
     });
   };
-
-  getSumByMonthFalse = () => {
-    API.getSumByMonthFalse().then(res => {
-      let monthArray = [];
-      monthArray = this.timeChartCompare(res.data, "budgetTotal");
-      this.setState({ arrayForFalseIncome: monthArray });
-    });
-  };
-
   deleteItem = event => {
     const { value } = event.target;
     this.setState({ itemToDelete: value }, this.handleClickDelete);
-  };
-
-  handleClickDelete = event => {
-    API.getDelete(this.state.itemToDelete)
-      .then(res => {
-        //console.log(res.data);
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.getCategorySumForCurrentMonth();
-        this.notifyRemoval();
-        this.setState({ itemToDelete: "" });
-      })
-      .catch(err => {
-        console.log(err);
-        this.notifyError();
-      });
-  };
-
-  handleItemDelete = event => {
-    API.getDelete(event.data._id)
-      .then(res => {
-        //console.log(res.data);
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.getCategorySumForCurrentMonth();
-        this.notifyRemoval();
-      })
-      .catch(err => {
-        console.log(err);
-        this.notifyError();
-      });
   };
 
   handleInputChange = event => {
@@ -504,57 +581,25 @@ class Main extends Component {
     });
   };
 
-  handleSearch = event => {
-    event.preventDefault();
-    this.toggle();
-    API.searchWalmart(this.state.itemToSearch)
-      .then(res => {
-        API.getWalmart()
-          .then(res => {
-            this.setState({
-              itemImages: res.data,
-              itemToSearch: ""
-            });
-          })
-          .catch(err => console.log(err));
-      })
-      .catch(err => {
-        this.notifyError();
-        console.log(err);
-      });
-  };
-
   handleStockSearch = () => {
     this.setState({ stockToSend: this.state.stockToSearch });
     this.setState({ stockToSearch: "" });
   };
 
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+    if (!this.state.modal) {
+      this.setState({ itemImages: [] });
+    }
+  };
+  //END VARIOUS STATE CHANGES
+
   //START NOTIFICATIONS
-  notifySubmit = () => {
-    toast.success("Item successfully added to budget.", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true
-    });
-  };
-
-  notifyRemoval = () => {
-    toast.error("Item successfully removed from budget.", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true
-    });
-  };
-
-  notifyError = () => {
-    toast.error("Error. Please try again", {
-      position: "top-left",
+  notify = (type, message, position) => {
+    toast[type](message, {
+      position: position,
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -564,49 +609,14 @@ class Main extends Component {
   };
   //END NOTIFICATIONS
 
-  handleWalmartSubmit = event => {
-    event.preventDefault();
-    const { value, name } = event.target;
-
-    let walmartObject = {
-      description: name,
-      amount: value,
-      date: moment().format("L"),
-      income: false,
-      category: "Shopping"
-    };
-
-    this.setState({ walmart: walmartObject });
-
-    API.budgetPost(walmartObject)
-      .then(res => {
-        //console.log(res);
-        //console.warn("WALMART STATE OBJECT: " + this.state.walmart);
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.getCategorySumForCurrentMonth();
-        this.notifySubmit();
-        this.toggle();
-      })
-      .catch(err => {
-        console.log(err);
-        this.toggle();
-        this.notifyError();
-      });
-
-    this.setState({ itemImages: [] });
+  // START TABLE METHODS
+  exportBudget = () => {
+    this.dt.exportCSV();
   };
 
   tableSelectedChange = event => {
     this.setState({ selectedBudgetItem: event.value });
     console.log(this.state.selectedBudgetItem);
-  };
-
-  exportBudget = () => {
-    this.dt.exportCSV();
   };
 
   createRef = el => {
@@ -622,23 +632,7 @@ class Main extends Component {
     const { value } = event.target;
     this.setState({ globalFilter: value });
   };
-
-  createMonthLabels = () => {
-    const barChartLabels = [];
-    for (let i = -2; i < 4; i++) {
-      let newMonth = moment()
-        .add(i, "M")
-        .format("MMMM");
-      barChartLabels.push(newMonth);
-    }
-    this.setState({ monthLabels: barChartLabels });
-  };
-
-  handleDrawerToggle = () => {
-    this.setState({
-      mobileOpen: !this.state.mobileOpen
-    });
-  };
+  //END TABLE METHODS
 
   render() {
     // If user isn't logged in, don't let them see this page
