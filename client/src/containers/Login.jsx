@@ -75,7 +75,7 @@ class Login extends Component {
           />
           {/* Same as */}
           <ToastContainer />
-          <Wrapper>
+          <Wrapper row="row justify-content-center" columns="col-md-6 col-12">
             <Card className="loginCard shadow">
               <CardContent>
                 <form>

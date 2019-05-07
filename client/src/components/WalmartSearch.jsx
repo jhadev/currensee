@@ -6,7 +6,7 @@ import Wrapper from "./common/Wrapper";
 
 const WalmartSearch = ({ itemToSearch, handleInputChange, handleSearch }) => {
   return (
-    <Wrapper>
+    <Wrapper row="row justify-content-center" columns="col-md-6 col-12">
       <Card className="total-sum">
         <CardContent>
           <div className="text-center text-primary">

@@ -313,7 +313,7 @@ class Main extends Component {
     let compare = 0;
     let mostActiveCategory;
 
-    const { arrayForBudgetTable } = this.state;
+    const { arrayForBudgetTable, arrayForCatSumList } = this.state;
 
     for (let i = 0; i < arrayForBudgetTable.length; i++) {
       let category = arrayForBudgetTable[i].category;
@@ -330,7 +330,7 @@ class Main extends Component {
     }
 
     //filter budget table by most active category
-    let filterByMostActive = this.state.arrayForCatSumList.filter(
+    const filterByMostActive = arrayForCatSumList.filter(
       category => category._id.category === mostActiveCategory
     );
 
@@ -653,27 +653,12 @@ class Main extends Component {
 
   createMonthLabels = () => {
     const barChartLabels = [];
-
-    const firstMonth = moment()
-      .subtract(2, "M")
-      .format("MMMM");
-    barChartLabels.push(firstMonth);
-
-    const secondMonth = moment()
-      .subtract(1, "M")
-      .format("MMMM");
-    barChartLabels.push(secondMonth);
-
-    const thirdMonth = moment().format("MMMM");
-    barChartLabels.push(thirdMonth);
-
-    for (let i = 1; i < 4; i++) {
+    for (let i = -2; i < 4; i++) {
       let newMonth = moment()
         .add(i, "M")
         .format("MMMM");
       barChartLabels.push(newMonth);
     }
-    //console.log("MONTH LABELS: " + barChartLabels);
     this.setState({ monthLabels: barChartLabels });
   };
 
@@ -697,7 +682,7 @@ class Main extends Component {
       <div className={classes.root}>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick

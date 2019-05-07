@@ -2,17 +2,16 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
+import Wrapper from "../components/common/Wrapper";
 
 const Wrap = ({ children }) => (
-  <div className="row justify-content-center">
-    <div className="col-12 col-md-8">
-      <Grid container justify="center">
-        <Card className="welcomeCard">
-          <CardContent>{children}</CardContent>
-        </Card>
-      </Grid>
-    </div>
-  </div>
+  <Wrapper row="row justify-content-center" columns="col-md-8 col-12">
+    <Grid container justify="center">
+      <Card className="welcomeCard">
+        <CardContent>{children}</CardContent>
+      </Card>
+    </Grid>
+  </Wrapper>
 );
 
 const Body = () => (
