@@ -131,7 +131,7 @@ const BudgetTable = ({
 
   const amountTemplate = (rowData, column) => {
     const { amount, income } = rowData;
-    const color = income === "false" ? "red" : "black";
+    const color = income === "false" ? "red" : null;
     const fontWeight = amount >= 500 ? "bold" : "normal";
 
     return (
