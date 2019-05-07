@@ -36,12 +36,12 @@ class Login extends Component {
       })
       .catch(err => {
         console.log(err.response);
-        this.notifyError();
+        this.notifyError(err.response.data);
       });
   };
 
-  notifyError = () => {
-    toast.error("User not found or password is incorrect. Please try again.", {
+  notifyError = message => {
+    toast.error(`${message}. Check your username or password`, {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,

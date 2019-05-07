@@ -38,12 +38,12 @@ class Signup extends Component {
       })
       .catch(err => {
         console.log(err.response.data);
-        this.notifyError();
+        this.notifyError(err.response.data.message);
       });
   };
 
-  notifyError = () => {
-    toast.error("Signup failed. Please try again", {
+  notifyError = message => {
+    toast.error(`${message}`, {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,

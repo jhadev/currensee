@@ -407,6 +407,8 @@ class Main extends Component {
       case 6:
         topCategory = "Utilities";
         break;
+      default:
+        console.log("stop yelling at me");
     }
 
     let filterByTopCategory = this.state.arrayForCatSumList.filter(
@@ -510,6 +512,7 @@ class Main extends Component {
         this.getSumByMonthTrue();
         this.getCategorySumForCurrentMonth();
         this.notifyRemoval();
+        this.setState({ itemToDelete: "" });
       })
       .catch(err => {
         console.log(err);

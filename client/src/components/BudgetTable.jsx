@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DataCard from "./DataCard";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -7,6 +7,11 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 import "./BudgetTable.css";
 
 const BudgetTable = ({
@@ -21,6 +26,8 @@ const BudgetTable = ({
   budgetTotal,
   deleteItem
 }) => {
+  const [rowSize, setRowSize] = useState(5);
+
   const thisMonth = moment().format("MM");
   const thisYear = moment().format("YYYY");
 
@@ -136,6 +143,24 @@ const BudgetTable = ({
               >
                 EXPORT CSV
               </Button>
+              <FormControl
+                color="secondary"
+                className="chartDrop p-3 border border-pink"
+              >
+                <InputLabel className="m-2" htmlFor="row-size-helper">
+                  Choose Chart Type
+                </InputLabel>
+                <Select
+                  value={rowSize}
+                  onChange={e => setRowSize(e.target.value)}
+                  input={<Input name="rowSize" id="row-size-helper" />}
+                >
+                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={15}>15</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           </div>
           <Typography
@@ -156,7 +181,7 @@ const BudgetTable = ({
             ref={createRef}
             className="budget-table"
             paginator={true}
-            rows={15}
+            rows={rowSize}
             tableStyle={{ width: "100%" }}
             value={arrayForBudgetTable}
             rowClassName={rowClassName}

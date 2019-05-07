@@ -277,16 +277,6 @@ class SideNav extends Component {
                 placeholder="100"
                 name="amount"
               />
-              {/* <TextField
-              id="standard-date"
-              label="Date"
-              className="textField"
-              onChange={this.handleInputChange}
-              value={this.state.date}
-              placeholder="MM/DD/YYYY"
-              margin="normal"
-              name="date"
-            /> */}
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   className="mt-4 textField"

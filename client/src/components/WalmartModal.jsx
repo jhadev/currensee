@@ -71,6 +71,8 @@ const WalmartModal = ({ toggle, itemImages, walmartSubmit }) => {
                     </button>
                   </div>
                 );
+              } else {
+                return null;
               }
             })
           )}
