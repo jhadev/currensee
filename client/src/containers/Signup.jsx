@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import API from "../utils/API";
-import Wrapper from "../components/common/Wrapper";
-import Navigation from "../components/Navigation";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./Signup.css";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import API from '../utils/API';
+import Wrapper from '../components/common/Wrapper';
+import Navigation from '../components/Navigation';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './Signup.css';
 
 class Signup extends Component {
   state = {
     success: false,
-    username: "",
-    password: ""
+    username: '',
+    password: ''
   };
 
   handleInputChange = e => {
@@ -28,34 +28,37 @@ class Signup extends Component {
   // Method to register a new user
   register = e => {
     e.preventDefault();
-    API.register({
-      username: this.state.username,
-      password: this.state.password
-    })
-      .then(res => {
-        console.log(res.data);
-        this.setState({ success: res.data });
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const validateEmail = email => {
+      return pattern.test(email);
+    };
+
+    console.log(validateEmail(this.state.username));
+
+    if (validateEmail(this.state.username) && this.state.password.length >= 6) {
+      API.register({
+        username: this.state.username,
+        password: this.state.password
       })
-      .catch(err => {
-        console.log(err.response.data);
-        this.notifyError(err.response.data.message);
-      });
+        .then(res => {
+          console.log(res.data);
+          this.setState({ success: res.data });
+        })
+        .catch(err => {
+          console.log(err.response.data);
+          this.notifyError(err.response.data.message);
+        });
+    } else if (this.state.password.length < 6) {
+      this.notifyError('Your password has to be over 6 characters or more.');
+    } else if (!validateEmail(this.state.username)) {
+      this.notifyError('Please enter a valid email');
+    }
   };
 
   notifyError = message => {
     toast.error(`${message}`, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true
-    });
-  };
-
-  notifySuccess = () => {
-    toast.success("Success! Please login with your credentials", {
-      position: "top-center",
+      position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -67,7 +70,6 @@ class Signup extends Component {
   render() {
     // If Register was a success, take them to the Login page
     if (this.state.success) {
-      this.notifySuccess();
       return <Redirect to="/login" />;
     }
 
@@ -77,7 +79,7 @@ class Signup extends Component {
         <div className="container my-5">
           <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -122,8 +124,8 @@ class Signup extends Component {
                     <div className="col-12">
                       <Button
                         disabled={
-                          this.state.username === "" ||
-                          this.state.password === ""
+                          this.state.username === '' ||
+                          this.state.password === ''
                         }
                         variant="contained"
                         color="secondary"

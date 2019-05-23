@@ -1,50 +1,50 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import moment from "moment";
-import API from "../utils/API";
-import SideNav from "../components/SideNav";
-import Welcome from "../components/Welcome";
-import Charts from "../components/Charts";
-import BudgetTable from "../components/BudgetTable";
-import WalmartSearch from "../components/WalmartSearch";
-import StockSearch from "../components/StockSearch";
-import WalmartModal from "../components/WalmartModal";
-import { Modal } from "reactstrap";
-import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Toolbar from "@material-ui/core/Toolbar";
-import MenuIcon from "@material-ui/icons/Menu";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./Main.css";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import moment from 'moment';
+import API from '../utils/API';
+import SideNav from '../components/SideNav';
+import Welcome from '../components/Welcome';
+import Charts from '../components/Charts';
+import BudgetTable from '../components/BudgetTable';
+import WalmartSearch from '../components/WalmartSearch';
+import StockSearch from '../components/StockSearch';
+import WalmartModal from '../components/WalmartModal';
+import { Modal } from 'reactstrap';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Toolbar from '@material-ui/core/Toolbar';
+import MenuIcon from '@material-ui/icons/Menu';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './Main.css';
 
 const drawerWidth = 300;
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: 'flex'
   },
   drawer: {
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0
     }
   },
   appBar: {
     marginLeft: drawerWidth,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`
     }
   },
   menuButton: {
     marginRight: 20,
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
+    [theme.breakpoints.up('sm')]: {
+      display: 'none'
     }
   },
   toolbar: theme.mixins.toolbar,
@@ -55,21 +55,21 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     backgroundImage:
-      "url(https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)"
+      'url(https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)'
   }
 });
 
 class Main extends Component {
   state = {
     isLoggedIn: true,
-    username: "",
-    itemToSearch: "",
+    username: '',
+    itemToSearch: '',
     itemImages: [],
     mobileOpen: false,
     walmart: {},
-    categoryRange: "",
-    activePageHeader: "Dashboard",
-    activePage: "Search",
+    categoryRange: '',
+    activePageHeader: 'Dashboard',
+    activePage: 'Search',
     arrayForPieChart: [],
     arrayForBudgetTable: [],
     arrayForSumByIncome: [],
@@ -80,19 +80,19 @@ class Main extends Component {
     arrayForFalseIncome: [],
     monthLabels: [],
     modal: false,
-    search: "",
-    value: "",
+    search: '',
+    value: '',
     selectedBudgetItem: {},
     globalFilter: null,
     categoryPick: null,
     arrayForCatByCurrentMonth: [],
-    stockToSearch: "",
-    stockToSend: "",
-    itemToDelete: "",
+    stockToSearch: '',
+    stockToSend: '',
+    itemToDelete: '',
     arrayForCatSumList: [],
-    topCategory: "",
+    topCategory: '',
     topCatChart: [],
-    mostActiveCategory: "",
+    mostActiveCategory: '',
     mostActiveChart: []
   };
 
@@ -145,15 +145,15 @@ class Main extends Component {
         this.getSumByMonthTrue();
         this.getCategorySumForCurrentMonth();
         this.notify(
-          "error",
-          "Item successfully removed from budget",
-          "top-right"
+          'error',
+          'Item successfully removed from budget',
+          'top-right'
         );
-        this.setState({ itemToDelete: "" });
+        this.setState({ itemToDelete: '' });
       })
       .catch(err => {
         console.log(err);
-        this.notify("error", "Error. Please try again", "top-left");
+        this.notify('error', 'Error. Please try again', 'top-left');
       });
   };
 
@@ -168,14 +168,14 @@ class Main extends Component {
         this.getSumByMonthTrue();
         this.getCategorySumForCurrentMonth();
         this.notify(
-          "error",
-          "Item successfully removed from budget",
-          "top-right"
+          'error',
+          'Item successfully removed from budget',
+          'top-right'
         );
       })
       .catch(err => {
         console.log(err);
-        this.notify("error", "Error. Please try again", "top-left");
+        this.notify('error', 'Error. Please try again', 'top-left');
       });
   };
 
@@ -188,13 +188,13 @@ class Main extends Component {
           .then(res => {
             this.setState({
               itemImages: res.data,
-              itemToSearch: ""
+              itemToSearch: ''
             });
           })
           .catch(err => console.log(err));
       })
       .catch(err => {
-        this.notify("error", "Error. Please try again", "top-left");
+        this.notify('error', 'Error. Please try again', 'top-left');
         console.log(err);
       });
   };
@@ -206,9 +206,9 @@ class Main extends Component {
     let walmartObject = {
       description: name,
       amount: value,
-      date: moment().format("L"),
+      date: moment().format('L'),
       income: false,
-      category: "Shopping"
+      category: 'Shopping'
     };
 
     this.setState({ walmart: walmartObject });
@@ -224,23 +224,23 @@ class Main extends Component {
         this.getSumByMonthTrue();
         this.getCategorySumForCurrentMonth();
         this.notify(
-          "success",
-          "Item successfully added to budget.",
-          "top-left"
+          'success',
+          'Item successfully added to budget.',
+          'top-left'
         );
         this.toggle();
       })
       .catch(err => {
         console.log(err);
         this.toggle();
-        this.notify("error", "Error. Please try again", "top-left");
+        this.notify('error', 'Error. Please try again', 'top-left');
       });
 
     this.setState({ itemImages: [] });
   };
 
   getCategorySumForCurrentMonth = () => {
-    const thisMonth = moment().format("MM/YYYY");
+    const thisMonth = moment().format('MM/YYYY');
 
     API.getSumByCategory().then(res => {
       let categorySumList = [];
@@ -248,49 +248,49 @@ class Main extends Component {
       const cat1 = res.data
         .filter(
           item =>
-            item._id.category === "Health" && item._id.fullDate === thisMonth
+            item._id.category === 'Health' && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       const cat2 = res.data
         .filter(
           item =>
-            item._id.category === "Home" && item._id.fullDate === thisMonth
+            item._id.category === 'Home' && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       const cat3 = res.data
         .filter(
           item =>
-            item._id.category === "Other" && item._id.fullDate === thisMonth
+            item._id.category === 'Other' && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       const cat4 = res.data
         .filter(
           item =>
-            item._id.category === "Savings" && item._id.fullDate === thisMonth
+            item._id.category === 'Savings' && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       const cat5 = res.data
         .filter(
           item =>
-            item._id.category === "Shopping" && item._id.fullDate === thisMonth
+            item._id.category === 'Shopping' && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       const cat6 = res.data
         .filter(
           item =>
-            item._id.category === "Travel" && item._id.fullDate === thisMonth
+            item._id.category === 'Travel' && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
       const cat7 = res.data
         .filter(
           item =>
-            item._id.category === "Utilities" && item._id.fullDate === thisMonth
+            item._id.category === 'Utilities' && item._id.fullDate === thisMonth
         )
         .map(item => item.categoryTotal);
 
@@ -311,31 +311,31 @@ class Main extends Component {
       this.setState({ arrayForCatSumList: res.data });
       let categorySumList = [];
       const cat1 = res.data
-        .filter(item => item._id.category === "Health")
+        .filter(item => item._id.category === 'Health')
         .map(item => item.categoryTotal);
 
       const cat2 = res.data
-        .filter(item => item._id.category === "Home")
+        .filter(item => item._id.category === 'Home')
         .map(item => item.categoryTotal);
 
       const cat3 = res.data
-        .filter(item => item._id.category === "Other")
+        .filter(item => item._id.category === 'Other')
         .map(item => item.categoryTotal);
 
       const cat4 = res.data
-        .filter(item => item._id.category === "Savings")
+        .filter(item => item._id.category === 'Savings')
         .map(item => item.categoryTotal);
 
       const cat5 = res.data
-        .filter(item => item._id.category === "Shopping")
+        .filter(item => item._id.category === 'Shopping')
         .map(item => item.categoryTotal);
 
       const cat6 = res.data
-        .filter(item => item._id.category === "Travel")
+        .filter(item => item._id.category === 'Travel')
         .map(item => item.categoryTotal);
 
       const cat7 = res.data
-        .filter(item => item._id.category === "Utilities")
+        .filter(item => item._id.category === 'Utilities')
         .map(item => item.categoryTotal);
 
       categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
@@ -355,7 +355,7 @@ class Main extends Component {
   getSumByMonthTrue = () => {
     API.getSumByMonthTrue().then(res => {
       let monthArray = [];
-      monthArray = this.timeChartCompare(res.data, "budgetTotal");
+      monthArray = this.timeChartCompare(res.data, 'budgetTotal');
       this.setState({ arrayForTrueIncome: monthArray });
     });
   };
@@ -363,7 +363,7 @@ class Main extends Component {
   getSumByMonthFalse = () => {
     API.getSumByMonthFalse().then(res => {
       let monthArray = [];
-      monthArray = this.timeChartCompare(res.data, "budgetTotal");
+      monthArray = this.timeChartCompare(res.data, 'budgetTotal');
       this.setState({ arrayForFalseIncome: monthArray });
     });
   };
@@ -449,7 +449,7 @@ class Main extends Component {
     );
 
     let monthArray = [];
-    monthArray = this.timeChartCompare(filterByMostActive, "categoryTotal");
+    monthArray = this.timeChartCompare(filterByMostActive, 'categoryTotal');
 
     this.setState({
       mostActiveChart: monthArray,
@@ -497,32 +497,32 @@ class Main extends Component {
     //find index for the max value
     const topCatIndex = sumArr.indexOf(Math.max(...sumArr));
     //declare top category
-    let topCategory = "";
+    let topCategory = '';
     //turn index into category name
     switch (topCatIndex) {
       case 0:
-        topCategory = "Health";
+        topCategory = 'Health';
         break;
       case 1:
-        topCategory = "Home";
+        topCategory = 'Home';
         break;
       case 2:
-        topCategory = "Other";
+        topCategory = 'Other';
         break;
       case 3:
-        topCategory = "Savings";
+        topCategory = 'Savings';
         break;
       case 4:
-        topCategory = "Shopping";
+        topCategory = 'Shopping';
         break;
       case 5:
-        topCategory = "Travel";
+        topCategory = 'Travel';
         break;
       case 6:
-        topCategory = "Utilities";
+        topCategory = 'Utilities';
         break;
       default:
-        console.log("stop yelling at me");
+        console.log('stop yelling at me');
     }
 
     const filterByTopCategory = this.state.arrayForCatSumList.filter(
@@ -530,7 +530,7 @@ class Main extends Component {
     );
 
     let monthArray = [];
-    monthArray = this.timeChartCompare(filterByTopCategory, "categoryTotal");
+    monthArray = this.timeChartCompare(filterByTopCategory, 'categoryTotal');
     this.setState({ topCatChart: monthArray, topCategory: topCategory });
   };
 
@@ -539,8 +539,8 @@ class Main extends Component {
 
     for (let i = -2; i < 4; i++) {
       const month = moment()
-        .add(i, "M")
-        .format("MM/YYYY");
+        .add(i, 'M')
+        .format('MM/YYYY');
 
       const data = arr
         .filter(item => item._id.fullDate === month)
@@ -555,8 +555,8 @@ class Main extends Component {
     const barChartLabels = [];
     for (let i = -2; i < 4; i++) {
       let newMonth = moment()
-        .add(i, "M")
-        .format("MMMM");
+        .add(i, 'M')
+        .format('MMMM');
       barChartLabels.push(newMonth);
     }
     this.setState({ monthLabels: barChartLabels });
@@ -583,7 +583,7 @@ class Main extends Component {
 
   handleStockSearch = () => {
     this.setState({ stockToSend: this.state.stockToSearch });
-    this.setState({ stockToSearch: "" });
+    this.setState({ stockToSearch: '' });
   };
 
   toggle = () => {
@@ -624,7 +624,7 @@ class Main extends Component {
   };
 
   onPickedCategoryChange = event => {
-    this.dt.filter(event.value, "category", "equals");
+    this.dt.filter(event.value, 'category', 'equals');
     this.setState({ categoryPick: event.value });
   };
 
@@ -639,8 +639,6 @@ class Main extends Component {
     if (!this.state.isLoggedIn) {
       return <Redirect to="/login" />;
     }
-
-    console.log(this.state);
 
     const { classes, theme } = this.props;
 
@@ -673,7 +671,7 @@ class Main extends Component {
             <div className="d-flex">
               <div className="dashtext">{this.state.activePageHeader}</div>
               <div className="dashtext">
-                {"\u00A0"}
+                {'\u00A0'}
                 {`- ${this.state.username}`}
               </div>
             </div>
@@ -684,7 +682,7 @@ class Main extends Component {
             <Drawer
               container={this.props.container}
               variant="temporary"
-              anchor={theme.direction === "rtl" ? "right" : "left"}
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
               open={this.state.mobileOpen}
               onClose={this.handleDrawerToggle}
               classes={{
