@@ -1,21 +1,22 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import API from "../utils/API";
-import Wrapper from "../components/common/Wrapper";
-import Navigation from "../components/Navigation";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./Signup.css";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import API from '../utils/API';
+import Wrapper from '../components/common/Wrapper';
+import Navigation from '../components/Navigation';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { ToastContainer, toast } from 'react-toastify';
+import * as yup from 'yup';
+import 'react-toastify/dist/ReactToastify.css';
+import './Signup.css';
 
 class Signup extends Component {
   state = {
     success: false,
-    username: "",
-    password: ""
+    username: '',
+    password: ''
   };
 
   handleInputChange = e => {
@@ -44,7 +45,7 @@ class Signup extends Component {
 
   notifyError = message => {
     toast.error(`${message}`, {
-      position: "top-center",
+      position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -54,8 +55,8 @@ class Signup extends Component {
   };
 
   notifySuccess = () => {
-    toast.success("Success! Please login with your credentials", {
-      position: "top-center",
+    toast.success('Success! Please login with your credentials', {
+      position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -70,6 +71,18 @@ class Signup extends Component {
       this.notifySuccess();
       return <Redirect to="/login" />;
     }
+
+    const userSchema = yup.object().shape({
+      email: yup
+        .string()
+        .email('Please Enter an valid Email')
+        .required('Email is Required.'),
+      password: yup
+        .string()
+        .required('Password is Required.')
+        .max(13, 'Too long')
+        .min(8, 'Too short')
+    });
 
     return (
       <div>
@@ -122,8 +135,8 @@ class Signup extends Component {
                     <div className="col-12">
                       <Button
                         disabled={
-                          this.state.username === "" ||
-                          this.state.password === ""
+                          this.state.username === '' ||
+                          this.state.password === ''
                         }
                         variant="contained"
                         color="secondary"
