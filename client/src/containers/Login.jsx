@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import API from "../utils/API";
-import Navigation from "../components/Navigation";
-import Wrapper from "../components/common/Wrapper";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./Login.css";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import API from '../utils/API';
+import Navigation from '../components/Navigation';
+import Wrapper from '../components/common/Wrapper';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './Login.css';
 
 class Login extends Component {
   state = {
     isLoggedIn: false,
-    username: "",
-    password: ""
+    username: '',
+    password: ''
   };
 
   handleInputChange = e => {
@@ -31,7 +31,6 @@ class Login extends Component {
     e.preventDefault();
     API.login({ username: this.state.username, password: this.state.password })
       .then(res => {
-        console.log(res.data);
         this.setState({ isLoggedIn: res.data });
       })
       .catch(err => {
@@ -42,7 +41,7 @@ class Login extends Component {
 
   notifyError = message => {
     toast.error(`${message}. Check your username or password`, {
-      position: "top-center",
+      position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -108,8 +107,8 @@ class Login extends Component {
                     <div className="col-12">
                       <Button
                         disabled={
-                          this.state.username === "" ||
-                          this.state.password === ""
+                          this.state.username === '' ||
+                          this.state.password === ''
                         }
                         variant="contained"
                         color="secondary"

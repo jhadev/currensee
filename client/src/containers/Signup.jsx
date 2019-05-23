@@ -8,7 +8,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { ToastContainer, toast } from 'react-toastify';
-import * as yup from 'yup';
 import 'react-toastify/dist/ReactToastify.css';
 import './Signup.css';
 
@@ -29,18 +28,32 @@ class Signup extends Component {
   // Method to register a new user
   register = e => {
     e.preventDefault();
-    API.register({
-      username: this.state.username,
-      password: this.state.password
-    })
-      .then(res => {
-        console.log(res.data);
-        this.setState({ success: res.data });
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const validateEmail = email => {
+      return pattern.test(email);
+    };
+
+    console.log(validateEmail(this.state.username));
+
+    if (validateEmail(this.state.username) && this.state.password.length >= 6) {
+      API.register({
+        username: this.state.username,
+        password: this.state.password
       })
-      .catch(err => {
-        console.log(err.response.data);
-        this.notifyError(err.response.data.message);
-      });
+        .then(res => {
+          console.log(res.data);
+          this.setState({ success: res.data });
+        })
+        .catch(err => {
+          console.log(err.response.data);
+          this.notifyError(err.response.data.message);
+        });
+    } else if (this.state.password.length < 6) {
+      this.notifyError('Your password has to be over 6 characters or more.');
+    } else if (!validateEmail(this.state.username)) {
+      this.notifyError('Please enter a valid email');
+    }
   };
 
   notifyError = message => {
@@ -54,35 +67,11 @@ class Signup extends Component {
     });
   };
 
-  notifySuccess = () => {
-    toast.success('Success! Please login with your credentials', {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true
-    });
-  };
-
   render() {
     // If Register was a success, take them to the Login page
     if (this.state.success) {
-      this.notifySuccess();
       return <Redirect to="/login" />;
     }
-
-    const userSchema = yup.object().shape({
-      email: yup
-        .string()
-        .email('Please Enter an valid Email')
-        .required('Email is Required.'),
-      password: yup
-        .string()
-        .required('Password is Required.')
-        .max(13, 'Too long')
-        .min(8, 'Too short')
-    });
 
     return (
       <div>
@@ -90,7 +79,7 @@ class Signup extends Component {
         <div className="container my-5">
           <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
