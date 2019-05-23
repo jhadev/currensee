@@ -1,5 +1,5 @@
-const db = require("../models");
-const Budget = require("../models/budget");
+const db = require('../models');
+const Budget = require('../models/budget');
 
 module.exports = {
   findAll: function(req, res) {
@@ -15,6 +15,15 @@ module.exports = {
         res.status(422).json(err);
       });
   },
+
+  // deleteAll: function(req, res) {
+  //   db.Budget.deleteMany({ userID: req.user._id })
+  //     .then(dbModel => res.json(dbModel))
+  //     .catch(err => {
+  //       console.log(err);
+  //       res.status(422).json(err);
+  //     });
+  // },
 
   monthField: function(req, res) {
     db.Budget.aggregate([
@@ -32,16 +41,16 @@ module.exports = {
           date: 1,
           userID: 1,
           month: {
-            $substrBytes: ["$date", 0, 2]
+            $substrBytes: ['$date', 0, 2]
           },
-          year: { $substrBytes: ["$date", 6, 8] },
+          year: { $substrBytes: ['$date', 6, 8] },
           fullDate: {
             $concat: [
               {
-                $substrBytes: ["$date", 0, 2]
+                $substrBytes: ['$date', 0, 2]
               },
-              "/",
-              { $substrBytes: ["$date", 6, 8] }
+              '/',
+              { $substrBytes: ['$date', 6, 8] }
             ]
           }
           //convertedIncome: { $toString: "$income" }
@@ -141,10 +150,10 @@ module.exports = {
       {
         $group: {
           _id: {
-            income: "$income"
+            income: '$income'
           },
           budgetTotal: {
-            $sum: "$amount"
+            $sum: '$amount'
           }
         }
       }
@@ -168,23 +177,23 @@ module.exports = {
       {
         $group: {
           _id: {
-            income: "$income",
+            income: '$income',
             month: {
-              $substrBytes: ["$date", 0, 2]
+              $substrBytes: ['$date', 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] },
+            year: { $substrBytes: ['$date', 6, 8] },
             fullDate: {
               $concat: [
                 {
-                  $substrBytes: ["$date", 0, 2]
+                  $substrBytes: ['$date', 0, 2]
                 },
-                "/",
-                { $substrBytes: ["$date", 6, 8] }
+                '/',
+                { $substrBytes: ['$date', 6, 8] }
               ]
             }
           },
           budgetTotal: {
-            $sum: "$amount"
+            $sum: '$amount'
           }
         }
       }
@@ -210,23 +219,23 @@ module.exports = {
       {
         $group: {
           _id: {
-            income: "$income",
+            income: '$income',
             month: {
-              $substrBytes: ["$date", 0, 2]
+              $substrBytes: ['$date', 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] },
+            year: { $substrBytes: ['$date', 6, 8] },
             fullDate: {
               $concat: [
                 {
-                  $substrBytes: ["$date", 0, 2]
+                  $substrBytes: ['$date', 0, 2]
                 },
-                "/",
-                { $substrBytes: ["$date", 6, 8] }
+                '/',
+                { $substrBytes: ['$date', 6, 8] }
               ]
             }
           },
           budgetTotal: {
-            $sum: "$amount"
+            $sum: '$amount'
           }
         }
       }
@@ -247,23 +256,23 @@ module.exports = {
       {
         $group: {
           _id: {
-            income: "$income",
+            income: '$income',
             month: {
-              $substrBytes: ["$date", 0, 2]
+              $substrBytes: ['$date', 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] },
+            year: { $substrBytes: ['$date', 6, 8] },
             fullDate: {
               $concat: [
                 {
-                  $substrBytes: ["$date", 0, 2]
+                  $substrBytes: ['$date', 0, 2]
                 },
-                "/",
-                { $substrBytes: ["$date", 6, 8] }
+                '/',
+                { $substrBytes: ['$date', 6, 8] }
               ]
             }
           },
           budgetTotal: {
-            $sum: "$amount"
+            $sum: '$amount'
           }
         }
       }
@@ -287,30 +296,30 @@ module.exports = {
       {
         $group: {
           _id: {
-            income: "$income",
-            category: "$category",
+            income: '$income',
+            category: '$category',
             month: {
-              $substrBytes: ["$date", 0, 2]
+              $substrBytes: ['$date', 0, 2]
             },
-            year: { $substrBytes: ["$date", 6, 8] },
+            year: { $substrBytes: ['$date', 6, 8] },
             fullDate: {
               $concat: [
                 {
-                  $substrBytes: ["$date", 0, 2]
+                  $substrBytes: ['$date', 0, 2]
                 },
-                "/",
-                { $substrBytes: ["$date", 6, 8] }
+                '/',
+                { $substrBytes: ['$date', 6, 8] }
               ]
             }
           },
           categoryTotal: {
-            $sum: "$amount"
+            $sum: '$amount'
           }
         }
       },
       {
         $sort: {
-          "_id.category": 1
+          '_id.category': 1
         }
       }
     ])
