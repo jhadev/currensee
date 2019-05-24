@@ -60,6 +60,8 @@ const styles = theme => ({
 });
 
 class Main extends Component {
+  _isMounted = false;
+
   state = {
     isLoggedIn: true,
     username: '',
@@ -98,25 +100,34 @@ class Main extends Component {
 
   // Check login status on load
   componentDidMount() {
+    this._isMounted = true;
     this.loginCheck();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   // Check login status
   loginCheck = () => {
     API.loginCheck()
-      .then(res =>
-        this.setState({
-          isLoggedIn: res.data.isLoggedIn,
-          username: res.data.username
-        })
-      )
       .then(res => {
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.createMonthLabels();
-        this.getCategorySumForCurrentMonth();
+        if (this._isMounted) {
+          this.setState({
+            isLoggedIn: res.data.isLoggedIn,
+            username: res.data.username
+          });
+        }
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.getCategorySum();
+          this.getBudgetTable();
+          this.getBudgetSum();
+          this.getSumByMonthFalse();
+          this.getSumByMonthTrue();
+          this.createMonthLabels();
+          this.getCategorySumForCurrentMonth();
+        }
       })
       .catch(err => {
         console.log(err);

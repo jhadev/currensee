@@ -1,57 +1,57 @@
-import React, { Component } from "react";
-import API from "../utils/API";
-import moment from "moment";
-import { Link } from "react-router-dom";
-import { withStyles } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import Select from "@material-ui/core/Select";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormGroup from "@material-ui/core/FormGroup";
-import Grid from "@material-ui/core/Grid";
-import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./SideNav.css";
+import React, { Component } from 'react';
+import API from '../utils/API';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import Grid from '@material-ui/core/Grid';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './SideNav.css';
 
 const styles = theme => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
-    width: "95%",
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '95%',
     padding: 20
   },
   textField: {
-    width: "100%"
+    width: '100%'
   },
   dense: {
     marginTop: 19
   },
   button: {
-    width: "100%"
+    width: '100%'
   }
 });
 
 class SideNav extends Component {
   state = {
-    description: "",
+    description: '',
     amount: 0,
-    category: "",
+    category: '',
     date: new Date(),
     income: true,
     budget: {},
-    value: "",
+    value: '',
     monthsRecurring: 0,
     recurring: false
   };
@@ -70,21 +70,23 @@ class SideNav extends Component {
 
   handleDateChange = pickedDate => {
     this.setState({
-      date: moment(pickedDate).format("MM/DD/YYYY")
+      date: moment(pickedDate).format('MM/DD/YYYY')
     });
   };
 
   logout = event => {
     event.preventDefault();
-    API.logout().then(res => {
-      console.log(res);
-      window.location.reload().catch(err => console.log(err));
-    });
+    API.logout()
+      .then(res => {
+        console.log(res);
+        window.location.reload();
+      })
+      .catch(err => console.log(err));
   };
 
   notifySubmit = () => {
-    toast.success("Item successfully added to budget.", {
-      position: "top-left",
+    toast.success('Item successfully added to budget.', {
+      position: 'top-left',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -95,9 +97,9 @@ class SideNav extends Component {
 
   notifySubmitError = () => {
     toast.error(
-      "Error. Please check if all fields are filled before submitting.",
+      'Error. Please check if all fields are filled before submitting.',
       {
-        position: "top-left",
+        position: 'top-left',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -110,16 +112,16 @@ class SideNav extends Component {
   handleFormSubmit = (event, props) => {
     event.preventDefault();
     if (
-      this.state.description !== "" &&
+      this.state.description !== '' &&
       this.state.amount > 0 &&
-      this.state.date !== "" &&
-      this.state.category !== "" &&
+      this.state.date !== '' &&
+      this.state.category !== '' &&
       !this.state.recurring
     ) {
       let budgetObject = {
         description: this.state.description,
         amount: this.state.amount,
-        date: moment(this.state.date).format("L"),
+        date: moment(this.state.date).format('L'),
         income: this.state.income,
         category: this.state.category
       };
@@ -129,7 +131,7 @@ class SideNav extends Component {
       API.budgetPost(budgetObject)
         .then(res => {
           this.notifySubmit();
-          console.log("BUDGET STATE OBJECT: " + this.state.budget);
+          console.log('BUDGET STATE OBJECT: ' + this.state.budget);
           this.setState({ budget: budgetObject });
 
           this.props.getCategorySum();
@@ -147,8 +149,8 @@ class SideNav extends Component {
           description: this.state.description,
           amount: this.state.amount,
           date: moment(this.state.date)
-            .add(i, "M")
-            .format("L"),
+            .add(i, 'M')
+            .format('L'),
           income: this.state.income,
           category: this.state.category
         };
@@ -156,7 +158,7 @@ class SideNav extends Component {
 
         API.budgetPost(budgetObject).then(res => {
           this.notifySubmit();
-          console.log("BUDGET STATE OBJECT: " + this.state.budget);
+          console.log('BUDGET STATE OBJECT: ' + this.state.budget);
           this.setState({ budget: budgetArray });
           // window.location.reload();
 
@@ -171,12 +173,12 @@ class SideNav extends Component {
       this.notifySubmitError();
     }
     this.setState({
-      description: "",
+      description: '',
       amount: 0,
       date: new Date(),
       income: true,
-      category: "",
-      value: "",
+      category: '',
+      value: '',
       budget: {},
       recurring: false
     });
@@ -233,7 +235,7 @@ class SideNav extends Component {
         </Grid>
         <Divider />
         <Grid container className="logout" justify="center">
-          <Link to={"/"}>
+          <Link to={'/'}>
             <Button
               variant="text"
               size="small"
@@ -252,7 +254,7 @@ class SideNav extends Component {
             noValidate
             autoComplete="off"
             style={{
-              width: "100%"
+              width: '100%'
             }}
             onSubmit={this.handleFormSubmit}
           >
@@ -292,7 +294,7 @@ class SideNav extends Component {
                   control={
                     <Checkbox
                       checked={this.state.recurring}
-                      onChange={this.handleCheckboxChange("recurring")}
+                      onChange={this.handleCheckboxChange('recurring')}
                       value={!this.state.recurring}
                     />
                   }
@@ -331,14 +333,14 @@ class SideNav extends Component {
                   onChange={this.handleInputChange}
                   input={<Input name="category" id="category-helper" />}
                 >
-                  <MenuItem value={"Health"}>Health & Fitness</MenuItem>
-                  <MenuItem value={"Home"}>Home</MenuItem>
-                  <MenuItem value={"Income"}>Income</MenuItem>
-                  <MenuItem value={"Savings"}>Savings</MenuItem>
-                  <MenuItem value={"Shopping"}>Shopping</MenuItem>
-                  <MenuItem value={"Travel"}>Travel</MenuItem>
-                  <MenuItem value={"Utilities"}>Utilities</MenuItem>
-                  <MenuItem value={"Other"}>Other</MenuItem>
+                  <MenuItem value={'Health'}>Health & Fitness</MenuItem>
+                  <MenuItem value={'Home'}>Home</MenuItem>
+                  <MenuItem value={'Income'}>Income</MenuItem>
+                  <MenuItem value={'Savings'}>Savings</MenuItem>
+                  <MenuItem value={'Shopping'}>Shopping</MenuItem>
+                  <MenuItem value={'Travel'}>Travel</MenuItem>
+                  <MenuItem value={'Utilities'}>Utilities</MenuItem>
+                  <MenuItem value={'Other'}>Other</MenuItem>
                 </Select>
                 <FormHelperText>choose your category</FormHelperText>
               </FormControl>
@@ -379,8 +381,8 @@ class SideNav extends Component {
                 onClick={this.handleFormSubmit}
               >
                 {this.state.recurring
-                  ? "SUBMIT BUDGET ITEMS"
-                  : "SUBMIT BUDGET ITEM"}
+                  ? 'SUBMIT BUDGET ITEMS'
+                  : 'SUBMIT BUDGET ITEM'}
               </Button>
             </Grid>
           </form>
