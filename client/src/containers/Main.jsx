@@ -298,11 +298,9 @@ class Main extends Component {
 
       categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
 
-      for (let i = 0; i < categorySumList.length; i++) {
-        if (categorySumList[i].length > 1) {
-          categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
-        }
-      }
+      categorySumList = categorySumList.map(sum =>
+        sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
+      );
 
       this.setState({ arrayForCatByCurrentMonth: categorySumList });
     });
@@ -342,11 +340,9 @@ class Main extends Component {
 
       categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
 
-      for (let i = 0; i < categorySumList.length; i++) {
-        if (categorySumList[i].length > 1) {
-          categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
-        }
-      }
+      categorySumList = categorySumList.map(sum =>
+        sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
+      );
 
       this.setState(
         { arrayForPieChart: categorySumList },

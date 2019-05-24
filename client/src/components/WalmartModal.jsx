@@ -1,12 +1,12 @@
-import React from "react";
-import { ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import Button from "@material-ui/core/Button";
-import "../containers/Main.css";
+import React from 'react';
+import { ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Button from '@material-ui/core/Button';
+import '../containers/Main.css';
 
 const WalmartModal = ({ toggle, itemImages, walmartSubmit }) => {
   return (
     <React.Fragment>
-      <ModalHeader toggle={this.toggle}>Walmart Results</ModalHeader>
+      <ModalHeader toggle={toggle}>Walmart Results</ModalHeader>
       <ModalBody className="scrollModal">
         <div className="row align-items-center">
           {itemImages.length === 0 ? (
