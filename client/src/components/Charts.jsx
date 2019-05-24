@@ -9,11 +9,12 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Wrapper from '../components/common/Wrapper';
 import '../containers/Main.css';
 import './Charts.css';
 
 const Wrap = ({ children }) => (
-  <div className="col-12">
+  <Wrapper row="row justify-content-center" columns="col-12">
     <Grid container justify="center">
       <Card className="chartCard">
         <CardContent className="chartCardContent">
@@ -21,7 +22,7 @@ const Wrap = ({ children }) => (
         </CardContent>
       </Card>
     </Grid>
-  </div>
+  </Wrapper>
 );
 
 const Charts = ({
@@ -289,210 +290,200 @@ const Charts = ({
   };
 
   return (
-    <div>
-      <div className="row justify-content-center">
-        {/* START TIME CHARTS */}
-        <div className="col-12">
-          <Grid container justify="center">
-            <Card className="chartCard">
-              <div className="row justify-content-start">
-                <div className="col-md-4 col-sm-8 col-8">
-                  {/* <Card className="pickerCard"> */}
-                  <div className="dropWrapper">
-                    <FormControl
-                      color="secondary"
-                      className="chartDrop p-3 border border-pink"
+    <>
+      <Wrapper row="row justify-content-center" columns="col-12">
+        <Grid container justify="center">
+          <Card className="chartCard">
+            <div className="row justify-content-start">
+              <div className="col-md-4 col-sm-8 col-8">
+                {/* <Card className="pickerCard"> */}
+                <div className="dropWrapper">
+                  <FormControl
+                    color="secondary"
+                    className="chartDrop p-3 border border-pink"
+                  >
+                    <InputLabel className="m-2" htmlFor="time-chart-helper">
+                      Choose Chart Type
+                    </InputLabel>
+                    <Select
+                      value={timeChartChoice}
+                      onChange={e => setTimeChart(e.target.value)}
+                      input={
+                        <Input name="timeChartChoice" id="time-chart-helper" />
+                      }
                     >
-                      <InputLabel className="m-2" htmlFor="time-chart-helper">
-                        Choose Chart Type
-                      </InputLabel>
-                      <Select
-                        value={timeChartChoice}
-                        onChange={e => setTimeChart(e.target.value)}
-                        input={
-                          <Input
-                            name="timeChartChoice"
-                            id="time-chart-helper"
-                          />
-                        }
-                      >
-                        <MenuItem value={'bar'}>Bar Chart</MenuItem>
-                        <MenuItem value={'line'}>Line Chart</MenuItem>
-                        <MenuItem value={'combo'}>Combo Chart</MenuItem>
-                        <MenuItem value={'comboTopCat'}>
-                          Combo With Top Categories
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                  {/* </Card> */}
+                      <MenuItem value={'bar'}>Bar Chart</MenuItem>
+                      <MenuItem value={'line'}>Line Chart</MenuItem>
+                      <MenuItem value={'combo'}>Combo Chart</MenuItem>
+                      <MenuItem value={'comboTopCat'}>
+                        Combo With Top Categories
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
-                <div className="col-md-4 col-sm-12 col-12">
-                  <h3 className="text-center catChartHeader chartHeading">
-                    {timeChartChoice === 'comboTopCat'
-                      ? `Income vs Expense vs Spending for ${topCategory} & ${mostActiveCategory}`
-                      : `Income vs Expense By Month (${year})`}
-                  </h3>
-                </div>
+                {/* </Card> */}
               </div>
-              <div className="row justify-content-center">
-                <div className="col-md-8 col-12">
-                  <div className="explainer px-5">
-                    <h6 className="text-center">
-                      This chart tracks your income and expenses for 2 months
-                      trailing and 3 months forward. You can switch to a line,
-                      bar or combo chart or view your income and expenses vs the
-                      category with the highest total spending and category with
-                      the most activity in the dropdown menu.
-                    </h6>
-                  </div>
-                </div>
+              <div className="col-md-4 col-sm-12 col-12">
+                <h3 className="text-center catChartHeader chartHeading">
+                  {timeChartChoice === 'comboTopCat'
+                    ? `Income vs Expense vs Spending for ${topCategory} & ${mostActiveCategory}`
+                    : `Income vs Expense By Month (${year})`}
+                </h3>
               </div>
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  {timeChartChoice === 'bar' ? (
-                    <Chart className="chart" type="bar" data={barData} />
-                  ) : timeChartChoice === 'line' ? (
-                    <Chart className="chart" type="line" data={lineData} />
-                  ) : timeChartChoice === 'combo' ? (
-                    <Chart
-                      className="chart"
-                      type="bar"
-                      data={comboData}
-                      options={options}
-                    />
-                  ) : timeChartChoice === 'comboTopCat' ? (
-                    <Chart
-                      className="chart"
-                      type="bar"
-                      options={options}
-                      data={comboDataTopCat}
-                    />
-                  ) : null}
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
-        {/* START TOTAL CAT CHART */}
-        <div className="col-12">
-          <Grid container justify="center">
-            <Card className="chartCard">
-              <div className="row justify-content-start">
-                <div className="col-md-4 col-sm-8 col-8">
-                  <div className="dropWrapper">
-                    <FormControl
-                      color="secondary"
-                      className="chartDrop p-3 border border-pink"
+            </div>
+            <Wrapper row="row justify-content-center" columns="col-md-8 col-12">
+              <div className="explainer px-5">
+                <h6 className="text-center">
+                  This chart tracks your income and expenses for 2 months
+                  trailing and 3 months forward. You can switch to a line, bar
+                  or combo chart or view your income and expenses vs the
+                  category with the highest total spending and category with the
+                  most activity in the dropdown menu.
+                </h6>
+              </div>
+            </Wrapper>
+            <CardContent className="chartCardContent">
+              <div className="content-section implementation">
+                {timeChartChoice === 'bar' ? (
+                  <Chart className="chart" type="bar" data={barData} />
+                ) : timeChartChoice === 'line' ? (
+                  <Chart className="chart" type="line" data={lineData} />
+                ) : timeChartChoice === 'combo' ? (
+                  <Chart
+                    className="chart"
+                    type="bar"
+                    data={comboData}
+                    options={options}
+                  />
+                ) : timeChartChoice === 'comboTopCat' ? (
+                  <Chart
+                    className="chart"
+                    type="bar"
+                    options={options}
+                    data={comboDataTopCat}
+                  />
+                ) : null}
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Wrapper>
+      {/* START TOTAL CAT CHART */}
+      <Wrapper row="row justify-content-center" columns="col-12">
+        <Grid container justify="center">
+          <Card className="chartCard">
+            <div className="row justify-content-start">
+              <div className="col-md-4 col-sm-8 col-8">
+                <div className="dropWrapper">
+                  <FormControl
+                    color="secondary"
+                    className="chartDrop p-3 border border-pink"
+                  >
+                    <InputLabel className="m-2" htmlFor="chart-helper">
+                      Choose Chart Type
+                    </InputLabel>
+                    <Select
+                      value={chartChoice}
+                      onChange={e => setChart(e.target.value)}
+                      input={<Input name="chartChoice" id="chart-helper" />}
                     >
-                      <InputLabel className="m-2" htmlFor="chart-helper">
-                        Choose Chart Type
-                      </InputLabel>
-                      <Select
-                        value={chartChoice}
-                        onChange={e => setChart(e.target.value)}
-                        input={<Input name="chartChoice" id="chart-helper" />}
-                      >
-                        <MenuItem value={'pie'}>Pie Chart</MenuItem>
-                        <MenuItem value={'radar'}>Radar Chart</MenuItem>
-                        <MenuItem value={'polar'}>Polar Chart</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
-                <div className="col-md-4 col-sm-12 col-12">
-                  <h3 className="text-center catChartHeader chartHeading">
-                    Total Spending by Category
-                  </h3>
-                  <h6 className="text-center">
-                    This chart is a breakdown of your total spending for each
-                    category. You can switch chart types with the dropdown menu.
-                  </h6>
+                      <MenuItem value={'pie'}>Pie Chart</MenuItem>
+                      <MenuItem value={'radar'}>Radar Chart</MenuItem>
+                      <MenuItem value={'polar'}>Polar Chart</MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  {chartChoice === 'pie' ? (
-                    <Chart className="chart" type="pie" data={pieData} />
-                  ) : chartChoice === 'radar' ? (
-                    <Chart className="chart" type="radar" data={radarData} />
-                  ) : chartChoice === 'polar' ? (
-                    <Chart className="chart" type="polarArea" data={pieData} />
-                  ) : null}
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
-        {/* START CATEGORIES FOR CURRENT MONTH */}
-        <Wrap>
-          <h3 className="text-center chartHeading">
-            Spending by Category for {month}, {year}
-          </h3>
-          <h6 className="text-center">
-            This chart is a breakdown of your total spending for each category
-            for the current month and year.
-          </h6>
-          <Chart
-            className="chart"
-            type="doughnut"
-            data={doughnutForCurrentMonth}
-          />
-        </Wrap>
-        <div className="col-12">
-          <Grid container justify="center">
-            <Card className="chartCard">
-              <div className="row justify-content-start">
-                <div className="col-md-4 col-sm-8 col-8">
-                  <div className="dropWrapper">
-                    <FormControl
-                      color="secondary"
-                      className="chartDrop p-3 border border-pink"
+              <div className="col-md-4 col-sm-12 col-12">
+                <h3 className="text-center catChartHeader chartHeading">
+                  Total Spending by Category
+                </h3>
+                <h6 className="text-center">
+                  This chart is a breakdown of your total spending for each
+                  category. You can switch chart types with the dropdown menu.
+                </h6>
+              </div>
+            </div>
+            <CardContent className="chartCardContent">
+              <div className="content-section implementation">
+                {chartChoice === 'pie' ? (
+                  <Chart className="chart" type="pie" data={pieData} />
+                ) : chartChoice === 'radar' ? (
+                  <Chart className="chart" type="radar" data={radarData} />
+                ) : chartChoice === 'polar' ? (
+                  <Chart className="chart" type="polarArea" data={pieData} />
+                ) : null}
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Wrapper>
+      {/* START CATEGORIES FOR CURRENT MONTH */}
+      <Wrap>
+        <h3 className="text-center chartHeading">
+          Spending by Category for {month}, {year}
+        </h3>
+        <h6 className="text-center">
+          This chart is a breakdown of your total spending for each category for
+          the current month and year.
+        </h6>
+        <Chart
+          className="chart"
+          type="doughnut"
+          data={doughnutForCurrentMonth}
+        />
+      </Wrap>
+      <Wrapper row="row justify-content-center" columns="col-12">
+        <Grid container justify="center">
+          <Card className="chartCard">
+            <div className="row justify-content-start">
+              <div className="col-md-4 col-sm-8 col-8">
+                <div className="dropWrapper">
+                  <FormControl
+                    color="secondary"
+                    className="chartDrop p-3 border border-pink"
+                  >
+                    <InputLabel className="m-2" htmlFor="chart-helper">
+                      Choose Chart Type
+                    </InputLabel>
+                    <Select
+                      value={activeOrTop}
+                      onChange={e => setActiveOrTop(e.target.value)}
+                      input={<Input name="chartChoice" id="chart-helper" />}
                     >
-                      <InputLabel className="m-2" htmlFor="chart-helper">
-                        Choose Chart Type
-                      </InputLabel>
-                      <Select
-                        value={activeOrTop}
-                        onChange={e => setActiveOrTop(e.target.value)}
-                        input={<Input name="chartChoice" id="chart-helper" />}
-                      >
-                        <MenuItem value={'top'}>Top Spending Category</MenuItem>
-                        <MenuItem value={'active'}>
-                          Most Active Category
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
-                <div className="col-md-4 col-sm-12 col-12">
-                  <h3 className="text-center catChartHeader chartHeading">
-                    {activeOrTop === 'top'
-                      ? `Spending for ${topCategory}`
-                      : `Spending for ${mostActiveCategory}`}
-                  </h3>
-                  <h6 className="text-center">
-                    This chart tracks your category with the highest total
-                    spending or your most active category and gives you a
-                    breakdown of your spending for 2 months trailing and 3
-                    months forward.
-                  </h6>
+                      <MenuItem value={'top'}>Top Spending Category</MenuItem>
+                      <MenuItem value={'active'}>Most Active Category</MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
-              <CardContent className="chartCardContent">
-                <div className="content-section implementation">
-                  {activeOrTop === 'top' ? (
-                    <Chart className="chart" type="bar" data={topCatData} />
-                  ) : activeOrTop === 'active' ? (
-                    <Chart className="chart" type="bar" data={activeCatData} />
-                  ) : null}
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
-      </div>
-    </div>
+              <div className="col-md-4 col-sm-12 col-12">
+                <h3 className="text-center catChartHeader chartHeading">
+                  {activeOrTop === 'top'
+                    ? `Spending for ${topCategory}`
+                    : `Spending for ${mostActiveCategory}`}
+                </h3>
+                <h6 className="text-center">
+                  This chart tracks your category with the highest total
+                  spending or your most active category and gives you a
+                  breakdown of your spending for 2 months trailing and 3 months
+                  forward.
+                </h6>
+              </div>
+            </div>
+            <CardContent className="chartCardContent">
+              <div className="content-section implementation">
+                {activeOrTop === 'top' ? (
+                  <Chart className="chart" type="bar" data={topCatData} />
+                ) : activeOrTop === 'active' ? (
+                  <Chart className="chart" type="bar" data={activeCatData} />
+                ) : null}
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Wrapper>
+    </>
   );
 };
 

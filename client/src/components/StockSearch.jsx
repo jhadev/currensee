@@ -1,8 +1,9 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import TradingViewWidget, { Themes } from "react-tradingview-widget";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Wrapper from '../components/common/Wrapper';
+import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
 const StockSearch = ({
   stockToSearch,
@@ -11,8 +12,8 @@ const StockSearch = ({
   stockToSend
 }) => {
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6 col-12">
+    <>
+      <Wrapper row="row justify-content-center" columns="col-md-6 col-12">
         <Card className="stockSearch mb-3">
           <CardContent>
             <div className="text-center">
@@ -31,7 +32,7 @@ const StockSearch = ({
               type="text"
               list="item-list"
             />
-            {stockToSend === "" ? (
+            {stockToSend === '' ? (
               <Button
                 variant="contained"
                 color="secondary"
@@ -73,9 +74,9 @@ const StockSearch = ({
             )}
           </CardContent>
         </Card>
-      </div>
-      <div className="col-md-8 col-12">
-        {stockToSend !== "" && (
+      </Wrapper>
+      <Wrapper row="row justify-content-center" columns="col-md-8 col-12">
+        {stockToSend !== '' && (
           <Card className="widgetCard">
             <CardContent className="test">
               <TradingViewWidget
@@ -87,8 +88,8 @@ const StockSearch = ({
             </CardContent>
           </Card>
         )}
-      </div>
-    </div>
+      </Wrapper>
+    </>
   );
 };
 

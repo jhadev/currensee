@@ -1,8 +1,8 @@
-import React from "react";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import Wrapper from "../components/common/Wrapper";
+import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import Wrapper from '../components/common/Wrapper';
 
 const Wrap = ({ children }) => (
   <Wrapper row="row justify-content-center" columns="col-md-8 col-12">

@@ -77,6 +77,7 @@ export default {
   getWalmart: function() {
     return axios.get(`api/external/walmart`);
   },
+
   deleteAllRecords: function() {
     return axios.get('api/budget/delete-all-records');
   }
