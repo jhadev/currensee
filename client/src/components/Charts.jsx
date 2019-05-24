@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import moment from "moment";
-import { Chart } from "primereact/chart";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import "../containers/Main.css";
-import "./Charts.css";
+import React, { useState } from 'react';
+import moment from 'moment';
+import { Chart } from 'primereact/chart';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import '../containers/Main.css';
+import './Charts.css';
 
 const Wrap = ({ children }) => (
   <div className="col-12">
@@ -36,39 +36,68 @@ const Charts = ({
   mostActiveCategory,
   mostActiveChart
 }) => {
-  const [chartChoice, setChart] = useState("pie");
-  const [timeChartChoice, setTimeChart] = useState("bar");
-  const [activeOrTop, setActiveOrTop] = useState("top");
+  const [chartChoice, setChart] = useState('pie');
+  const [timeChartChoice, setTimeChart] = useState('bar');
+  const [activeOrTop, setActiveOrTop] = useState('top');
 
-  const month = moment().format("MMMM");
-  const year = moment().format("YYYY");
+  const month = moment().format('MMMM');
+  const year = moment().format('YYYY');
+  const categories = [
+    'Health & Fitness',
+    'Home',
+    'Other',
+    'Savings',
+    'Shopping',
+    'Travel',
+    'Utilities'
+  ];
+
+  const bgColors = [
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#003366',
+    '#336D2B',
+    '#7FFFD4',
+    '#f48642'
+  ];
+
+  const hoverColors = [
+    '#ff3a64',
+    '#0291f2',
+    '#ffb80c',
+    '#001123',
+    '#38772F',
+    '#38ffbc',
+    '#fc7019'
+  ];
 
   const pickColors = choice => {
-    let color = "";
+    let color = '';
     switch (choice) {
-      case "Health":
-        color = "#F26419";
+      case 'Health':
+        color = '#F26419';
         break;
-      case "Home":
-        color = "#33658A";
+      case 'Home':
+        color = '#33658A';
         break;
-      case "Other":
-        color = "#F6AE2D";
+      case 'Other':
+        color = '#F6AE2D';
         break;
-      case "Savings":
-        color = "#295723";
+      case 'Savings':
+        color = '#295723';
         break;
-      case "Shopping":
-        color = "#FF6384";
+      case 'Shopping':
+        color = '#FF6384';
         break;
-      case "Travel":
-        color = "#86BBD8";
+      case 'Travel':
+        color = '#86BBD8';
         break;
-      case "Utilities":
-        color = "#454E9E";
+      case 'Utilities':
+        color = '#454E9E';
         break;
       default:
-        color = "#003366";
+        color = '#003366';
     }
     return color;
   };
@@ -76,36 +105,12 @@ const Charts = ({
   const pieData = {
     responsive: true,
     maintainAspectRatio: false,
-    labels: [
-      "Health & Fitness",
-      "Home",
-      "Other",
-      "Savings",
-      "Shopping",
-      "Travel",
-      "Utilities"
-    ],
+    labels: categories,
     datasets: [
       {
         data: pieChart,
-        backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#003366",
-          "#336D2B",
-          "#7FFFD4",
-          "#f48642"
-        ],
-        hoverBackgroundColor: [
-          "#ff3a64",
-          "#0291f2",
-          "#ffb80c",
-          "#001123",
-          "#38772F",
-          "#38ffbc",
-          "#fc7019"
-        ]
+        backgroundColor: bgColors,
+        hoverBackgroundColor: hoverColors
       }
     ]
   };
@@ -113,36 +118,12 @@ const Charts = ({
   const doughnutForCurrentMonth = {
     responsive: true,
     maintainAspectRatio: false,
-    labels: [
-      "Health & Fitness",
-      "Home",
-      "Other",
-      "Savings",
-      "Shopping",
-      "Travel",
-      "Utilities"
-    ],
+    labels: categories,
     datasets: [
       {
         data: arrayForCatByCurrentMonth,
-        backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#003366",
-          "#336D2B",
-          "#7FFFD4",
-          "#f48642"
-        ],
-        hoverBackgroundColor: [
-          "#ff3a64",
-          "#0291f2",
-          "#ffb80c",
-          "#001123",
-          "#38772F",
-          "#38ffbc",
-          "#fc7019"
-        ]
+        backgroundColor: bgColors,
+        hoverBackgroundColor: hoverColors
       }
     ]
   };
@@ -152,13 +133,13 @@ const Charts = ({
     labels: monthLabels,
     datasets: [
       {
-        label: "Income",
-        backgroundColor: "rgb(4, 244, 12, 0.8)",
+        label: 'Income',
+        backgroundColor: 'rgb(4, 244, 12, 0.8)',
         data: trueIncome
       },
       {
-        label: "Expense",
-        backgroundColor: "rgb(255, 0, 0, 0.8)",
+        label: 'Expense',
+        backgroundColor: 'rgb(255, 0, 0, 0.8)',
         data: falseIncome
       }
     ]
@@ -169,7 +150,7 @@ const Charts = ({
     labels: monthLabels,
     datasets: [
       {
-        label: "Total Spending",
+        label: 'Total Spending',
         backgroundColor: pickColors(topCategory),
         data: topCatChart
       }
@@ -181,7 +162,7 @@ const Charts = ({
     labels: monthLabels,
     datasets: [
       {
-        label: "Total Spending",
+        label: 'Total Spending',
         backgroundColor: pickColors(mostActiveCategory),
         data: mostActiveChart
       }
@@ -193,17 +174,17 @@ const Charts = ({
     labels: monthLabels,
     datasets: [
       {
-        label: "Income",
+        label: 'Income',
         data: trueIncome,
         fill: false,
-        borderColor: "#42A5F5",
+        borderColor: '#42A5F5',
         borderWidth: 3
       },
       {
-        label: "Expenses",
+        label: 'Expenses',
         data: falseIncome,
         fill: true,
-        borderColor: "#ff3059",
+        borderColor: '#ff3059',
         borderWidth: 3
       }
     ]
@@ -213,32 +194,32 @@ const Charts = ({
     labels: monthLabels,
     datasets: [
       {
-        type: "line",
-        label: "Income",
-        borderColor: "#2EC4B6",
+        type: 'line',
+        label: 'Income',
+        borderColor: '#2EC4B6',
         borderWidth: 3,
         fill: false,
         data: trueIncome
       },
       {
-        type: "line",
-        label: "Expenses",
-        borderColor: "#E71D36",
+        type: 'line',
+        label: 'Expenses',
+        borderColor: '#E71D36',
         borderWidth: 3,
         fill: true,
         data: falseIncome
       },
       {
-        type: "bar",
-        label: "Income",
-        backgroundColor: "#011627",
+        type: 'bar',
+        label: 'Income',
+        backgroundColor: '#011627',
         data: trueIncome,
-        borderColor: "white"
+        borderColor: 'white'
       },
       {
-        type: "bar",
-        label: "Expenses",
-        backgroundColor: "#FF9F1C",
+        type: 'bar',
+        label: 'Expenses',
+        backgroundColor: '#FF9F1C',
         data: falseIncome
       }
     ]
@@ -248,7 +229,7 @@ const Charts = ({
     labels: monthLabels,
     datasets: [
       {
-        type: "line",
+        type: 'line',
         label: `Spending for ${topCategory}`,
         borderWidth: 3,
         borderColor: pickColors(topCategory),
@@ -256,7 +237,7 @@ const Charts = ({
         data: topCatChart
       },
       {
-        type: "line",
+        type: 'line',
         label: `Spending for ${mostActiveCategory}`,
         borderWidth: 3,
         borderColor: pickColors(mostActiveCategory),
@@ -264,15 +245,15 @@ const Charts = ({
         data: mostActiveChart
       },
       {
-        type: "bar",
-        label: "Income",
-        backgroundColor: "#018E42",
+        type: 'bar',
+        label: 'Income',
+        backgroundColor: '#018E42',
         data: trueIncome
       },
       {
-        type: "bar",
-        label: "Expenses",
-        backgroundColor: "#BF1A2F",
+        type: 'bar',
+        label: 'Expenses',
+        backgroundColor: '#BF1A2F',
         data: falseIncome
       }
     ]
@@ -282,34 +263,26 @@ const Charts = ({
     responsive: true,
     title: {
       display: false,
-      text: "Combo Bar Line Chart"
+      text: 'Combo Bar Line Chart'
     },
     tooltips: {
-      mode: "index",
+      mode: 'index',
       intersect: true
     }
   };
 
   const radarData = {
     responsive: true,
-    labels: [
-      "Health & Fitness",
-      "Home",
-      "Other",
-      "Savings",
-      "Shopping",
-      "Travel",
-      "Utilities"
-    ],
+    labels: categories,
     datasets: [
       {
-        label: "Amount in $",
-        backgroundColor: "rgba(7,16,19, 0.4)",
-        borderColor: "rgba(255,99,132,1)",
-        pointBackgroundColor: "rgba(7,16,19, 0.4)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(255,99,132,1)",
+        label: 'Amount in $',
+        backgroundColor: 'rgba(7,16,19, 0.4)',
+        borderColor: 'rgba(255,99,132,1)',
+        pointBackgroundColor: 'rgba(7,16,19, 0.4)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(255,99,132,1)',
         data: pieChart
       }
     ]
@@ -343,10 +316,10 @@ const Charts = ({
                           />
                         }
                       >
-                        <MenuItem value={"bar"}>Bar Chart</MenuItem>
-                        <MenuItem value={"line"}>Line Chart</MenuItem>
-                        <MenuItem value={"combo"}>Combo Chart</MenuItem>
-                        <MenuItem value={"comboTopCat"}>
+                        <MenuItem value={'bar'}>Bar Chart</MenuItem>
+                        <MenuItem value={'line'}>Line Chart</MenuItem>
+                        <MenuItem value={'combo'}>Combo Chart</MenuItem>
+                        <MenuItem value={'comboTopCat'}>
                           Combo With Top Categories
                         </MenuItem>
                       </Select>
@@ -356,7 +329,7 @@ const Charts = ({
                 </div>
                 <div className="col-md-4 col-sm-12 col-12">
                   <h3 className="text-center catChartHeader chartHeading">
-                    {timeChartChoice === "comboTopCat"
+                    {timeChartChoice === 'comboTopCat'
                       ? `Income vs Expense vs Spending for ${topCategory} & ${mostActiveCategory}`
                       : `Income vs Expense By Month (${year})`}
                   </h3>
@@ -377,18 +350,18 @@ const Charts = ({
               </div>
               <CardContent className="chartCardContent">
                 <div className="content-section implementation">
-                  {timeChartChoice === "bar" ? (
+                  {timeChartChoice === 'bar' ? (
                     <Chart className="chart" type="bar" data={barData} />
-                  ) : timeChartChoice === "line" ? (
+                  ) : timeChartChoice === 'line' ? (
                     <Chart className="chart" type="line" data={lineData} />
-                  ) : timeChartChoice === "combo" ? (
+                  ) : timeChartChoice === 'combo' ? (
                     <Chart
                       className="chart"
                       type="bar"
                       data={comboData}
                       options={options}
                     />
-                  ) : timeChartChoice === "comboTopCat" ? (
+                  ) : timeChartChoice === 'comboTopCat' ? (
                     <Chart
                       className="chart"
                       type="bar"
@@ -420,9 +393,9 @@ const Charts = ({
                         onChange={e => setChart(e.target.value)}
                         input={<Input name="chartChoice" id="chart-helper" />}
                       >
-                        <MenuItem value={"pie"}>Pie Chart</MenuItem>
-                        <MenuItem value={"radar"}>Radar Chart</MenuItem>
-                        <MenuItem value={"polar"}>Polar Chart</MenuItem>
+                        <MenuItem value={'pie'}>Pie Chart</MenuItem>
+                        <MenuItem value={'radar'}>Radar Chart</MenuItem>
+                        <MenuItem value={'polar'}>Polar Chart</MenuItem>
                       </Select>
                     </FormControl>
                   </div>
@@ -439,11 +412,11 @@ const Charts = ({
               </div>
               <CardContent className="chartCardContent">
                 <div className="content-section implementation">
-                  {chartChoice === "pie" ? (
+                  {chartChoice === 'pie' ? (
                     <Chart className="chart" type="pie" data={pieData} />
-                  ) : chartChoice === "radar" ? (
+                  ) : chartChoice === 'radar' ? (
                     <Chart className="chart" type="radar" data={radarData} />
-                  ) : chartChoice === "polar" ? (
+                  ) : chartChoice === 'polar' ? (
                     <Chart className="chart" type="polarArea" data={pieData} />
                   ) : null}
                 </div>
@@ -484,8 +457,8 @@ const Charts = ({
                         onChange={e => setActiveOrTop(e.target.value)}
                         input={<Input name="chartChoice" id="chart-helper" />}
                       >
-                        <MenuItem value={"top"}>Top Spending Category</MenuItem>
-                        <MenuItem value={"active"}>
+                        <MenuItem value={'top'}>Top Spending Category</MenuItem>
+                        <MenuItem value={'active'}>
                           Most Active Category
                         </MenuItem>
                       </Select>
@@ -494,7 +467,7 @@ const Charts = ({
                 </div>
                 <div className="col-md-4 col-sm-12 col-12">
                   <h3 className="text-center catChartHeader chartHeading">
-                    {activeOrTop === "top"
+                    {activeOrTop === 'top'
                       ? `Spending for ${topCategory}`
                       : `Spending for ${mostActiveCategory}`}
                   </h3>
@@ -508,9 +481,9 @@ const Charts = ({
               </div>
               <CardContent className="chartCardContent">
                 <div className="content-section implementation">
-                  {activeOrTop === "top" ? (
+                  {activeOrTop === 'top' ? (
                     <Chart className="chart" type="bar" data={topCatData} />
-                  ) : activeOrTop === "active" ? (
+                  ) : activeOrTop === 'active' ? (
                     <Chart className="chart" type="bar" data={activeCatData} />
                   ) : null}
                 </div>
