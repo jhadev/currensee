@@ -18,8 +18,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { ToastContainer, toast } from 'react-toastify';
+import swal from '@sweetalert/with-react';
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
 
@@ -618,6 +620,43 @@ class Main extends Component {
       draggable: true
     });
   };
+
+  launchDeleteAlert = () => {
+    swal({
+      text: 'Clicking this button will delete your entire budget.',
+      buttons: {
+        cancel: 'Close'
+      },
+      content: (
+        <div>
+          <h2 className="my-2">WARNING!</h2>
+          <Button
+            variant="contained"
+            className="button delButton"
+            color="secondary"
+            onClick={this.deleteAllRecords}
+          >
+            DELETE ALL RECORDS
+          </Button>
+        </div>
+      )
+    });
+  };
+
+  deleteAllRecords = () => {
+    API.deleteAllRecords()
+      .then(res => {
+        this.getCategorySum();
+        this.getBudgetTable();
+        this.getBudgetSum();
+        this.getSumByMonthFalse();
+        this.getSumByMonthTrue();
+        this.getCategorySumForCurrentMonth();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   //END NOTIFICATIONS
 
   // START TABLE METHODS
@@ -759,6 +798,7 @@ class Main extends Component {
                 categoryPick={this.state.categoryPick}
                 globalFilter={this.state.globalFilter}
                 globalFilterChange={this.globalFilterChange}
+                launchDeleteAlert={this.launchDeleteAlert}
               />
               <Charts
                 trueIncome={this.state.arrayForTrueIncome}
