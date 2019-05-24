@@ -16,14 +16,14 @@ module.exports = {
       });
   },
 
-  // deleteAll: function(req, res) {
-  //   db.Budget.deleteMany({ userID: req.user._id })
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => {
-  //       console.log(err);
-  //       res.status(422).json(err);
-  //     });
-  // },
+  deleteAll: function(req, res) {
+    db.Budget.deleteMany({ userID: req.user._id })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => {
+        console.log(err);
+        res.status(422).json(err);
+      });
+  },
 
   monthField: function(req, res) {
     db.Budget.aggregate([

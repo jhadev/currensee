@@ -30,6 +30,6 @@ router.route('/sumbymonthtrue').get(budgetController.sumByMonthTrue);
 
 router.route('/sumbymonthfalse').get(budgetController.sumByMonthFalse);
 
-// router.route('/delete-all-records').get(budgetController.deleteAll);
+router.route('/delete-all-records').get(budgetController.deleteAll);
 
 module.exports = router;

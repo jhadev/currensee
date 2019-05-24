@@ -1,17 +1,17 @@
-import React from "react";
-import DataCard from "./DataCard";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import moment from "moment";
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import "./BudgetTable.css";
-import "primereact/resources/themes/nova-light/theme.css";
-import "primereact/resources/primereact.min.css";
+import React from 'react';
+import DataCard from './DataCard';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import moment from 'moment';
+import { Dropdown } from 'primereact/dropdown';
+import { InputText } from 'primereact/inputtext';
+import './BudgetTable.css';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
 
 const BudgetTable = ({
   arrayForBudgetTable,
@@ -19,6 +19,7 @@ const BudgetTable = ({
   tableSelectedChange,
   handleItemDelete,
   exportBudget,
+  launchDeleteAlert,
   createRef,
   income,
   expenses,
@@ -30,20 +31,20 @@ const BudgetTable = ({
   globalFilterChange
 }) => {
   let categories = [
-    { label: "All Categories", value: null },
-    { label: "Health", value: "Health" },
-    { label: "Home", value: "Home" },
-    { label: "Income", value: "Income" },
-    { label: "Other", value: "Other" },
-    { label: "Savings", value: "Savings" },
-    { label: "Shopping", value: "Shopping" },
-    { label: "Travel", value: "Travel" },
-    { label: "Utilities", value: "Utilities" }
+    { label: 'All Categories', value: null },
+    { label: 'Health', value: 'Health' },
+    { label: 'Home', value: 'Home' },
+    { label: 'Income', value: 'Income' },
+    { label: 'Other', value: 'Other' },
+    { label: 'Savings', value: 'Savings' },
+    { label: 'Shopping', value: 'Shopping' },
+    { label: 'Travel', value: 'Travel' },
+    { label: 'Utilities', value: 'Utilities' }
   ];
 
   let header = (
-    <div style={{ textAlign: "left" }}>
-      <i className="pi pi-search" style={{ margin: "4px 4px 0 0" }} />
+    <div style={{ textAlign: 'left' }}>
+      <i className="pi pi-search" style={{ margin: '4px 4px 0 0' }} />
       <InputText
         type="search"
         onInput={globalFilterChange}
@@ -55,15 +56,15 @@ const BudgetTable = ({
 
   let categoryFilter = (
     <Dropdown
-      style={{ width: "100%" }}
+      style={{ width: '100%' }}
       value={categoryPick}
       options={categories}
       onChange={onPickedCategoryChange}
     />
   );
 
-  const thisMonth = moment().format("MM");
-  const thisYear = moment().format("YYYY");
+  const thisMonth = moment().format('MM');
+  const thisYear = moment().format('YYYY');
 
   const dataForThisMonth = str => {
     let dataForCurrentMonth = arrayForBudgetTable
@@ -83,15 +84,15 @@ const BudgetTable = ({
       <div className="row justify-content-center my-1">
         <div className="col-12">
           <span className="income m-1">
-            Income for {moment().format("MMMM, YYYY")}: {/* COLOR HERE */}
+            Income for {moment().format('MMMM, YYYY')}: {/* COLOR HERE */}
             <strong className="surplus1">
-              ${dataForThisMonth("true").toFixed(2)}
+              ${dataForThisMonth('true').toFixed(2)}
             </strong>
           </span>
           <span className="expenses m-1">
-            Expenses for {moment().format("MMMM, YYYY")}: {/* COLOR HERE */}
+            Expenses for {moment().format('MMMM, YYYY')}: {/* COLOR HERE */}
             <strong className="deficit1">
-              ${dataForThisMonth("false").toFixed(2)}
+              ${dataForThisMonth('false').toFixed(2)}
             </strong>
           </span>
         </div>
@@ -126,13 +127,13 @@ const BudgetTable = ({
 
   const rowClassName = rowData => {
     const { income } = rowData;
-    return { highlightRed: income === "false" };
+    return { highlightRed: income === 'false' };
   };
 
   const amountTemplate = (rowData, column) => {
     const { amount, income } = rowData;
-    const color = income === "false" ? "red" : null;
-    const fontWeight = amount >= 500 ? "bold" : "normal";
+    const color = income === 'false' ? 'red' : null;
+    const fontWeight = amount >= 500 ? 'bold' : 'normal';
 
     return (
       <span style={{ fontWeight: fontWeight, color: color }}>
@@ -143,9 +144,9 @@ const BudgetTable = ({
 
   const dateTemplate = rowData => {
     const { date } = rowData;
-    const thisMonth = moment().format("MM");
+    const thisMonth = moment().format('MM');
     const tableDate = date.substring(0, 2);
-    const fontWeight = tableDate === thisMonth ? "bold" : "normal";
+    const fontWeight = tableDate === thisMonth ? 'bold' : 'normal';
     return <span style={{ fontWeight: fontWeight }}>{date}</span>;
   };
 
@@ -173,10 +174,18 @@ const BudgetTable = ({
               <Button
                 variant="contained"
                 className="button csvButton"
-                color="secondary"
+                color="primary"
                 onClick={exportBudget}
               >
                 EXPORT CSV
+              </Button>
+              <Button
+                variant="contained"
+                className="button delButton mx-2"
+                color="secondary"
+                onClick={launchDeleteAlert}
+              >
+                DELETE ALL RECORDS
               </Button>
             </div>
           </div>
@@ -202,7 +211,7 @@ const BudgetTable = ({
             className="budget-table"
             paginator={true}
             rows={10}
-            tableStyle={{ width: "100%" }}
+            tableStyle={{ width: '100%' }}
             value={arrayForBudgetTable}
             rowClassName={rowClassName}
             selectionMode="single"
