@@ -122,13 +122,8 @@ class Main extends Component {
       })
       .then(res => {
         if (this._isMounted) {
-          this.getCategorySum();
-          this.getBudgetTable();
-          this.getBudgetSum();
-          this.getSumByMonthFalse();
-          this.getSumByMonthTrue();
+          this.runEverything();
           this.createMonthLabels();
-          this.getCategorySumForCurrentMonth();
         }
       })
       .catch(err => {
@@ -137,6 +132,15 @@ class Main extends Component {
       });
   };
 
+  // RUN ALL
+  runEverything = () => {
+    this.getCategorySum();
+    this.getBudgetTable();
+    this.getBudgetSum();
+    this.getSumByMonthFalse();
+    this.getSumByMonthTrue();
+    this.getCategorySumForCurrentMonth();
+  };
   //START API CALLS
   getBudgetTable = () => {
     API.getMonth().then(res => {
@@ -151,12 +155,7 @@ class Main extends Component {
     API.getDelete(this.state.itemToDelete)
       .then(res => {
         //console.log(res.data);
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.getCategorySumForCurrentMonth();
+        this.runEverything();
         this.notify(
           'error',
           'Item successfully removed from budget',
@@ -174,12 +173,7 @@ class Main extends Component {
     API.getDelete(event.data._id)
       .then(res => {
         //console.log(res.data);
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.getCategorySumForCurrentMonth();
+        this.runEverything();
         this.notify(
           'error',
           'Item successfully removed from budget',
@@ -230,12 +224,7 @@ class Main extends Component {
       .then(res => {
         //console.log(res);
         //console.warn("WALMART STATE OBJECT: " + this.state.walmart);
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.getCategorySumForCurrentMonth();
+        this.runEverything();
         this.notify(
           'success',
           'Item successfully added to budget.',
@@ -358,6 +347,7 @@ class Main extends Component {
           categorySumList[i] = [categorySumList[i].reduce((a, b) => a + b)];
         }
       }
+
       this.setState(
         { arrayForPieChart: categorySumList },
         this.getTopCategoryOverTime
@@ -491,7 +481,7 @@ class Main extends Component {
     const [travelSum] = travel;
     const [utilitiesSum] = utilities;
     //put them back in an array
-    const sumArr = [
+    let sumArr = [
       healthSum,
       homeSum,
       otherSum,
@@ -501,12 +491,7 @@ class Main extends Component {
       utilitiesSum
     ];
 
-    //if there is no value set to 0
-    for (let i = 0; i < sumArr.length; i++) {
-      if (sumArr[i] === undefined) {
-        sumArr[i] = 0;
-      }
-    }
+    sumArr = sumArr.map(sum => (sum === undefined ? (sum = 0) : sum));
     //find index for the max value
     const topCatIndex = sumArr.indexOf(Math.max(...sumArr));
     //declare top category
@@ -646,12 +631,7 @@ class Main extends Component {
   deleteAllRecords = () => {
     API.deleteAllRecords()
       .then(res => {
-        this.getCategorySum();
-        this.getBudgetTable();
-        this.getBudgetSum();
-        this.getSumByMonthFalse();
-        this.getSumByMonthTrue();
-        this.getCategorySumForCurrentMonth();
+        this.runEverything();
       })
       .catch(err => {
         console.log(err);
