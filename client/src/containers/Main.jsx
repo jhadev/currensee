@@ -66,38 +66,47 @@ class Main extends Component {
 
   state = {
     isLoggedIn: true,
-    username: '',
-    itemToSearch: '',
-    itemImages: [],
     mobileOpen: false,
-    walmart: {},
-    categoryRange: '',
+    modal: false,
+    globalFilter: null,
+    categoryPick: null,
     activePageHeader: 'Dashboard',
     activePage: 'Search',
-    arrayForPieChart: [],
-    arrayForBudgetTable: [],
-    arrayForSumByIncome: [],
+    username: '',
+    itemToDelete: '',
+    itemToSearch: '',
+    search: '',
+    stockToSearch: '',
+    stockToSend: '',
+    categoryRange: '',
+    mostActiveCategory: '',
+    topCategory: '',
+    value: '',
     budgetTotal: 0,
     totalIncome: 0,
     totalExpense: 0,
+    walmart: {},
+    selectedBudgetItem: {},
+    itemImages: [],
+    arrayForCatSumList: [],
+    arrayForCatByCurrentMonth: [],
+    arrayForPieChart: [],
+    arrayForBudgetTable: [],
+    arrayForSumByIncome: [],
     arrayForTrueIncome: [],
     arrayForFalseIncome: [],
     monthLabels: [],
-    modal: false,
-    search: '',
-    value: '',
-    selectedBudgetItem: {},
-    globalFilter: null,
-    categoryPick: null,
-    arrayForCatByCurrentMonth: [],
-    stockToSearch: '',
-    stockToSend: '',
-    itemToDelete: '',
-    arrayForCatSumList: [],
-    topCategory: '',
     topCatChart: [],
-    mostActiveCategory: '',
-    mostActiveChart: []
+    mostActiveChart: [],
+    categories: [
+      'Health',
+      'Home',
+      'Other',
+      'Savings',
+      'Shopping',
+      'Travel',
+      'Utilities'
+    ]
   };
 
   // Check login status on load
@@ -244,133 +253,90 @@ class Main extends Component {
   getCategorySumForCurrentMonth = () => {
     const thisMonth = moment().format('MM/YYYY');
 
-    API.getSumByCategory().then(res => {
-      let categorySumList = [];
+    const { categories } = this.state;
+    API.getSumByCategory()
+      .then(res => {
+        let catSums = categories.map(category => {
+          let amounts = res.data
+            .filter(
+              item =>
+                item._id.category === category &&
+                item._id.fullDate === thisMonth
+            )
+            .map(item => item.categoryTotal);
+          return amounts;
+        });
 
-      const cat1 = res.data
-        .filter(
-          item =>
-            item._id.category === 'Health' && item._id.fullDate === thisMonth
-        )
-        .map(item => item.categoryTotal);
-
-      const cat2 = res.data
-        .filter(
-          item =>
-            item._id.category === 'Home' && item._id.fullDate === thisMonth
-        )
-        .map(item => item.categoryTotal);
-
-      const cat3 = res.data
-        .filter(
-          item =>
-            item._id.category === 'Other' && item._id.fullDate === thisMonth
-        )
-        .map(item => item.categoryTotal);
-
-      const cat4 = res.data
-        .filter(
-          item =>
-            item._id.category === 'Savings' && item._id.fullDate === thisMonth
-        )
-        .map(item => item.categoryTotal);
-
-      const cat5 = res.data
-        .filter(
-          item =>
-            item._id.category === 'Shopping' && item._id.fullDate === thisMonth
-        )
-        .map(item => item.categoryTotal);
-
-      const cat6 = res.data
-        .filter(
-          item =>
-            item._id.category === 'Travel' && item._id.fullDate === thisMonth
-        )
-        .map(item => item.categoryTotal);
-
-      const cat7 = res.data
-        .filter(
-          item =>
-            item._id.category === 'Utilities' && item._id.fullDate === thisMonth
-        )
-        .map(item => item.categoryTotal);
-
-      categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
-
-      categorySumList = categorySumList.map(sum =>
-        sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
-      );
-
-      this.setState({ arrayForCatByCurrentMonth: categorySumList });
-    });
+        const categorySumList = catSums.map(sum =>
+          sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
+        );
+        this.setState({ arrayForCatByCurrentMonth: categorySumList });
+      })
+      .catch(err => console.log(err));
   };
 
   getCategorySum = () => {
-    API.getSumByCategory().then(res => {
-      this.setState({ arrayForCatSumList: res.data });
-      let categorySumList = [];
-      const cat1 = res.data
-        .filter(item => item._id.category === 'Health')
-        .map(item => item.categoryTotal);
+    const { categories } = this.state;
 
-      const cat2 = res.data
-        .filter(item => item._id.category === 'Home')
-        .map(item => item.categoryTotal);
+    API.getSumByCategory()
+      .then(res => {
+        this.setState({ arrayForCatSumList: res.data });
 
-      const cat3 = res.data
-        .filter(item => item._id.category === 'Other')
-        .map(item => item.categoryTotal);
+        let catSums = categories.map(category => {
+          let amounts = res.data
+            .filter(item => item._id.category === category)
+            .map(item => item.categoryTotal);
+          return amounts;
+        });
 
-      const cat4 = res.data
-        .filter(item => item._id.category === 'Savings')
-        .map(item => item.categoryTotal);
+        const categorySumList = catSums.map(sum =>
+          sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
+        );
 
-      const cat5 = res.data
-        .filter(item => item._id.category === 'Shopping')
-        .map(item => item.categoryTotal);
-
-      const cat6 = res.data
-        .filter(item => item._id.category === 'Travel')
-        .map(item => item.categoryTotal);
-
-      const cat7 = res.data
-        .filter(item => item._id.category === 'Utilities')
-        .map(item => item.categoryTotal);
-
-      categorySumList = [cat1, cat2, cat3, cat4, cat5, cat6, cat7];
-
-      categorySumList = categorySumList.map(sum =>
-        sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
-      );
-
-      this.setState(
-        { arrayForPieChart: categorySumList },
-        this.getTopCategoryOverTime
-      );
-    });
+        this.setState(
+          { arrayForPieChart: categorySumList },
+          this.getTopCategoryOverTime
+        );
+      })
+      .catch(err => console.log(err));
   };
 
   getSumByMonthTrue = () => {
-    API.getSumByMonthTrue().then(res => {
-      let monthArray = [];
-      monthArray = this.timeChartCompare(res.data, 'budgetTotal');
-      this.setState({ arrayForTrueIncome: monthArray });
-    });
+    API.getSumByMonthTrue()
+      .then(res => {
+        let monthArray = [];
+        monthArray = this.timeChartCompare(res.data, 'budgetTotal');
+        this.setState({ arrayForTrueIncome: monthArray });
+      })
+      .catch(err => console.log(err));
   };
 
   getSumByMonthFalse = () => {
-    API.getSumByMonthFalse().then(res => {
-      let monthArray = [];
-      monthArray = this.timeChartCompare(res.data, 'budgetTotal');
-      this.setState({ arrayForFalseIncome: monthArray });
-    });
+    API.getSumByMonthFalse()
+      .then(res => {
+        let monthArray = [];
+        monthArray = this.timeChartCompare(res.data, 'budgetTotal');
+        this.setState({ arrayForFalseIncome: monthArray });
+      })
+      .catch(err => console.log(err));
   };
 
   getBudgetSum = () => {
-    API.getSumByIncome().then(res => {
-      this.setState({ arrayForSumByIncome: res.data }, this.setBudgetSum);
-    });
+    API.getSumByIncome()
+      .then(res => {
+        this.setState({ arrayForSumByIncome: res.data }, this.setBudgetSum);
+      })
+      .catch(err => console.log(err));
+  };
+
+  deleteAllRecords = () => {
+    API.deleteAllRecords()
+      .then(res => {
+        this.runEverything();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   //END API CALLS
 
@@ -622,16 +588,6 @@ class Main extends Component {
         </div>
       )
     });
-  };
-
-  deleteAllRecords = () => {
-    API.deleteAllRecords()
-      .then(res => {
-        this.runEverything();
-      })
-      .catch(err => {
-        console.log(err);
-      });
   };
   //END NOTIFICATIONS
 
