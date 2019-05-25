@@ -264,12 +264,26 @@ class Main extends Component {
                 item._id.fullDate === thisMonth
             )
             .map(item => item.categoryTotal);
-          return amounts;
+          let maps = new Map();
+          maps.set(category, amounts);
+          return maps;
         });
 
-        const categorySumList = catSums.map(sum =>
-          sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
-        );
+        console.log(catSums);
+        const categorySumList = catSums.map(sum => {
+          sum.forEach((value, key) => {
+            if (value.length > 1) {
+              value = [value.reduce((a, b) => a + b)];
+              console.log(value);
+            }
+            sum.set(key, value);
+          });
+
+          let [totalSum] = sum.values();
+          return [...totalSum];
+        });
+
+        console.log(categorySumList);
         this.setState({ arrayForCatByCurrentMonth: categorySumList });
       })
       .catch(err => console.log(err));
@@ -286,13 +300,26 @@ class Main extends Component {
           let amounts = res.data
             .filter(item => item._id.category === category)
             .map(item => item.categoryTotal);
-          return amounts;
+          let maps = new Map();
+          maps.set(category, amounts);
+          return maps;
         });
 
-        const categorySumList = catSums.map(sum =>
-          sum.length > 1 ? [sum.reduce((a, b) => a + b)] : sum
-        );
+        console.log(catSums);
+        const categorySumList = catSums.map(sum => {
+          sum.forEach((value, key) => {
+            if (value.length > 1) {
+              value = [value.reduce((a, b) => a + b)];
+              console.log(value);
+            }
+            sum.set(key, value);
+          });
 
+          let [totalSum] = sum.values();
+          return [...totalSum];
+        });
+
+        console.log(categorySumList);
         this.setState(
           { arrayForPieChart: categorySumList },
           this.getTopCategoryOverTime
