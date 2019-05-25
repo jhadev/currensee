@@ -66,38 +66,47 @@ class Main extends Component {
 
   state = {
     isLoggedIn: true,
-    username: '',
-    itemToSearch: '',
-    itemImages: [],
     mobileOpen: false,
-    walmart: {},
-    categoryRange: '',
+    modal: false,
+    globalFilter: null,
+    categoryPick: null,
     activePageHeader: 'Dashboard',
     activePage: 'Search',
-    arrayForPieChart: [],
-    arrayForBudgetTable: [],
-    arrayForSumByIncome: [],
+    username: '',
+    itemToDelete: '',
+    itemToSearch: '',
+    search: '',
+    stockToSearch: '',
+    stockToSend: '',
+    categoryRange: '',
+    mostActiveCategory: '',
+    topCategory: '',
+    value: '',
     budgetTotal: 0,
     totalIncome: 0,
     totalExpense: 0,
+    walmart: {},
+    selectedBudgetItem: {},
+    itemImages: [],
+    arrayForCatSumList: [],
+    arrayForCatByCurrentMonth: [],
+    arrayForPieChart: [],
+    arrayForBudgetTable: [],
+    arrayForSumByIncome: [],
     arrayForTrueIncome: [],
     arrayForFalseIncome: [],
     monthLabels: [],
-    modal: false,
-    search: '',
-    value: '',
-    selectedBudgetItem: {},
-    globalFilter: null,
-    categoryPick: null,
-    arrayForCatByCurrentMonth: [],
-    stockToSearch: '',
-    stockToSend: '',
-    itemToDelete: '',
-    arrayForCatSumList: [],
-    topCategory: '',
     topCatChart: [],
-    mostActiveCategory: '',
-    mostActiveChart: []
+    mostActiveChart: [],
+    categories: [
+      'Health',
+      'Home',
+      'Other',
+      'Savings',
+      'Shopping',
+      'Travel',
+      'Utilities'
+    ]
   };
 
   // Check login status on load
@@ -244,16 +253,7 @@ class Main extends Component {
   getCategorySumForCurrentMonth = () => {
     const thisMonth = moment().format('MM/YYYY');
 
-    const categories = [
-      'Health',
-      'Home',
-      'Other',
-      'Savings',
-      'Shopping',
-      'Travel',
-      'Utilities'
-    ];
-
+    const { categories } = this.state;
     API.getSumByCategory()
       .then(res => {
         let catSums = categories.map(category => {
@@ -276,15 +276,7 @@ class Main extends Component {
   };
 
   getCategorySum = () => {
-    const categories = [
-      'Health',
-      'Home',
-      'Other',
-      'Savings',
-      'Shopping',
-      'Travel',
-      'Utilities'
-    ];
+    const { categories } = this.state;
 
     API.getSumByCategory()
       .then(res => {
@@ -335,6 +327,16 @@ class Main extends Component {
         this.setState({ arrayForSumByIncome: res.data }, this.setBudgetSum);
       })
       .catch(err => console.log(err));
+  };
+
+  deleteAllRecords = () => {
+    API.deleteAllRecords()
+      .then(res => {
+        this.runEverything();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   //END API CALLS
 
@@ -586,16 +588,6 @@ class Main extends Component {
         </div>
       )
     });
-  };
-
-  deleteAllRecords = () => {
-    API.deleteAllRecords()
-      .then(res => {
-        this.runEverything();
-      })
-      .catch(err => {
-        console.log(err);
-      });
   };
   //END NOTIFICATIONS
 
