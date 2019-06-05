@@ -20,7 +20,7 @@
     "@material-ui/core": "^3.5.1",
     "@material/menu": "^0.41.0",
     "@sweetalert/with-react": "^0.1.1",
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "body-parser": "^1.18.2",
     "chart.js": "^2.7.3",
     "date-fns": "^2.0.0-alpha.27",
