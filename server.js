@@ -18,7 +18,9 @@ app.use(bodyParser.json());
 app.use(morgan('dev')); // for logging
 
 // We need to use sessions to keep track of our user's login status
-app.use(session({secret: "keyboard cat", resave: true, saveUninitialized: true}));
+app.use(
+  session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -36,9 +38,17 @@ passport.deserializeUser(User.deserializeUser());
 const Budget = require('./models/budget');
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/currensee-demo');
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/currensee-demo',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  }
+);
 
 // Start the API server
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
